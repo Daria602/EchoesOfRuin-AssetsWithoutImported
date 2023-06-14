@@ -15,3 +15,4 @@ MonoBehaviour:
   minDamage: 1
   maxDamage: 2
   weaponPrefab: {fileID: 2999748106215116, guid: a9de5a98f016a334c9a1113e07b1a12f, type: 3}
+  level: 1

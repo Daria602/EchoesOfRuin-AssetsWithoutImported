@@ -17,7 +17,7 @@ public class SkillPanelController : MonoBehaviour
     private void Start()
     {
         AssignSkillsToButtons();
-        skillPanel.SetActive(false);
+        //skillPanel.SetActive(false);
     }
 
     private void Update()

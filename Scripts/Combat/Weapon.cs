@@ -8,4 +8,5 @@ public class Weapon : ScriptableObject
     public int minDamage;
     public int maxDamage;
     public GameObject weaponPrefab;
+    public int level;
 }

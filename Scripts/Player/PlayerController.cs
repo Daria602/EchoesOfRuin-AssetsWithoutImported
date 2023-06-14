@@ -99,22 +99,30 @@ public class PlayerController : MonoBehaviour
 
 
             }
+            if (movement.HasArrived())
+            {
+                animator.SetBool("isRunning", false);
+            }
         }
 
         
         // T for test
         if (Input.GetKeyDown(KeyCode.T))
         {
+            // To toggle combat
+            // if player is not in combat, running, but the combat is triggered mid run,
+            // reset the animation
+            if (!combat.IsInCombat)
+            {
+                animator.SetBool("isRunning", false);
+            }
             combat.IsInCombat = !combat.IsInCombat;
         }
 
         //ShowDistance();
 
 
-        if (movement.HasArrived())
-        {
-            animator.SetBool("isRunning", false);
-        }
+        
         
     }
 

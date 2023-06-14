@@ -20,6 +20,11 @@ public class CombatController : MonoBehaviour
     public bool finishedPerforming = true;
     int actionIndex = 0;
 
+    bool isPreparingToAffect = false;
+
+    private delegate void DoAction();
+    DoAction doAction;
+
     public bool IsInCombat 
     { 
         get => m_isInCombat; 
@@ -36,14 +41,134 @@ public class CombatController : MonoBehaviour
     {
         if (m_isInCombat)
         {
-            if (isPerformingAction)
+            if (isPreparingToAffect)
+            {
+                // do the animation and circle around
+                WaitForClick();
+                Debug.Log("Waiting for a click");
+            } 
+            else if (isPerformingAction)
             {
                 //Debug.Log(skills[actionIndex].name);
-
-                FinishedPerforming();
+                Debug.Log("Performing the action");
+                doAction();
                 
             }
         }
+    }
+
+    private Vector3 pointToMove;
+    private Interactable interactable;
+
+    private void Move()
+    {
+        // Move gets a special treatment
+        if (gameObject.GetComponent<PlayerMovement>().IsAllowedToMove)
+        {
+            if (gameObject.GetComponent<PlayerMovement>().HasArrived())
+            {
+                gameObject.GetComponent<PlayerMovement>().IsAllowedToMove = false;
+                isPerformingAction = false;
+                gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].affectAnimationBoolName, false);
+                skills[actionIndex].RemoveEffect();
+
+            }
+
+        }
+        
+    }
+
+    private void Attack()
+    {
+        if (finishedPerforming)
+        {
+            finishedPerforming = false;
+            // Deal damage here
+            isPerformingAction = false;
+            gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].affectAnimationBoolName, false);
+            skills[actionIndex].RemoveEffect();
+
+        }
+    }
+
+    
+
+    private void WaitForClick()
+    {
+        if (LeftMouseClicked())
+        {
+            //Vector3 point;
+            //Interactable interactable;
+            PlayerController.ClickType clickType = gameObject.GetComponent<PlayerController>().GetClickType(out pointToMove, out interactable);
+            if (skills[actionIndex].name == "Move")
+            {
+                // Move if possible
+                float distance;
+                if (gameObject.GetComponent<PlayerMovement>().GetDistance(pointToMove, out distance))
+                {
+                    Debug.Log("Distance: " + distance.ToString() + "; Cost: " + Mathf.FloorToInt(distance / Constants.DISTANCE_COST_UNIT).ToString());
+                    if (distance > gameObject.GetComponent<PlayerMovement>().maximumTravelDistance)
+                    {
+                        CancelAction();
+                        return;
+                    }
+
+                }
+                CancelPrepare();
+                gameObject.GetComponent<PlayerMovement>().IsAllowedToMove = true;
+                gameObject.GetComponent<PlayerMovement>().MovePlayer(pointToMove);
+                isPreparingToAffect = false;
+                isPerformingAction = true;
+                doAction = Move;
+
+            }
+            else
+            {
+                if (clickType == PlayerController.ClickType.Interact)
+                {
+                    // TODO: check if Interractable is enemy (and not a potion bottle, for example)
+
+                    // check for distance, attack and stop performing
+
+                    // Is in distance
+                    if (Vector3.Distance(transform.position, pointToMove) <= skills[actionIndex].minDistance)
+                    {
+                        CancelPrepare();
+                        isPreparingToAffect = false;
+                        isPerformingAction = true;
+                        doAction = Attack;
+                    }
+                    else
+                    {
+                        CancelAction();
+                    }
+                }
+                else
+                {
+                    isPerformingAction = false;
+                }
+            }
+        }
+        else if (RightMouseClicked())
+        {
+            CancelAction();
+        }
+    }
+
+    private void CancelPrepare()
+    {
+        gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].prepareAnimationBoolName, false);
+        gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].affectAnimationBoolName, true);
+    }
+
+    private void CancelAction()
+    {
+        isPreparingToAffect = false;
+        isPerformingAction = false;
+        finishedPerforming = true;
+        gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].prepareAnimationBoolName, false);
+        gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].affectAnimationBoolName, false);
+        skills[actionIndex].RemoveEffect();
     }
 
     private void FinishedPerforming()
@@ -55,6 +180,8 @@ public class CombatController : MonoBehaviour
             {
                 gameObject.GetComponent<PlayerMovement>().IsAllowedToMove = false;
                 isPerformingAction = false;
+                gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].prepareAnimationBoolName, false);
+
             }
 
         } 
@@ -88,6 +215,7 @@ public class CombatController : MonoBehaviour
                     if (clickType == PlayerController.ClickType.Interact)
                     {
                         // check for distance, attack and stop performing
+
                     }
                     else
                     {
@@ -150,10 +278,15 @@ public class CombatController : MonoBehaviour
 
     private void PerformAction(int skillIndex)
     {
-        isPerformingAction = true;
+        isPerformingAction = false;
+        isPreparingToAffect = true;
         finishedPerforming = false;
         actionIndex = skillIndex;
+        // Sets the visual effect around the character
+        skills[skillIndex].SetEffect(gameObject);
+        GetComponent<Animator>().SetBool(skills[skillIndex].prepareAnimationBoolName, true);
         Debug.Log("Performing skill " + skillIndex);
+        Debug.Log("Animation is set to " + GetComponent<Animator>().GetBool(skills[skillIndex].prepareAnimationBoolName));
     }
 
 
