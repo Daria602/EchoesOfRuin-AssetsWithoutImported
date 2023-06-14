@@ -1048,6 +1048,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1502395440424298062, guid: 28b9af488f81b5e4dae2ce7257fd71fd, type: 3}
+      propertyPath: m_TagString
+      value: Attackable
+      objectReference: {fileID: 0}
     - target: {fileID: 1502395440424298064, guid: 28b9af488f81b5e4dae2ce7257fd71fd, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1067,6 +1071,10 @@ PrefabInstance:
     - target: {fileID: 1502395440730316598, guid: 28b9af488f81b5e4dae2ce7257fd71fd, type: 3}
       propertyPath: m_Name
       value: Enemies
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502395440730316598, guid: 28b9af488f81b5e4dae2ce7257fd71fd, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1502395440730316601, guid: 28b9af488f81b5e4dae2ce7257fd71fd, type: 3}
       propertyPath: m_RootOrder
@@ -5860,6 +5868,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4302093862802679469, guid: e3d4d8d137ac8b14296f280875982092, type: 3}
   m_PrefabInstance: {fileID: 308793961}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &308828158
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 308828159}
+  m_Layer: 0
+  m_Name: RH
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &308828159
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308828158}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 958385609}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &309979915
 GameObject:
   m_ObjectHideFlags: 0
@@ -10781,9 +10819,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 495b9654c2e9c6c4bbcbca68ee19718c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 5345125771269466596}
-  participants:
-  - {fileID: 958385608}
 --- !u!1 &597418856
 GameObject:
   m_ObjectHideFlags: 0
@@ -17212,6 +17247,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyTest
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 7e30eee73c241d5448ce0ac372cf6602, type: 3}
+      propertyPath: m_TagString
+      value: Attackable
+      objectReference: {fileID: 0}
     - target: {fileID: 100108, guid: 7e30eee73c241d5448ce0ac372cf6602, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -17609,6 +17648,27 @@ CapsuleCollider:
   m_Height: 1.7582262
   m_Direction: 1
   m_Center: {x: 0, y: 0.86787975, z: 0}
+--- !u!114 &958385668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958385608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f12554644aec74296a4908ed496740, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isInCombat: 0
+  skills:
+  - {fileID: 11400000, guid: 056a329e542376841836f69f32a81627, type: 2}
+  hasWeapon: 1
+  weapon: {fileID: 11400000, guid: ced2583e6af32d445bc78db9e8c6d795, type: 2}
+  rightHand: {fileID: 308828159}
+  isPerformingAction: 0
+  finishedPerforming: 1
+  actionIndex: 0
 --- !u!1 &960195572
 GameObject:
   m_ObjectHideFlags: 0
@@ -24278,7 +24338,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5345125771269466604}
-        m_TargetAssemblyTypeName: CombatController, Assembly-CSharp
+        m_TargetAssemblyTypeName: PlayerCombat, Assembly-CSharp
         m_MethodName: ButtonIndexClicked
         m_Mode: 3
         m_Arguments:
@@ -48520,19 +48580,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5345125771269466596}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35f12554644aec74296a4908ed496740, type: 3}
+  m_Script: {fileID: 11500000, guid: bb1815b74c20f3f468cb7e48a048715d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 1
+  m_isInCombat: 0
   skills:
   - {fileID: 11400000, guid: d7572d7748a47f845bd100dbe23ad3a5, type: 2}
-  skillButtons:
-  - {fileID: 1330043005}
   hasWeapon: 1
   weapon: {fileID: 11400000, guid: ced2583e6af32d445bc78db9e8c6d795, type: 2}
-  leftHand: {fileID: 267716825}
   rightHand: {fileID: 1904546346}
+  isPerformingAction: 0
   finishedPerforming: 1
+  actionIndex: 0
 --- !u!114 &5345125771269466605
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,6 +11,16 @@ public class NPCMovement : BaseMovement
     // To set the positions
     public Camera sceneCamera = null;
 
+    private CombatController combat;
+
+    private void Start()
+    {
+        combat = GetComponent<CombatController>();
+
+        // TODO: remove this
+        combat.IsInCombat = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -24,25 +34,30 @@ public class NPCMovement : BaseMovement
         //        Debug.Log(hit.point);
         //    }
         //}
-        if (IsAllowedToMove)
+        if (!combat.IsInCombat)
         {
-            if (positionsToMove.Length == 0) return;
-            Move();
-        } 
-        else
-        {
-            agent.ResetPath();
+            if (IsAllowedToMove)
+            {
+                if (positionsToMove.Length == 0) return;
+                MoveStatic();
+            }
+            else
+            {
+                agent.ResetPath();
+            }
         }
+        
+    }
 
-        if (Input.GetKeyDown(KeyCode.M))
+    public void MoveNPC(Vector3 point)
+    {
+        if (CanGetToDestination(point))
         {
-            
-            IsAllowedToMove = !IsAllowedToMove;
-            Debug.Log(IsAllowedToMove);
+            SetPath();
         }
     }
 
-    private void Move()
+    private void MoveStatic()
     {
         if (HasArrived())
         {
