@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +11,10 @@ public class CombatController : MonoBehaviour
     public Skill[] skills = null;
     public Button[] skillButtons = null;
 
-
-    public Button butt;
+    public bool hasWeapon = true;
+    public Weapon weapon;
+    public Transform leftHand;
+    public Transform rightHand;
 
     bool isPerformingAction = false;
     public bool finishedPerforming = true;
@@ -35,7 +38,7 @@ public class CombatController : MonoBehaviour
         {
             if (isPerformingAction)
             {
-                Debug.Log(skills[actionIndex].name);
+                //Debug.Log(skills[actionIndex].name);
 
                 FinishedPerforming();
                 
@@ -45,24 +48,60 @@ public class CombatController : MonoBehaviour
 
     private void FinishedPerforming()
     {
-        if (LeftMouseClicked())
+        // Move gets a special treatment
+        if (skills[actionIndex].name == "Move" && gameObject.GetComponent<PlayerMovement>().IsAllowedToMove)
         {
-            Vector3 point;
-            Interactable interactable;
-            PlayerController.ClickType clickType = gameObject.GetComponent<PlayerController>().GetClickType(out point, out interactable);
-            if (clickType == PlayerController.ClickType.Interact)
+            if (gameObject.GetComponent<PlayerMovement>().HasArrived())
             {
-                // check for distance, attack and stop performing
+                gameObject.GetComponent<PlayerMovement>().IsAllowedToMove = false;
+                isPerformingAction = false;
             }
-            else
+
+        } 
+        else
+        {
+            if (LeftMouseClicked())
+            {
+                Vector3 point;
+                Interactable interactable;
+                PlayerController.ClickType clickType = gameObject.GetComponent<PlayerController>().GetClickType(out point, out interactable);
+                if (skills[actionIndex].name == "Move")
+                {
+                    // Move if possible
+                    float distance;
+                    if (gameObject.GetComponent<PlayerMovement>().GetDistance(point, out distance))
+                    {
+                        Debug.Log("Distance: " + distance.ToString() + "; Cost: " + Mathf.FloorToInt(distance / Constants.DISTANCE_COST_UNIT).ToString());
+                        if (distance > gameObject.GetComponent<PlayerMovement>().maximumTravelDistance)
+                        {
+                            isPerformingAction = false;
+                            return;
+                        }
+                        
+                    }
+                    gameObject.GetComponent<PlayerMovement>().IsAllowedToMove = true;
+                    gameObject.GetComponent<PlayerMovement>().MovePlayer(point);
+
+                }
+                else
+                {
+                    if (clickType == PlayerController.ClickType.Interact)
+                    {
+                        // check for distance, attack and stop performing
+                    }
+                    else
+                    {
+                        isPerformingAction = false;
+                    }
+                }
+
+            }
+            else if (RightMouseClicked())
             {
                 isPerformingAction = false;
             }
-        }
-        else if (RightMouseClicked())
-        {
-            isPerformingAction = false;
-        }
+        } 
+        
     }
 
     private bool LeftMouseClicked()
@@ -77,6 +116,10 @@ public class CombatController : MonoBehaviour
 
     private void CombatStateIsChanged(bool value)
     {
+        if (value && hasWeapon)
+        {
+            GameObject go = Instantiate(weapon.weaponPrefab, leftHand);
+        }
         m_isInCombat = value;
         ResetMovement();
     }

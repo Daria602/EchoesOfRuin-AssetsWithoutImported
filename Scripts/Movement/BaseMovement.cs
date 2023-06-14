@@ -9,6 +9,7 @@ public class BaseMovement : MonoBehaviour
     public NavMeshAgent agent;
     private bool m_isAllowedToMove = true;
     protected NavMeshPath path = null;
+    public float maximumTravelDistance;
 
     public bool IsAllowedToMove { get => m_isAllowedToMove; set => m_isAllowedToMove = value; }
 
@@ -16,6 +17,7 @@ public class BaseMovement : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        maximumTravelDistance = agent.stoppingDistance * 10;
     }
  
     public void SetPath()
@@ -49,6 +51,25 @@ public class BaseMovement : MonoBehaviour
         {
 
             return true;
+        }
+        return false;
+    }
+
+    public bool GetDistance(Vector3 point, out float distance)
+    {
+        distance = -1;
+        NavMeshPath path = new NavMeshPath();
+        if (agent.CalculatePath(point, path) && path.status == NavMeshPathStatus.PathComplete)
+        {
+            float length = 0f;
+            for (int i = 1; i < path.corners.Length; i++)
+            {
+                length += Vector3.Distance(path.corners[i - 1], path.corners[i]);
+            }
+
+            distance = length;
+            return true;
+
         }
         return false;
     }
