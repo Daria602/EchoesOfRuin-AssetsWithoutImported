@@ -233,46 +233,13 @@ public class PlayerController : MonoBehaviour
                         attackable.TakeDamage(10);
                     }
                 }
-                // Check for distance to target
-
-                // If distance to target is too big, move to furthest away character can attack
-
-                // Take away HP from target & perform character animation/sound
             }
             else
             {
-                // Additional moving logic, here moving should be restricted to the number of action points available
-                // For now, moving is enabled
                 Move();
-
             }
         }
     }
-
-    //void CreateAttackRangeCircle()
-    //{
-    //    attackRangeCircle.transform.SetParent(transform, false);
-    //    attackRangeCircle.useWorldSpace = false;
-    //    attackRangeCircle.widthMultiplier = 0.1f;
-
-    //    float angle = 0f;
-    //    float angleIncrement = 360f / circleSegments;
-    //    Vector3[] positions = new Vector3[circleSegments + 1];
-
-    //    for (int i = 0; i <= circleSegments; i++)
-    //    {
-    //        float x = Mathf.Sin(Mathf.Deg2Rad * angle) * attackRange;
-    //        float z = Mathf.Cos(Mathf.Deg2Rad * angle) * attackRange;
-    //        positions[i] = new Vector3(x, 0f, z);
-
-    //        angle += angleIncrement;
-    //    }
-
-    //    attackRangeCircle.positionCount = circleSegments + 1;
-    //    attackRangeCircle.SetPositions(positions);
-    //    attackRangeCircle.transform.localPosition = Vector3.zero;
-    //}
-
 
     void SetCombatMode()
     {
@@ -284,16 +251,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Combat mode is set to " + isInCombat);
         }
     }
-
-    //void ShowOutOfRangeWarning()
-    //{
-    //    outOfRangePanel.SetActive(true);
-    //}
-
-    //void HideOutOfRangeWarning()
-    //{
-    //    outOfRangePanel.SetActive(false);
-    //}
 
     private bool LeftMouseClicked()
     {
