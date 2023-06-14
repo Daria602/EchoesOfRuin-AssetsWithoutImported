@@ -5,4 +5,12 @@ using UnityEngine;
 public class Constants
 {
     public const float DISTANCE_COST_UNIT = 1.5f;
+
+    public enum SpellType
+    {
+        Special,
+        Buff,
+        IncreasedDamage,
+        AoE
+    }
 }

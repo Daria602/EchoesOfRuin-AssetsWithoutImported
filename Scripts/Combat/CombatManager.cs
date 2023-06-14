@@ -5,8 +5,8 @@ using UnityEngine;
 public class CombatManager : MonoBehaviour
 {
     private static CombatManager instance;
-    public GameObject player;
-    public GameObject[] participants;
+    //public GameObject player;
+    //public List<GameObject> participants;
 
     public static CombatManager GetInstance()
     {
@@ -21,12 +21,14 @@ public class CombatManager : MonoBehaviour
         instance = this;
     }
 
-    public void InitiateCombat()
-    {
-        player.GetComponent<PlayerMovement>().IsAllowedToMove = false;
-        foreach (var enemy in participants)
-        {
-            enemy.GetComponent<NPCMovement>().IsAllowedToMove = false;
-        }
-    }
+    //public void InitiateCombat(ref GameObject player, ref List<GameObject>)
+    //{
+    //    player.GetComponent<CombatController>().IsInCombat = true;
+    //    Debug.Log("Player is in combat: " + player.GetComponent<CombatController>().IsInCombat);
+    //    foreach (var enemy in participants)
+    //    {
+    //        enemy.GetComponent<CombatController>().IsInCombat = true;
+    //        Debug.Log("Enemy is in combat: " + enemy.GetComponent<CombatController>().IsInCombat);
+    //    }
+    //}
 }

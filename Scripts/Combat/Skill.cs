@@ -7,7 +7,7 @@ public class Skill : ScriptableObject
 {
     public string skillName;
     public Sprite skillIcon;
-    public int cost;
+    
     public bool hasVisuals = false;
     public GameObject visualEffectPrefab = null;
     private GameObject visualEffect = null;
@@ -15,7 +15,34 @@ public class Skill : ScriptableObject
     public string affectAnimationBoolName = "";
     public float minDistance = 0;
     public string description;
+    public Constants.SpellType spellType;
 
+    public bool isInCooldown = false;
+    public int cooldown = 2;
+
+    [HideInInspector]
+    public int cost;
+
+    // TODO: afflict enemies with debuffs
+
+    private void Awake()
+    {
+        switch (spellType)
+        {
+            case Constants.SpellType.Special:
+                cost = 0;
+                break;
+            case Constants.SpellType.Buff:
+                cost = 1;
+                break;
+            case Constants.SpellType.IncreasedDamage:
+                cost = 2;
+                break;
+            case Constants.SpellType.AoE:
+                cost = 3;
+                break;
+        }
+    }
     public void SetEffect(GameObject character)
     {
         if (hasVisuals)

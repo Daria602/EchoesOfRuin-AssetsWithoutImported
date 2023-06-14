@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -24,7 +25,7 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI distanceText;
 
     public GameObject distance;
-    private CombatController combat;
+    private PlayerCombat combat;
 
     public enum ClickType
     {
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         movement = GetComponent<PlayerMovement>();
         //distanceText.gameObject.SetActive(false);
-        combat = GetComponent<CombatController>();
+        combat = GetComponent<PlayerCombat>();
 
     }
 
@@ -68,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.B))
             {
-                CombatManager.GetInstance().InitiateCombat();
+                
             }
 
             if (isInCombat && Input.GetMouseButtonDown(1))
@@ -109,21 +110,42 @@ public class PlayerController : MonoBehaviour
         // T for test
         if (Input.GetKeyDown(KeyCode.T))
         {
+
+            
             // To toggle combat
             // if player is not in combat, running, but the combat is triggered mid run,
             // reset the animation
             if (!combat.IsInCombat)
             {
                 animator.SetBool("isRunning", false);
+
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position, 6);
+                List<GameObject> participants = new List<GameObject>();
+                foreach (var hitCollider in hitColliders)
+                {
+                    if (hitCollider.gameObject.tag == "Attackable")
+                    {
+                        participants.Add(hitCollider.gameObject);
+                    }
+                }
+
+                InitiateCombat(ref participants);
+                
             }
             combat.IsInCombat = !combat.IsInCombat;
         }
 
         //ShowDistance();
-
-
         
-        
+    }
+
+    private void InitiateCombat(ref List<GameObject> participants)
+    {
+        foreach (var enemy in participants)
+        {
+            enemy.GetComponent<CombatController>().IsInCombat = true;
+            Debug.Log("Enemy is in combat: " + enemy.GetComponent<CombatController>().IsInCombat);
+        }
     }
 
     private void ShowDistance()

@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Basic Attack
   skillIcon: {fileID: 21300000, guid: 08c71e4e0565fe4469d1e0a593047156, type: 3}
-  cost: 0
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: 
   affectAnimationBoolName: 
-  minDistance: 0
-  description: 
+  minDistance: 2
+  description: Attack with your current weapon
+  spellType: 0
+  cost: 0

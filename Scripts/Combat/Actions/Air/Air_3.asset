@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8793a39f5d9e804d93e93fb68a190dc, type: 3}
   m_Name: Air_3
   m_EditorClassIdentifier: 
-  skillName: 
-  skillIcon: {fileID: 0}
-  cost: 0
+  skillName: Tempest Storm
+  skillIcon: {fileID: 21300000, guid: 85011a1dd0f9b55498ae51053a4a32c0, type: 3}
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: 
   affectAnimationBoolName: 
   minDistance: 0
+  description: Summon a raging tempest, creating a swirling vortex of powerful winds
+    that damages multiple enemies within a wide area
+  spellType: 3
+  cost: 0

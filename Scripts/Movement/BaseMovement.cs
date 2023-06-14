@@ -11,10 +11,10 @@ public class BaseMovement : MonoBehaviour
     protected NavMeshPath path = null;
     public float maximumTravelDistance;
 
-    public bool IsAllowedToMove { get => m_isAllowedToMove; set => m_isAllowedToMove = value; }
+    public bool IsAllowedToMove { get => m_isAllowedToMove; set => MovementStateIsChanged(value); }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         maximumTravelDistance = agent.stoppingDistance * 10;
@@ -43,7 +43,7 @@ public class BaseMovement : MonoBehaviour
         return false;
     }
 
-    protected bool CanGetToDestination(Vector3 destination)
+    public bool CanGetToDestination(Vector3 destination)
     {
         path = new NavMeshPath();
         // Check if path can be made
@@ -73,4 +73,12 @@ public class BaseMovement : MonoBehaviour
         }
         return false;
     }
+
+    void MovementStateIsChanged(bool value)
+    {
+        //agent.ResetPath();
+        m_isAllowedToMove = value;
+    }
+
+
 }

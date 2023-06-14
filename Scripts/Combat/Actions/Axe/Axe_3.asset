@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8793a39f5d9e804d93e93fb68a190dc, type: 3}
   m_Name: Axe_3
   m_EditorClassIdentifier: 
-  skillName: 
-  skillIcon: {fileID: 0}
-  cost: 0
+  skillName: Sundering Blow
+  skillIcon: {fileID: 21300000, guid: 864b55b5281c02244a5a9e626a8c483c, type: 3}
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: 
   affectAnimationBoolName: 
   minDistance: 0
+  description: Deliver a blow with your axe, causing a deep gash in the enemy's defenses,
+    increasing the amount if damage taken next turn
+  spellType: 2
+  cost: 0
