@@ -32,6 +32,11 @@ public class CombatController : MonoBehaviour
         set => CombatStateIsChanged(value); 
     }
 
+    public void DoneCasting()
+    {
+        Debug.LogWarning("Hellooooo");
+    }
+
     protected void Move()
     {
         // Move gets a special treatment

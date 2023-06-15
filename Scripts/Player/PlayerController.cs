@@ -49,34 +49,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!combat.IsInCombat)
         {
-            SetCombatMode();
-
-            if (isInCombat)
-            {
-                //attackRangeCircle.enabled = true;
-                //CreateAttackRangeCircle();
-            }
-
-            if (!isInCombat)
-            {
-                //attackRangeCircle.enabled = false;
-            }
-
-            if (!isInCombat && Input.GetMouseButtonDown(1))
-            {
-                RemoveFocus();
-            }
-
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                
-            }
-
-            if (isInCombat && Input.GetMouseButtonDown(1))
-            {
-                AttackTarget();
-            }
-            //else if (!isInCombat && Input.GetMouseButtonDown(0))
+           
             if (LeftMouseClicked())
             {
                 Interactable interactable;
