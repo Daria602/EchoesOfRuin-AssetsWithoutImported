@@ -11,13 +11,6 @@ public class PlayerMovement : BaseMovement
             agent.ResetPath();
         }
 
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-
-            IsAllowedToMove = !IsAllowedToMove;
-            Debug.Log(IsAllowedToMove);
-        }
-
     }
     public void MovePlayer(Vector3 point)
     {

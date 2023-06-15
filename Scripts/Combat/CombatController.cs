@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class CombatController : MonoBehaviour
 {
-    
+    public int characterId;
     public bool m_isInCombat = false;
-    public Skill[] skills = null;
+    public int[] skillsIds = null;
     public bool hasWeapon = true;
     public Weapon weapon;
     public Transform rightHand;
@@ -16,11 +16,18 @@ public class CombatController : MonoBehaviour
     public bool isPerformingAction = false;
     public bool finishedPerforming = true;
     public int actionIndex = 0;
+    public bool charactersTurn = false;
+    [HideInInspector()]
+    public List<Skill> skills = new List<Skill>();
 
     
 
     protected delegate void DoAction();
     protected DoAction doAction;
+
+    public bool endedTurn = true;
+
+
 
 
 
@@ -32,10 +39,15 @@ public class CombatController : MonoBehaviour
         set => CombatStateIsChanged(value); 
     }
 
-    public void DoneCasting()
+    private void Awake()
     {
-        Debug.LogWarning("Hellooooo");
+        for (int i = 0; i < skillsIds.Length; i++)
+        {
+            var skillInstantiated = ScriptableObject.Instantiate(Constants.GetInstance().skillMap[skillsIds[i]]);
+            skills.Add(skillInstantiated);
+        }
     }
+
 
     protected void Move()
     {
@@ -60,6 +72,7 @@ public class CombatController : MonoBehaviour
         {
             finishedPerforming = false;
             // Deal damage here
+            Debug.Log("Got into Attack");
             isPerformingAction = false;
             gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].affectAnimationBoolName, false);
             skills[actionIndex].RemoveEffect();
@@ -82,6 +95,64 @@ public class CombatController : MonoBehaviour
         gameObject.GetComponent<BaseMovement>().IsAllowedToMove = !m_isInCombat;
 
     }
+
+    protected float CalculateAffectedDamage()
+    {
+        float baseDamage = 0f;
+        if (skills[actionIndex].requiresWeapon)
+        {
+            // TODO: calculate base on weapon
+        }
+        else
+        {
+            baseDamage = Random.Range((int)skills[actionIndex].baseDamageMin, (int)skills[actionIndex].baseDamageMax);
+        }
+
+        // TODO: apply stats here
+        Debug.Log("Base damage was: " + baseDamage);
+        baseDamage = ApplyAttributes(baseDamage);
+        Debug.Log("Damage now is: " + baseDamage);
+        //ApplyAbilities(out baseDamage);
+
+
+        return Mathf.Round(baseDamage);
+    }
+
+    private float ApplyAttributes(float baseDamage)
+    {
+        List<float> additions = new List<float>();
+        for (int i = 0; i < skills[actionIndex].affectedByAttributes.Length; i++)
+        {
+            switch (skills[actionIndex].affectedByAttributes[i])
+            {
+                case Constants.AffectedByAttributes.Strength:
+                    break;
+                case Constants.AffectedByAttributes.Agility:
+                    break;
+                case Constants.AffectedByAttributes.Intelligence:
+                    additions.Add(
+                        baseDamage * gameObject.GetComponent<Stats>().intelligence * 0.05f
+                        );
+                    break;
+                case Constants.AffectedByAttributes.Constitution:
+                    break;
+                case Constants.AffectedByAttributes.Wits:
+                    break;
+            }
+        }
+
+        foreach (float addition in additions)
+        {
+            baseDamage += addition;
+        }
+
+        return Mathf.Round(baseDamage);
+    }
+
+    //private void ApplyAbilities(out float damage)
+    //{
+
+    //}
 
 
 }

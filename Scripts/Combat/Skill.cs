@@ -13,17 +13,32 @@ public class Skill : ScriptableObject
     private GameObject visualEffect = null;
     public string prepareAnimationBoolName = "";
     public string affectAnimationBoolName = "";
-    public float minDistance = 0;
+    public bool hasAnimTrigger = true;
+    public string castTrigger;
+    public float maxDistance = 10;
     public string description;
     public Constants.SpellType spellType;
 
     public bool isInCooldown = false;
-    public int cooldown = 2;
+
+    public int cooldown = 0;
+    public int maxCooldown = 4;
 
     [HideInInspector]
     public int cost;
 
+    public float baseDamageMin;
+    public float baseDamageMax;
+
+
+    public Constants.Spell spell;
+    public bool requiresWeapon = false;
+    public Constants.WeaponTypes weaponTypeRequired;
     // TODO: afflict enemies with debuffs
+
+
+    public Constants.AffectedByAttributes[] affectedByAttributes;
+    public Constants.AffectedByAbilities[] affectedByAbilities;
 
     private void Awake()
     {

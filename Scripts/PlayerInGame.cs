@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -40,14 +41,17 @@ public class PlayerInGame : MonoBehaviour, ILoadingData
         EarthAffinity
     }
     public TMP_Text availablePointsAbility;
+    // TODO: change this to melee
     public TMP_Text oneHanded;
     public TMP_Text twoHanded;
     public TMP_Text dualWielding;
+    //
     public TMP_Text ranged;
     public TMP_Text fireAffinity;
     public TMP_Text airAffinity;
     public TMP_Text waterAffinity;
     public TMP_Text earthAffinity;
+
 
     // Attributes
     public void IncreaseStat(int statType)
@@ -233,19 +237,28 @@ public class PlayerInGame : MonoBehaviour, ILoadingData
 
     public void LoadGameData(CharacterData characterData)
     {
-        this.male = characterData.isMale;
-        if (male)
-        {
-            maleCharacter.GetComponent<CharacterCreation>().LoadGameData(characterData);
-            maleCharacter.GetComponent<PlayerStats>().LoadGameData(characterData);
-            SetAbilityValues(ref maleCharacter);
-        }
-        else
-        {
-            femaleCharacter.GetComponent<CharacterCreation>().LoadGameData(characterData);
-            femaleCharacter.GetComponent<PlayerStats>().LoadGameData(characterData);
-            SetAbilityValues(ref femaleCharacter);
-        }
+        //try
+        //{
+        //    this.male = characterData.isMale;
+        //    if (male)
+        //    {
+        //        maleCharacter.GetComponent<CharacterCreation>().LoadGameData(characterData);
+        //        maleCharacter.GetComponent<PlayerStats>().LoadGameData(characterData);
+        //        SetAbilityValues(ref maleCharacter);
+        //    }
+        //    else
+        //    {
+        //        femaleCharacter.GetComponent<CharacterCreation>().LoadGameData(characterData);
+        //        femaleCharacter.GetComponent<PlayerStats>().LoadGameData(characterData);
+        //        SetAbilityValues(ref femaleCharacter);
+        //    }
+        //} catch (NullReferenceException ex)
+        //{
+            
+        //}
+            
+        
+        
 
     }
 

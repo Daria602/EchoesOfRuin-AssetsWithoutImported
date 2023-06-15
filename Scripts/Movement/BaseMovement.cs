@@ -76,7 +76,7 @@ public class BaseMovement : MonoBehaviour
 
     void MovementStateIsChanged(bool value)
     {
-        //agent.ResetPath();
+        agent.ResetPath();
         m_isAllowedToMove = value;
     }
 

@@ -18,8 +18,15 @@ MonoBehaviour:
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: 
   affectAnimationBoolName: 
+  hasAnimTrigger: 1
+  castTrigger: 
   minDistance: 0
   description: Engulf yourself in a fiery aura, increasing your defences and reducing
     next damage taken.
   spellType: 1
+  isInCooldown: 0
+  cooldown: 2
   cost: 1
+  spell: 0
+  requiresWeapon: 0
+  weaponTypeRequired: 0

@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     //public LineRenderer attackRangeCircle;
     public int circleSegments = 360;
     public Interactable focus;
-    private WaitCoroutine waitCoroutine = new WaitCoroutine();
+    //private WaitCoroutine waitCoroutine = new WaitCoroutine();
 
     public const string AttackableLayer = "Attackable";
     public const string InteractableLayer = "Interactable";
@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
 
     public GameObject distance;
     private PlayerCombat combat;
+
+    //public CombatManager combatManager;
 
     public enum ClickType
     {
@@ -92,33 +94,46 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetBool("isRunning", false);
 
-                Collider[] hitColliders = Physics.OverlapSphere(transform.position, 6);
-                List<GameObject> participants = new List<GameObject>();
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position, 30f);
+                List<int> participants = new List<int>();
                 foreach (var hitCollider in hitColliders)
                 {
                     if (hitCollider.gameObject.tag == "Attackable")
                     {
-                        participants.Add(hitCollider.gameObject);
+                        participants.Add(hitCollider.gameObject.GetComponent<CombatController>().characterId);
                     }
                 }
+                if (participants.Count > 0)
+                {
+                    // Player's Id is 0
+                    participants.Add(0);
+                    InitiateCombat(participants);
+                }
 
-                InitiateCombat(ref participants);
+                
                 
             }
-            combat.IsInCombat = !combat.IsInCombat;
+            //combat.IsInCombat = !combat.IsInCombat;
         }
 
         //ShowDistance();
         
     }
 
-    private void InitiateCombat(ref List<GameObject> participants)
+    private void InitiateCombat(List<int> participantsIds)
     {
-        foreach (var enemy in participants)
-        {
-            enemy.GetComponent<CombatController>().IsInCombat = true;
-            Debug.Log("Enemy is in combat: " + enemy.GetComponent<CombatController>().IsInCombat);
-        }
+        
+        CombatManager.GetInstance().StartCombat(participantsIds);
+        CombatManager.GetInstance().isCombatGoing = true;
+        //combatManager.InitiateCombat(participants);
+        //foreach (var enemy in participants)
+        //{
+
+        //    enemy.GetComponent<CombatController>().IsInCombat = true;
+        //    enemy.transform.LookAt(transform);
+        //    Debug.Log("Enemy is in combat: " + enemy.GetComponent<CombatController>().IsInCombat);
+        //}
+
     }
 
     private void ShowDistance()
