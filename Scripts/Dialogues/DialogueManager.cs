@@ -48,6 +48,8 @@ public class DialogueManager : MonoBehaviour
 
         Button button = continueButton.GetComponent<Button>();
         button.onClick.AddListener(TaskOnClick);
+
+        
     }
 
     private void Update()
@@ -58,12 +60,25 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON)
+    public void EnterDialogueMode(TextAsset inkJSON, Inventory inventory = null)
     {
         currentStory = new Story(inkJSON.text);
         dialogueIsActive = true;
         dialoguePanel.SetActive(true);
         ContinueStory();
+        currentStory.ObserveVariable("choseToFight", (variableName, newValue) =>
+        {
+            // Print the new value
+            ExitDialogueMode();
+            FindObjectOfType<PlayerController>().StartFight();
+        });
+
+        currentStory.ObserveVariable("choseToTrade", (variableName, newValue) =>
+        {
+            // Print the new value
+            ExitDialogueMode();
+            TradeManager.GetInstance().TriggerTrade(inventory);
+        });
     }
 
     private void ExitDialogueMode()
@@ -129,6 +144,7 @@ public class DialogueManager : MonoBehaviour
         currentStory.ChooseChoiceIndex(choiceIndex);
         ContinueStory();
         scrollRectInput.GetComponent<ScrollRect>().verticalNormalizedPosition = 0.95f;
+        
     }
 
     void TaskOnClick()

@@ -61,11 +61,12 @@ public class NPCMovement : BaseMovement
     {
         if (HasArrived())
         {
-
+            gameObject.GetComponent<Animator>().SetBool("isRunning", false);
             posToMoveIndex =
                 (posToMoveIndex + 1 == positionsToMove.Length) ? 0 : posToMoveIndex + 1;
             if (CanGetToDestination(positionsToMove[posToMoveIndex]))
             {
+                gameObject.GetComponent<Animator>().SetBool("isRunning", true);
                 SetPath();
 
             }

@@ -17,7 +17,7 @@ public class CombatController : MonoBehaviour
     public bool finishedPerforming = true;
     public int actionIndex = 0;
     public bool charactersTurn = false;
-    [HideInInspector()]
+    //[HideInInspector()]
     public List<Skill> skills = new List<Skill>();
 
     
@@ -39,9 +39,14 @@ public class CombatController : MonoBehaviour
         set => CombatStateIsChanged(value); 
     }
 
+    private void Awake()
+    {
+        
+    }
+
     private void Start()
     {
-        Debug.Log(gameObject.name);
+        Debug.Log("Combat controller thing");
         for (int i = 0; i < skillsIds.Length; i++)
         {
             Skill skillInstantiated = Instantiate(Constants.GetInstance().skillMap[skillsIds[i]]);

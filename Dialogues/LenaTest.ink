@@ -1,23 +1,15 @@
-VAR hasIntroduced = false
-VAR playerName = "Bobba"
--> Start
-=== Start ===
-Hello, {playerName}!
-* { not hasIntroduced } -> Introduction
-* { hasIntroduced } -> Generic
-=== Introduction ===
-My name is John Wilson and I am a curator of many trinkets and curios.
-~hasIntroduced = true
--> Generic
-=== Generic ===
-Would you be interested in seeing my wares?
--> options
-= options
-* [(yes)] Yes, of course
-    NPC response for choice 1
+VAR choseToTrade = false
+VAR choseToFight = false
+Hello!
+Would you like to see my trinkets or fight me?
+* [Trinkets]
+    Here you go 
+    ~ choseToTrade = true
     -> END
-* [(no)] No, not really
-    Okay, goodbye then.
+    
+* [Fight]
+    Oh, you want to fight? I'll bring friends then!
+    ~ choseToFight = true
     -> END
 
 

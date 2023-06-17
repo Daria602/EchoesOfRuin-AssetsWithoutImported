@@ -77,6 +77,7 @@ public class BaseMovement : MonoBehaviour
     void MovementStateIsChanged(bool value)
     {
         agent.ResetPath();
+        gameObject.GetComponent<Animator>().SetBool("isRunning", false);
         m_isAllowedToMove = value;
     }
 

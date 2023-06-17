@@ -52,6 +52,10 @@ public class PlayerCombat : CombatController
         }
         if (isPreparingToAffect)
         {
+            for (int i = 0; i < skills.Count; i++)
+            {
+                Debug.Log(skills[i].name);
+            }
             // do the animation and circle around
             WaitForClick();
             Debug.Log("Waiting for a click");

@@ -18,7 +18,11 @@ public class DialogueTrigger : Interactable
     {
         base.Interact();
         //CombatManager.GetInstance().InitiateCombat(ref p);
-        DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+        gameObject.GetComponent<NPCMovement>().IsAllowedToMove = false;
+        gameObject.GetComponent<Animator>().SetBool("isRunning", false);
+        var player = FindObjectOfType<PlayerController>();
+        player.GetComponent<PlayerMovement>().IsAllowedToMove = false;
+        DialogueManager.GetInstance().EnterDialogueMode(inkJSON, gameObject.GetComponent<Inventory>());
     }
 
 

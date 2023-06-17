@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
 
 
     public Slider XPSlider;
+    public Slider HealthSlider;
+    public TextMeshProUGUI healthText;
+    public TextMeshProUGUI xpText;
     public PlayerStats stats;
 
 
@@ -55,15 +58,21 @@ public class PlayerController : MonoBehaviour
         //distanceText.gameObject.SetActive(false);
         combat = GetComponent<PlayerCombat>();
         stats = GetComponent<PlayerStats>();
-        XPSlider.value = 0;
+        XPSlider.minValue = 0;
+        XPSlider.maxValue = currentThreshold;
+        XPSlider.value = XP;
+        HealthSlider.minValue = 0;
+        HealthSlider.maxValue = GetComponent<PlayerHealth>().CurrentMaxHealth;
+        HealthSlider.value = GetComponent<PlayerHealth>().currentHealth;
+        xpText.text = XP.ToString();
 
     }
 
-    public int currentThreshold = 0;
+    public int currentThreshold = 1000;
 
     public void CalculateNewThreshold()
     {
-        currentThreshold = 500 * (stats.characterLevel * stats.characterLevel) - (500 * stats.characterLevel);
+        currentThreshold = 500 * ((stats.characterLevel + 1) * (stats.characterLevel+1)) - (500 * (stats.characterLevel+1));
     }
 
     public bool PassedCurrentThreshold()
@@ -75,6 +84,7 @@ public class PlayerController : MonoBehaviour
     {
         
         XP += XPValue;
+        xpText.text = XPValue.ToString();
 
         if (PassedCurrentThreshold())
         {
@@ -89,6 +99,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        HealthSlider.value = GetComponent<PlayerHealth>().currentHealth;
+        healthText.text = GetComponent<PlayerHealth>().currentHealth.ToString();
         if (!combat.IsInCombat)
         {
            
@@ -107,6 +119,7 @@ public class PlayerController : MonoBehaviour
                         animator.SetBool("isRunning", true);
                         break;
                     case ClickType.Interact:
+                        animator.SetBool("isRunning", true);
                         movement.MovePlayer(point);
                         SetFocus(interactable);
                         Debug.Log("Clicked to interract");
@@ -121,42 +134,38 @@ public class PlayerController : MonoBehaviour
         }
 
         
-        // T for test
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-
-            
-            // To toggle combat
-            // if player is not in combat, running, but the combat is triggered mid run,
-            // reset the animation
-            if (!combat.IsInCombat)
-            {
-                animator.SetBool("isRunning", false);
-
-                Collider[] hitColliders = Physics.OverlapSphere(transform.position, 30f);
-                List<int> participants = new List<int>();
-                foreach (var hitCollider in hitColliders)
-                {
-                    if (hitCollider.gameObject.tag == "Attackable")
-                    {
-                        participants.Add(hitCollider.gameObject.GetComponent<CombatController>().characterId);
-                    }
-                }
-                if (participants.Count > 0)
-                {
-                    // Player's Id is 0
-                    participants.Add(0);
-                    InitiateCombat(participants);
-                }
-
-                
-                
-            }
-            //combat.IsInCombat = !combat.IsInCombat;
-        }
+        
 
         //ShowDistance();
         
+    }
+
+    public void StartFight()
+    {
+        // To toggle combat
+        // if player is not in combat, running, but the combat is triggered mid run,
+        // reset the animation
+        if (!combat.IsInCombat)
+        {
+            animator.SetBool("isRunning", false);
+
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 30f);
+            List<int> participants = new List<int>();
+            foreach (var hitCollider in hitColliders)
+            {
+                if (hitCollider.gameObject.tag == "Attackable")
+                {
+                    participants.Add(hitCollider.gameObject.GetComponent<CombatController>().characterId);
+                }
+            }
+            if (participants.Count > 0)
+            {
+                // Player's Id is 0
+                participants.Add(0);
+                InitiateCombat(participants);
+            }
+
+        }
     }
 
     private void InitiateCombat(List<int> participantsIds)
