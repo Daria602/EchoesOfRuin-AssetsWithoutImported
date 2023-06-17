@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private PlayerCombat combat;
 
     public int XP = 0;
+    public int gold = 0;
 
 
     public Slider XPSlider;
@@ -64,7 +65,7 @@ public class PlayerController : MonoBehaviour
         HealthSlider.minValue = 0;
         HealthSlider.maxValue = GetComponent<PlayerHealth>().CurrentMaxHealth;
         HealthSlider.value = GetComponent<PlayerHealth>().currentHealth;
-        xpText.text = XP.ToString();
+        xpText.text = "Level " + stats.characterLevel.ToString();
 
     }
 

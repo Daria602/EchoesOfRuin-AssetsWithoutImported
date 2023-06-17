@@ -38,4 +38,9 @@ public class InventorySlot : MonoBehaviour
             item.Use();
         }
     }
+
+    public void BuyItem()
+    {
+        TradeManager.GetInstance().IsWillingToPurchaseItem(item, this);
+    }
 }

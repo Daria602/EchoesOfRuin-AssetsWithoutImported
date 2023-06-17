@@ -31,7 +31,8 @@ public class CombatController : MonoBehaviour
 
 
 
-    int actionPointsLeft = 3;
+    public int actionPointsLeft = 5;
+    public const int MAX_ACTION_POINTS = 5;
 
     public bool IsInCombat 
     { 
@@ -115,12 +116,7 @@ public class CombatController : MonoBehaviour
         }
 
         // TODO: apply stats here
-        Debug.Log("Base damage was: " + baseDamage);
         baseDamage = ApplyAttributes(baseDamage);
-        Debug.Log("Damage now is: " + baseDamage);
-        //ApplyAbilities(out baseDamage);
-
-
         return Mathf.Round(baseDamage);
     }
 
@@ -159,6 +155,25 @@ public class CombatController : MonoBehaviour
     //{
 
     //}
+
+    public void DecreaseCooldown(bool resetCooldowns)
+    {
+        if (resetCooldowns)
+        {
+            foreach (Skill skill in skills)
+            {
+                skill.cooldown = 0;
+            }
+        }
+        else
+        {
+            foreach (Skill skill in skills)
+            {
+                skill.cooldown = (skill.cooldown - 1 < 0) ? 0 : skill.cooldown - 1;
+            }
+        }
+        
+    }
 
 
 }

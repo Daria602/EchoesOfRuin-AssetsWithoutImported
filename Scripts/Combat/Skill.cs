@@ -24,7 +24,6 @@ public class Skill : ScriptableObject
     public int cooldown = 0;
     public int maxCooldown = 4;
 
-    [HideInInspector]
     public int cost;
 
     public float baseDamageMin;
@@ -42,21 +41,21 @@ public class Skill : ScriptableObject
 
     private void Awake()
     {
-        switch (spellType)
-        {
-            case Constants.SpellType.Special:
-                cost = 0;
-                break;
-            case Constants.SpellType.Buff:
-                cost = 1;
-                break;
-            case Constants.SpellType.IncreasedDamage:
-                cost = 2;
-                break;
-            case Constants.SpellType.AoE:
-                cost = 3;
-                break;
-        }
+        //switch (spellType)
+        //{
+        //    case Constants.SpellType.Special:
+        //        cost = 0;
+        //        break;
+        //    case Constants.SpellType.Buff:
+        //        cost = 1;
+        //        break;
+        //    case Constants.SpellType.IncreasedDamage:
+        //        cost = 2;
+        //        break;
+        //    case Constants.SpellType.AoE:
+        //        cost = 3;
+        //        break;
+        //}
     }
     public void SetEffect(GameObject character)
     {

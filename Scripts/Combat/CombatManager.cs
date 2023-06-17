@@ -31,10 +31,13 @@ public class CombatManager : MonoBehaviour
     public delegate void EnemyDeathEventHandler(NPCHealth character);
 
 
-
+    // action points
+    public GameObject actionPointsUI;
+    public GameObject enemyTurnUI;
+    public GameObject endTurnButton;
 
     private static CombatManager instance;
-    //public GameObject player;
+    public GameObject player;
     //public int currentCharacterTurn = -1;
 
     public static CombatManager GetInstance()
@@ -70,8 +73,19 @@ public class CombatManager : MonoBehaviour
     {
         if (isCombatGoing)
         {
+            if (characterInitiativeList.Count <= 1)
+            {
+                isCombatGoing = false;
+                player.GetComponent<CombatController>().IsInCombat = false;
+                player.GetComponent<Animator>().SetTrigger("CombatOver");
+                // TODO: end combat
+                
+            }
+
             if (characterInitiativeList[turnIndex].characterId == 0)
             {
+                UpdateActionPointsUI(currentCharacter.GetComponent<PlayerCombat>().actionPointsLeft);
+                ToggleSkillsVisibility(currentCharacter.GetComponent<CombatController>().actionPointsLeft);
                 currentCharacter.GetComponent<PlayerCombat>().DoSomething();
             }
             else
@@ -87,6 +101,10 @@ public class CombatManager : MonoBehaviour
                 {
                     turnIndex = 0;
                     round++;
+                    for (int i = 0; i < characterInitiativeList.Count; i++)
+                    {
+                        characters[characterInitiativeList[i].characterId].GetComponent<CombatController>().DecreaseCooldown(false);
+                    }
                 }
                 else
                 {
@@ -95,6 +113,23 @@ public class CombatManager : MonoBehaviour
 
                 currentCharacter = characters[characterInitiativeList[turnIndex].characterId];
                 currentCharacter.GetComponent<CombatController>().endedTurn = false;
+                if (characterInitiativeList[turnIndex].characterId == Constants.PLAYER_ID)
+                {
+                    // enable action point UI
+                    EnableActionPointsUI();
+                    UpdateActionPointsUI(CombatController.MAX_ACTION_POINTS);
+                    List<Skill> skills = currentCharacter.GetComponent<CombatController>().skills;
+                    for (int i = 0; i < skills.Count; i++)
+                    {
+                        SkillPanelController.GetInstance().UpdateCooldown(i, skills[i].cooldown);
+                    }
+                }
+                else
+                {
+                    // say that it's enemies turn
+                    EnableEnemyTurnUI();
+                }
+                currentCharacter.GetComponent<CombatController>().actionPointsLeft = CombatController.MAX_ACTION_POINTS;
 
 
             }
@@ -125,11 +160,78 @@ public class CombatManager : MonoBehaviour
         // Set the current character to take turn
         currentCharacter = characters[characterInitiativeList[0].characterId];
         currentCharacter.GetComponent<CombatController>().endedTurn = false;
+        if (characterInitiativeList[0].characterId == Constants.PLAYER_ID)
+        {
+            // enable action point UI
+            EnableActionPointsUI();
+            UpdateActionPointsUI(3);
+        }
+        else
+        {
+            // say that it's enemies turn
+            EnableEnemyTurnUI();
+        }
+
+
     }
 
     public int CalculateInitiative(int id)
     {
         return characters[id].GetComponent<Stats>().GetInitiative();
 
+    }
+
+    public void EnableActionPointsUI()
+    {
+        actionPointsUI.SetActive(true);
+        endTurnButton.SetActive(true);
+        enemyTurnUI.SetActive(false);
+    }
+
+    public void EnableEnemyTurnUI()
+    {
+        actionPointsUI.SetActive(false);
+        endTurnButton.SetActive(false);
+        enemyTurnUI.SetActive(true);
+    }
+
+    public void UpdateActionPointsUI(int actionPointsLeft)
+    {
+        ActionPoint[] ap = actionPointsUI.GetComponentsInChildren<ActionPoint>();
+        for (int i = 0; i < ap.Length; i++)
+        {
+            ap[i].ToggleActive(i < actionPointsLeft);
+        }
+    }
+
+    public void ToggleSkillsVisibility(int actionPointsLeft)
+    {
+        List<Skill> skills = currentCharacter.GetComponent<CombatController>().skills;
+        for (int i = 0; i < skills.Count; i++)
+        {
+            if (skills[i].cost > actionPointsLeft)
+            {
+                SkillPanelController.GetInstance().SetButtonInactive(false, i, skills[i].cooldown);
+            }
+            
+        }
+    }
+
+    public void SignalDeath(int id)
+    {
+        for (int i = 0; i < characterInitiativeList.Count; i++)
+        {
+            if (characterInitiativeList[i].characterId == id)
+            {
+                characterInitiativeList.RemoveAt(i);
+            }
+        }
+    }
+
+    public void CombatOver()
+    {
+        actionPointsUI.SetActive(false);
+        endTurnButton.SetActive(false);
+        enemyTurnUI.SetActive(false);
     }
 }

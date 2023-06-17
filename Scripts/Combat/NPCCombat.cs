@@ -53,11 +53,13 @@ public class NPCCombat : CombatController
                 FindObjectOfType<PlayerHealth>().GetDamaged(CalculateAffectedDamage());
                 //gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].prepareAnimationBoolName, false);
                 //skills[actionIndex].RemoveEffect();
+                skills[actionIndex].cooldown = skills[actionIndex].maxCooldown;
                 selectedSkill.RemoveEffect();
                 donePerforming = false;
                 isPerformingAction = false;
                 selectedSkill = null;
                 isChoosingAttack = true;
+                actionPointsLeft -= skills[actionIndex].cost;
             }
 
         }
@@ -80,6 +82,10 @@ public class NPCCombat : CombatController
 
     private void ChooseSkill()
     {
+        if (actionPointsLeft == 0)
+        {
+            return;
+        }
         List<Skill> possibleSkills = new List<Skill>();
         Vector3 playerPosition = FindObjectOfType<PlayerCombat>().transform.position;
         foreach (var skill in skills)
@@ -93,7 +99,11 @@ public class NPCCombat : CombatController
                     // check if the target is too far
                     if (Vector3.Distance(transform.position, playerPosition) < skill.maxDistance)
                     {
-                        possibleSkills.Add(skill);
+                        if (skill.cost <= actionPointsLeft)
+                        {
+                            possibleSkills.Add(skill);
+                        }
+                        
                     }
                 }
             }

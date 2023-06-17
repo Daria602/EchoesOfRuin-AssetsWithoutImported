@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class SkillPanelController : MonoBehaviour
 {
@@ -15,9 +16,19 @@ public class SkillPanelController : MonoBehaviour
     public bool skillPanelVisibility = false;
     public PlayerCombat pc;
     private bool afterStart = true;
+
+    public static SkillPanelController instance;
     private void Awake()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
+    public static SkillPanelController GetInstance()
+    {
+        return instance;
     }
 
     private void Start()
@@ -80,5 +91,33 @@ public class SkillPanelController : MonoBehaviour
     {
         //Debug.Log(imageUI.name);
         imageUI.sprite = skill.skillIcon;
+    }
+
+    public void SetButtonInactive(bool activity, int buttonIndex, int cooldown)
+    {
+        slots[buttonIndex].interactable = activity;
+        if (cooldown == 0)
+        {
+            slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = "";
+        }
+        else
+        {
+            slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = cooldown.ToString();
+        }
+        
+        
+    }
+
+    public void UpdateCooldown(int buttonIndex, int cooldown)
+    {
+        if (cooldown == 0)
+        {
+            SetButtonInactive(true, buttonIndex, 0);
+        }
+        else
+        {
+            slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = cooldown.ToString();
+        }
+        
     }
 }

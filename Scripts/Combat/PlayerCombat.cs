@@ -45,11 +45,7 @@ public class PlayerCombat : CombatController
 
     public void DoSomething()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Debug.Log("Got here");
-            endedTurn = true;
-        }
+        
         if (isPreparingToAffect)
         {
             for (int i = 0; i < skills.Count; i++)
@@ -63,7 +59,7 @@ public class PlayerCombat : CombatController
         else if (isPerformingAction)
         {
             //Debug.Log(skills[actionIndex].name);
-            Debug.Log("Performing the action");
+            
             //doAction();
             if (donePerforming)
             {
@@ -72,6 +68,14 @@ public class PlayerCombat : CombatController
                 skills[actionIndex].RemoveEffect();
                 donePerforming = false;
                 isPerformingAction = false;
+                // set cooldown
+                skills[actionIndex].cooldown = skills[actionIndex].maxCooldown;
+                Debug.Log(skills[actionIndex].name + " cool of " + skills[actionIndex].cooldown);
+                // make skill unclickable
+                SkillPanelController.GetInstance().SetButtonInactive(false, actionIndex, skills[actionIndex].cooldown);
+                CombatManager.GetInstance().UpdateActionPointsUI(actionPointsLeft);
+                // decrease action point
+                actionPointsLeft -= skills[actionIndex].cost;
             }
 
         }
@@ -205,11 +209,19 @@ public class PlayerCombat : CombatController
         // actionIndex = 0, 
         // else actionIndex should recalculate
         int skillIndex = 0;
-        PerformAction(skillIndex);
+        PerformAction(buttonIndex);
     }
 
     public void SetDoneCasting()
     {
         donePerforming = true;
+    }
+
+    public void EndTurn()
+    {
+        
+        Debug.Log("Got here");
+        endedTurn = true;
+        
     }
 }
