@@ -8,7 +8,7 @@ public class CombatController : MonoBehaviour
 {
     public int characterId;
     public bool m_isInCombat = false;
-    public int[] skillsIds = null;
+    public int[] skillsIds;
     public bool hasWeapon = true;
     public Weapon weapon;
     public Transform rightHand;
@@ -39,11 +39,12 @@ public class CombatController : MonoBehaviour
         set => CombatStateIsChanged(value); 
     }
 
-    private void Awake()
+    private void Start()
     {
+        Debug.Log(gameObject.name);
         for (int i = 0; i < skillsIds.Length; i++)
         {
-            var skillInstantiated = ScriptableObject.Instantiate(Constants.GetInstance().skillMap[skillsIds[i]]);
+            Skill skillInstantiated = Instantiate(Constants.GetInstance().skillMap[skillsIds[i]]);
             skills.Add(skillInstantiated);
         }
     }

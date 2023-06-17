@@ -25,6 +25,8 @@ public class Stats : MonoBehaviour
 
     private const int MIN_ATTRIBUTE_VALUE = 0;
 
+    public int characterLevel = 1;
+    public int grantedXP = 1000;
     // Combat abilities
     public enum AbilityStats
     {
@@ -48,6 +50,8 @@ public class Stats : MonoBehaviour
     public int earthAffinity = 0;
 
     private const int MIN_ABILITY_VALUE = 0;
+
+
 
 
 

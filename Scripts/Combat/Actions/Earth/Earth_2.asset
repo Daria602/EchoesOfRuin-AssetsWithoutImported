@@ -14,12 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Stone Shatter
   skillIcon: {fileID: 21300000, guid: 94959a9305c46364eaec926d78c9e0a1, type: 3}
-  hasVisuals: 0
-  visualEffectPrefab: {fileID: 0}
+  hasVisuals: 1
+  visualEffectPrefab: {fileID: 6291787840653091404, guid: a516977f45914844aa1c210bce44b7c5, type: 3}
   prepareAnimationBoolName: 
   affectAnimationBoolName: 
-  minDistance: 0
+  hasAnimTrigger: 1
+  castTrigger: CastMagicAoE
+  maxDistance: 10
   description: Slam the ground with great force, causing sharp stone fragments to
     erupt towards multiple enemies
   spellType: 3
+  isInCooldown: 0
+  cooldown: 0
+  maxCooldown: 4
   cost: 3
+  baseDamageMin: 0
+  baseDamageMax: 0
+  spell: 0
+  requiresWeapon: 0
+  weaponTypeRequired: 0
+  affectedByAttributes: 
+  affectedByAbilities: 

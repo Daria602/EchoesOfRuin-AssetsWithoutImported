@@ -113,6 +113,7 @@ public class PlayerCombat : CombatController
                     // Is in distance
                     if (Vector3.Distance(transform.position, pointInScene) <= skills[actionIndex].maxDistance)
                     {
+                        transform.LookAt(pointInScene);
                         CancelPrepare();
                         isPreparingToAffect = false;
                         isPerformingAction = true;
@@ -156,13 +157,7 @@ public class PlayerCombat : CombatController
         else
         {
             gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].affectAnimationBoolName, true);
-        }
-        //if (skills[actionIndex].prepareAnimationBoolName != "")
-        //{
-        //    
-        //}
-        
-        
+        } 
         
     }
 
@@ -193,7 +188,7 @@ public class PlayerCombat : CombatController
             GetComponent<Animator>().SetBool(skills[skillIndex].prepareAnimationBoolName, true);
         }
         
-        Debug.Log("Performing skill " + skillIndex);
+        Debug.Log("Performing skill " + skills[skillIndex].name);
         //Debug.Log("Animation is set to " + GetComponent<Animator>().GetBool(skills[skillIndex].prepareAnimationBoolName));
     }
 

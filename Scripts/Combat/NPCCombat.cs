@@ -37,6 +37,7 @@ public class NPCCombat : CombatController
             }
             else
             {
+                isChoosingAttack = true;
                 endedTurn = true;
             }
             
@@ -86,46 +87,30 @@ public class NPCCombat : CombatController
             
             if (skill.spellType != Constants.SpellType.Special && skill.spellType != Constants.SpellType.Buff)
             {
-                if (skill.cooldown > 0)
-                {
-                    // skill is still in cooldown
-                }
-                else
-                {
-                    // skill is not in cooldown 
+                // skill is not in cooldown 
+                if (skill.cooldown == 0)
+                {   
                     // check if the target is too far
                     if (Vector3.Distance(transform.position, playerPosition) < skill.maxDistance)
                     {
-                        Debug.Log("The distance is fine");
                         possibleSkills.Add(skill);
-                    }
-                    else
-                    {
-                        // too far, disregard this skill 
                     }
                 }
             }
-            // add buff separately, because it is self cast and soesn't require distance
+            // add buff separately, because it is self cast and doesn't require distance
             else if (skill.spellType == Constants.SpellType.Buff)
             {
                 
-                if (skill.cooldown > 0)
+                if (skill.cooldown == 0)
                 {
                     // skill is still in cooldown
-                }
-                else
-                {
                     possibleSkills.Add(skill);
                 }
             }
         }
 
-        if (possibleSkills.Count == 0)
-        {
-            Debug.Log("No spells founf");
-            //possibleSkills.Add(moveSkill);
-        }
-        else
+        // skills where found
+        if (possibleSkills.Count > 0)
         {
             int selectedSkillIndex = Random.Range(0, possibleSkills.Count - 1);
             selectedSkill = possibleSkills[selectedSkillIndex];
@@ -137,9 +122,6 @@ public class NPCCombat : CombatController
                 }
             }
         }
-        
-        //selectedSkill = skills[0];
-        
         possibleSkills.Clear();
     }
 

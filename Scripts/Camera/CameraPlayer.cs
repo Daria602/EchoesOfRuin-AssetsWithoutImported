@@ -35,10 +35,10 @@ public class CameraPlayer : MonoBehaviour
 
     private void Zoom()
     {
-        //if (EventSystem.current.IsPointerOverGameObject())
-        //{
-        //    return;
-        //}
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         //else
         //{
             //Get the input axis

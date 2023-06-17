@@ -3,17 +3,18 @@ using UnityEngine;
 public class ItemPickup : Interactable
 {
     public Item item;
+    bool isItemPicked;
     public override void Interact()
     {
         base.Interact();
-        PickUpItem();
+        PickItemUp();
     }
-    void PickUpItem()
+    void PickItemUp()
     {
-        Debug.Log("Picking up item " + item.name);        
-        bool wasItemPickedUp = InventoryManager.instance.Add(item);
+        //If the item was added to the list return true        
+        isItemPicked = InventoryManager.instance.Add(item);
 
-        if (wasItemPickedUp) {
+        if (isItemPicked) {
             Destroy(gameObject);
         }      
     }

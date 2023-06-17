@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+//using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,8 +26,16 @@ public class PlayerController : MonoBehaviour
     // Distance for Move
     public TextMeshProUGUI distanceText;
 
-    public GameObject distance;
+    
     private PlayerCombat combat;
+
+    public int XP = 0;
+
+
+    public Slider XPSlider;
+    public PlayerStats stats;
+
+
 
     //public CombatManager combatManager;
 
@@ -44,7 +54,37 @@ public class PlayerController : MonoBehaviour
         movement = GetComponent<PlayerMovement>();
         //distanceText.gameObject.SetActive(false);
         combat = GetComponent<PlayerCombat>();
+        stats = GetComponent<PlayerStats>();
+        XPSlider.value = 0;
 
+    }
+
+    public int currentThreshold = 0;
+
+    public void CalculateNewThreshold()
+    {
+        currentThreshold = 500 * (stats.characterLevel * stats.characterLevel) - (500 * stats.characterLevel);
+    }
+
+    public bool PassedCurrentThreshold()
+    {
+        return XP >= currentThreshold;
+    }
+
+    public void AddXP(int XPValue)
+    {
+        
+        XP += XPValue;
+
+        if (PassedCurrentThreshold())
+        {
+            stats.characterLevel++;
+            CalculateNewThreshold();
+            XPSlider.minValue = XPValue;
+            XPSlider.maxValue = currentThreshold;
+        }
+
+        XPSlider.value = XPValue;
     }
 
     void Update()
@@ -72,7 +112,6 @@ public class PlayerController : MonoBehaviour
                         Debug.Log("Clicked to interract");
                         break;
                 }
-
 
             }
             if (movement.HasArrived())

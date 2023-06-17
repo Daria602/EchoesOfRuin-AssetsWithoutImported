@@ -22,23 +22,8 @@ public class InventoryUI : MonoBehaviour
     {
         if (Input.GetButtonDown("Inventory"))
         {
-            if (inventoryUi.activeInHierarchy == false)
-                inventoryUi.SetActive(true);
-            else
-            {
-                inventoryUi.SetActive(false);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
+            inventoryUi.SetActive(inventoryUi.activeInHierarchy ? false : true);
             statsUi.SetActive(statsUi.activeInHierarchy ? false : true);
-            //if (statsUi.activeInHierarchy == false)
-            //    statsUi.SetActive(true);
-            //else
-            //{
-            //    statsUi.SetActive(false);
-            //}
         }
     }
 

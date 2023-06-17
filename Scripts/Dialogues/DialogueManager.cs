@@ -10,13 +10,16 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private GameObject[] choicesUI;
+    [SerializeField] private GameObject choicesUIPanel;
+    [SerializeField] private GameObject continueButton;
+    public GameObject scrollRectInput;
     private TextMeshProUGUI[] choicesText;
 
     private Story currentStory;
-
     private bool dialogueIsActive;
 
     private static DialogueManager instance;
+
     private void Awake()
     {
         if (instance != null)
@@ -42,7 +45,9 @@ public class DialogueManager : MonoBehaviour
             choicesText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
             index++;
         }
-        
+
+        Button button = continueButton.GetComponent<Button>();
+        button.onClick.AddListener(TaskOnClick);
     }
 
     private void Update()
@@ -50,11 +55,6 @@ public class DialogueManager : MonoBehaviour
         if (!dialogueIsActive)
         {
             return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ContinueStory();
         }
     }
 
@@ -64,8 +64,6 @@ public class DialogueManager : MonoBehaviour
         dialogueIsActive = true;
         dialoguePanel.SetActive(true);
         ContinueStory();
-
-
     }
 
     private void ExitDialogueMode()
@@ -80,11 +78,13 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentStory.canContinue)
         {
+            Debug.Log("Story can continue");
             dialogueText.text = currentStory.Continue();
             DisplayChoices();
         }
         else
         {
+            Debug.Log("Story cannot continue");
             ExitDialogueMode();
         }
     }
@@ -107,15 +107,33 @@ public class DialogueManager : MonoBehaviour
             index++;
         }
 
-        for (int i = index; i < choicesUI.Length; i++)
+        if (currentChoices.Count > 0)
         {
-            choicesUI[i].gameObject.SetActive(false);
+            continueButton.SetActive(false);
+            choicesUIPanel.SetActive(true);
+            for (int i = index; i < choicesUI.Length; i++)
+            {
+                choicesUI[i].gameObject.SetActive(false);
+            }
+        }
+        else 
+        {
+            choicesUIPanel.SetActive(false);
+            continueButton.SetActive(true);
         }
     }
 
     public void MakeChoice(int choiceIndex)
     {
+        Debug.Log("Choice index is " + choiceIndex);
         currentStory.ChooseChoiceIndex(choiceIndex);
         ContinueStory();
+        scrollRectInput.GetComponent<ScrollRect>().verticalNormalizedPosition = 0.95f;
+    }
+
+    void TaskOnClick()
+    {
+        ContinueStory();
+        scrollRectInput.GetComponent<ScrollRect>().verticalNormalizedPosition = 0.95f;
     }
 }
