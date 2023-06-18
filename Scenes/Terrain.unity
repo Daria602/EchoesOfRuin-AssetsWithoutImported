@@ -45669,7 +45669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39c9fea6aaac0744b9a432ec9f89b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillIds: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
+  skillIds: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c000000
   allSkills:
   - {fileID: 11400000, guid: 056a329e542376841836f69f32a81627, type: 2}
   - {fileID: 11400000, guid: 19606e054e0ce604d9959e182bf9d0f6, type: 2}
@@ -45683,6 +45683,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 17ecc100903473643a29a2e950e10099, type: 2}
   - {fileID: 11400000, guid: aca7e483f124d964aa8c214d1d958010, type: 2}
   - {fileID: 11400000, guid: 643de89e8029ab4409f8ed1a2dbd8317, type: 2}
+  - {fileID: 11400000, guid: d7572d7748a47f845bd100dbe23ad3a5, type: 2}
   weaponIds: 01000000
   allWeapons:
   - {fileID: 11400000, guid: ced2583e6af32d445bc78db9e8c6d795, type: 2}
@@ -64720,15 +64721,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6889665758937958036, guid: d4566591229e830419e6bdc30792a648, type: 3}
       propertyPath: skillsIds.Array.data[0]
-      value: 2
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6889665758937958036, guid: d4566591229e830419e6bdc30792a648, type: 3}
       propertyPath: skillsIds.Array.data[1]
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6889665758937958036, guid: d4566591229e830419e6bdc30792a648, type: 3}
       propertyPath: skillsIds.Array.data[2]
-      value: 9
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6889665758937958037, guid: d4566591229e830419e6bdc30792a648, type: 3}
       propertyPath: maximumTravelDistance

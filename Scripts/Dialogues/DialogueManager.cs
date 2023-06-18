@@ -140,7 +140,7 @@ public class DialogueManager : MonoBehaviour
 
     public void MakeChoice(int choiceIndex)
     {
-        Debug.Log("Choice index is " + choiceIndex);
+        
         currentStory.ChooseChoiceIndex(choiceIndex);
         ContinueStory();
         scrollRectInput.GetComponent<ScrollRect>().verticalNormalizedPosition = 0.95f;

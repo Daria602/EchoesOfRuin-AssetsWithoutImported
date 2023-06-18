@@ -48,29 +48,37 @@ public class PlayerCombat : CombatController
         
         if (isPreparingToAffect)
         {
-            for (int i = 0; i < skills.Count; i++)
-            {
-                Debug.Log(skills[i].name);
-            }
             // do the animation and circle around
             WaitForClick();
-            Debug.Log("Waiting for a click");
+            // Debug.Log("Waiting for a click");
         }
         else if (isPerformingAction)
         {
-            //Debug.Log(skills[actionIndex].name);
-            
+            Debug.Log("During the performance");
+            if (skills[actionIndex].name != "Move")
+            {
+                if (GetComponent<BaseMovement>().HasArrived())
+                {
+                    donePerforming = true;
+                }
+
+            }
+
             //doAction();
             if (donePerforming)
             {
-                interactable.gameObject.GetComponent<NPCHealth>().GetDamaged(CalculateAffectedDamage());
-                gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].prepareAnimationBoolName, false);
-                skills[actionIndex].RemoveEffect();
+                if (skills[actionIndex].name != "Move(Clone)")
+                {
+                    interactable.gameObject.GetComponent<NPCHealth>().GetDamaged(CalculateAffectedDamage());
+                    gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].prepareAnimationBoolName, false);
+                    skills[actionIndex].RemoveEffect();
+                    
+                }
                 donePerforming = false;
                 isPerformingAction = false;
                 // set cooldown
                 skills[actionIndex].cooldown = skills[actionIndex].maxCooldown;
-                Debug.Log(skills[actionIndex].name + " cool of " + skills[actionIndex].cooldown);
+                //Debug.Log(skills[actionIndex].name + " cool of " + skills[actionIndex].cooldown);
                 // make skill unclickable
                 SkillPanelController.GetInstance().SetButtonInactive(false, actionIndex, skills[actionIndex].cooldown);
                 CombatManager.GetInstance().UpdateActionPointsUI(actionPointsLeft);
@@ -84,23 +92,28 @@ public class PlayerCombat : CombatController
     {
         if (LeftMouseClicked())
         {
-
+            
             PlayerController.ClickType clickType = gameObject.GetComponent<PlayerController>().GetClickType(out pointInScene, out interactable);
-            if (skills[actionIndex].name == "Move")
+            Debug.Log(skills[actionIndex].name == "Move(Clone)");
+            Debug.Log(skills[actionIndex].name);
+            if (skills[actionIndex].name == "Move(Clone)")
             {
+                Debug.Log("Got here");
                 // Move if possible
                 float distance;
                 if (gameObject.GetComponent<PlayerMovement>().GetDistance(pointInScene, out distance))
                 {
+                    int cost = Mathf.FloorToInt(distance / Constants.DISTANCE_COST_UNIT);
                     Debug.Log("Distance: " + distance.ToString() + "; Cost: " + Mathf.FloorToInt(distance / Constants.DISTANCE_COST_UNIT).ToString());
-                    if (distance > gameObject.GetComponent<PlayerMovement>().maximumTravelDistance)
+                    if (distance > gameObject.GetComponent<PlayerMovement>().maximumTravelDistance || cost > actionPointsLeft)
                     {
-                        Debug.Log("Too far");
+                        Debug.Log("Too far or no ap left");
                         CancelAction();
                         return;
                     }
 
                 }
+                Debug.Log("Got here");
                 CancelPrepare();
                 gameObject.GetComponent<PlayerMovement>().IsAllowedToMove = true;
                 gameObject.GetComponent<PlayerMovement>().MovePlayer(pointInScene);
@@ -196,6 +209,12 @@ public class PlayerCombat : CombatController
             GetComponent<Animator>().SetBool(skills[skillIndex].prepareAnimationBoolName, true);
         }
         
+        if (skills[skillIndex].name == "Move")
+        {
+            //isPerformingAction = false;
+            //isPreparingToAffect = true;
+        }
+
         Debug.Log("Performing skill " + skills[skillIndex].name);
         //Debug.Log("Animation is set to " + GetComponent<Animator>().GetBool(skills[skillIndex].prepareAnimationBoolName));
     }

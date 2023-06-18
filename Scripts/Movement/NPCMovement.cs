@@ -6,12 +6,16 @@ public class NPCMovement : BaseMovement
 {
     public Vector3[] positionsToMove = null;
     private int posToMoveIndex = -1;
+    private WaitCoroutine waitCoroutine = new WaitCoroutine();
 
 
     // To set the positions
     public Camera sceneCamera = null;
 
     private CombatController combat;
+
+    private float secondsToWait = 0;
+    private float maxSecondsToWait = 1500f;
 
     private void Start()
     {
@@ -72,6 +76,9 @@ public class NPCMovement : BaseMovement
             }
 
         }
+
     }
+
+    
 
 }

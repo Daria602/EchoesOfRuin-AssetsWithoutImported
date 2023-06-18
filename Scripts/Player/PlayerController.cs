@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
     {
         
         XP += XPValue;
-        xpText.text = XPValue.ToString();
+        
 
         if (PassedCurrentThreshold())
         {
@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
             XPSlider.minValue = XPValue;
             XPSlider.maxValue = currentThreshold;
         }
-
+        xpText.text = "Level " + stats.characterLevel.ToString();
         XPSlider.value = XPValue;
     }
 
@@ -120,6 +120,7 @@ public class PlayerController : MonoBehaviour
                         RemoveFocus();
                         movement.MovePlayer(point);
                         animator.SetBool("isRunning", true);
+                        Debug.Log(point);
                         break;
                     case ClickType.Interact:
                         animator.SetBool("isRunning", true);

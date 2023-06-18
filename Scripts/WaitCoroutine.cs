@@ -12,4 +12,6 @@ public class WaitCoroutine
         Debug.Log("Reached coroutine");
     }
 
+    public IEnumerable Wait(float seconds) { yield return new WaitForSeconds(seconds); }
+
 }
