@@ -7517,7 +7517,7 @@ GameObject:
   - component: {fileID: 6889665758937958037}
   - component: {fileID: 6889665758937958036}
   - component: {fileID: 6889665758937958038}
-  - component: {fileID: 6889665758937958039}
+  - component: {fileID: 952799260}
   m_Layer: 0
   m_Name: PlayerInGame
   m_TagString: Untagged
@@ -7629,7 +7629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items: []
-  inventorySpace: 5
+  inventorySpace: 35
 --- !u!114 &6889665758937958034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7647,7 +7647,14 @@ MonoBehaviour:
   circleSegments: 360
   focus: {fileID: 0}
   distanceText: {fileID: 0}
-  distance: {fileID: 0}
+  XP: 0
+  gold: 1000
+  XPSlider: {fileID: 0}
+  HealthSlider: {fileID: 0}
+  healthText: {fileID: 0}
+  xpText: {fileID: 0}
+  stats: {fileID: 0}
+  currentThreshold: 1000
 --- !u!114 &4507242681998114127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7670,14 +7677,10 @@ MonoBehaviour:
   constitution: {fileID: 0}
   wits: {fileID: 0}
   availablePointsAbility: {fileID: 0}
-  oneHanded: {fileID: 0}
-  twoHanded: {fileID: 0}
-  dualWielding: {fileID: 0}
-  ranged: {fileID: 0}
-  fireAffinity: {fileID: 0}
-  airAffinity: {fileID: 0}
-  waterAffinity: {fileID: 0}
-  earthAffinity: {fileID: 0}
+  shadow: {fileID: 0}
+  chaos: {fileID: 0}
+  luck: {fileID: 0}
+  charisma: {fileID: 0}
 --- !u!114 &6889665758937958037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7691,7 +7694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
-  maximumTravelDistance: 0
+  maximumTravelDistance: 20
 --- !u!114 &6889665758937958036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7706,17 +7709,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterId: 0
   m_isInCombat: 0
-  skillsIds: 
+  skillsIds: 0c0000000200000004000000
   hasWeapon: 1
-  weapon: {fileID: 11400000, guid: ced2583e6af32d445bc78db9e8c6d795, type: 2}
+  weaponId: 1
   rightHand: {fileID: 1562943757192740178}
   isPerformingAction: 0
   finishedPerforming: 1
   actionIndex: 0
   charactersTurn: 0
-  skills:
-  - {fileID: 11400000, guid: 7b4046ef4ac1f6c47a7feb5f53a5cc1a, type: 2}
+  skills: []
   endedTurn: 1
+  actionPointsLeft: 5
   donePerforming: 0
 --- !u!114 &6889665758937958038
 MonoBehaviour:
@@ -7733,7 +7736,7 @@ MonoBehaviour:
   currentHealth: 0
   healthModifier: 0
   maxHealth: 10
---- !u!114 &6889665758937958039
+--- !u!114 &952799260
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7742,25 +7745,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 6889665758937958044}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce4e6b27581272f4987ae31fb3dd5be8, type: 3}
+  m_Script: {fileID: 11500000, guid: 884f8063a3a5f904ebe897bcfd297471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initiative: 20
+  initiative: 1
   availableAttributePoints: 5
   strength: 0
   agility: 0
-  intelligence: 10
+  intelligence: 0
   constitution: 0
   wits: 0
+  characterLevel: 1
+  grantedXP: 1000
   availableAbilityPoints: 3
-  oneHanded: 0
-  twoHanded: 0
-  dualWielding: 0
-  ranged: 0
-  fireAffinity: 0
-  airAffinity: 0
-  waterAffinity: 0
-  earthAffinity: 0
+  shadow: 0
+  chaos: 0
+  luck: 0
+  charisma: 0
 --- !u!1 &6889665758942389761
 GameObject:
   m_ObjectHideFlags: 0
@@ -19704,15 +19705,13 @@ MonoBehaviour:
   intelligence: 10
   constitution: 10
   wits: 10
+  characterLevel: 1
+  grantedXP: 1000
   availableAbilityPoints: 3
-  oneHanded: 0
-  twoHanded: 0
-  dualWielding: 0
-  ranged: 0
-  fireAffinity: 0
-  airAffinity: 0
-  waterAffinity: 0
-  earthAffinity: 0
+  shadow: 0
+  chaos: 0
+  luck: 0
+  charisma: 0
 --- !u!114 &6889665759218735827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20194,34 +20193,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400062, guid: d4bc8aeee1248da43a4176631929bc9d, type: 3}
   m_PrefabInstance: {fileID: 6889665759814094831}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6889665759814094761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6889665759814191439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884f8063a3a5f904ebe897bcfd297471, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initiative: 1
-  availableAttributePoints: 5
-  strength: 10
-  agility: 10
-  intelligence: 10
-  constitution: 10
-  wits: 10
-  availableAbilityPoints: 3
-  oneHanded: 0
-  twoHanded: 0
-  dualWielding: 0
-  ranged: 0
-  fireAffinity: 0
-  airAffinity: 0
-  waterAffinity: 0
-  earthAffinity: 0
 --- !u!114 &6889665759814094758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20349,3 +20320,29 @@ MonoBehaviour:
       name: Dark
     currentMaterialIndex: 0
     affectedBySkinColor: 1
+--- !u!114 &6889665759814094761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889665759814191439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 884f8063a3a5f904ebe897bcfd297471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initiative: 1
+  availableAttributePoints: 5
+  strength: 10
+  agility: 10
+  intelligence: 10
+  constitution: 10
+  wits: 10
+  characterLevel: 1
+  grantedXP: 1000
+  availableAbilityPoints: 3
+  shadow: 0
+  chaos: 0
+  luck: 0
+  charisma: 0

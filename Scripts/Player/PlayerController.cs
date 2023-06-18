@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 //using UnityEngine.UIElements;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, ILoadingData
 {
     public Camera sceneCamera;
     private Animator animator;
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     public Slider HealthSlider;
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI xpText;
-    public PlayerStats stats;
+    public Stats stats;
 
 
 
@@ -50,7 +50,20 @@ public class PlayerController : MonoBehaviour
         Move,
         Interact
     }
-    
+
+    public void LoadGameData(CharacterData characterData)
+    {
+        this.GetComponent<PlayerCombat>().LoadGameData(characterData);
+        this.GetComponent<PlayerHealth>().LoadGameData(characterData);
+        this.transform.position = characterData.characterPosition;
+    }
+    public void SaveGameData(ref CharacterData characterData)
+    {
+        this.GetComponent<PlayerCombat>().SaveGameData(ref characterData);
+        this.GetComponent<PlayerHealth>().SaveGameData(ref characterData);
+        characterData.characterPosition = this.transform.position;
+    }
+
 
     private void Start()
     {
@@ -58,7 +71,7 @@ public class PlayerController : MonoBehaviour
         movement = GetComponent<PlayerMovement>();
         //distanceText.gameObject.SetActive(false);
         combat = GetComponent<PlayerCombat>();
-        stats = GetComponent<PlayerStats>();
+        stats = GetComponent<Stats>();
         XPSlider.minValue = 0;
         XPSlider.maxValue = currentThreshold;
         XPSlider.value = XP;

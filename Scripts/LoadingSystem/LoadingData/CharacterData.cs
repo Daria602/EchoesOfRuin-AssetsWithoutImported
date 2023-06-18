@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -22,14 +20,31 @@ public class CharacterData
 
     // Abilities
     public int availableAbilityPoints;
-    public int oneHanded;
-    public int twoHanded;
-    public int dualWielding;
-    public int ranged;
-    public int fireAffinity;
-    public int airAffinity;
-    public int waterAffinity;
-    public int earthAffinity;
+    public int shadow;
+    public int chaos;
+    public int luck;
+    public int charisma;
+    // Character position
+    public Vector3 characterPosition;
+    // Character combat state
+    public int characterId;
+    public bool m_isInCombat;
+    public int[] skillsIds;
+    public bool hasWeapon;
+    public int weaponId;
+    //public Transform rightHand;
+    public bool isPerformingAction;
+    public bool finishedPerforming;
+    public int actionIndex;
+    public bool charactersTurn;
+    public bool IsInCombat;
+
+    // Character health
+
+    public float currentHealth;
+    public float healthModifier;
+    public float maxHealth;
+    public float m_currentMaxHealth;
 
     // Creating initial values
     public CharacterData()
@@ -50,14 +65,31 @@ public class CharacterData
 
         // Abilities
         this.availableAbilityPoints = 3;
-        this.oneHanded = 0;
-        this.twoHanded = 0;
-        this.dualWielding = 0;
-        this.ranged = 0;
-        this.fireAffinity = 0;
-        this.airAffinity = 0;
-        this.waterAffinity = 0;
-        this.earthAffinity = 0;
-}
+        this.shadow = 0;
+        this.chaos = 0;
+        this.luck = 0;
+        this.charisma = 0;
+
+        // Character position
+        this.characterPosition = Vector3.zero;
+
+        // Character combat state
+        this.IsInCombat = false;
+        this.characterId = 0;
+        this.m_isInCombat = false;
+        this.skillsIds = null;
+        this.hasWeapon = false;
+        this.weaponId = 0;
+        //this.rightHand = Vector3.zero;
+        this.isPerformingAction = false;
+        this.finishedPerforming = true;
+        this.actionIndex = 0;
+        this.charactersTurn = false;
+
+        this.currentHealth = 0;
+        this.healthModifier = 0;
+        this.maxHealth = 10;
+        this.m_currentMaxHealth = 10;
+    }
 
 }

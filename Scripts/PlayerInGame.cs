@@ -31,26 +31,17 @@ public class PlayerInGame : MonoBehaviour, ILoadingData
     // Abilities
     public enum AbilityStats
     {
-        OneHanded,
-        TwoHanded,
-        DualWielding,
-        Ranged,
-        FireAffinity,
-        AirAffinity,
-        WaterAffinity,
-        EarthAffinity
+        Shadow,
+        Chaos,
+        Luck,
+        Charisma
     }
     public TMP_Text availablePointsAbility;
     // TODO: change this to melee
-    public TMP_Text oneHanded;
-    public TMP_Text twoHanded;
-    public TMP_Text dualWielding;
-    //
-    public TMP_Text ranged;
-    public TMP_Text fireAffinity;
-    public TMP_Text airAffinity;
-    public TMP_Text waterAffinity;
-    public TMP_Text earthAffinity;
+    public TMP_Text shadow;
+    public TMP_Text chaos;
+    public TMP_Text luck;
+    public TMP_Text charisma;
 
 
     // Attributes
@@ -165,37 +156,21 @@ public class PlayerInGame : MonoBehaviour, ILoadingData
         int currentNumber;
         switch (statType)
         {
-            case (int)AbilityStats.OneHanded:
-                currentNumber = int.Parse(oneHanded.text) + amount;
-                oneHanded.text = currentNumber.ToString();
+            case (int)AbilityStats.Shadow:
+                currentNumber = int.Parse(shadow.text) + amount;
+                shadow.text = currentNumber.ToString();
                 break;
-            case (int)AbilityStats.TwoHanded:
-                currentNumber = int.Parse(twoHanded.text) + amount;
-                twoHanded.text = currentNumber.ToString();
+            case (int)AbilityStats.Chaos:
+                currentNumber = int.Parse(chaos.text) + amount;
+                chaos.text = currentNumber.ToString();
                 break;
-            case (int)AbilityStats.DualWielding:
-                currentNumber = int.Parse(dualWielding.text) + amount;
-                dualWielding.text = currentNumber.ToString();
+            case (int)AbilityStats.Luck:
+                currentNumber = int.Parse(luck.text) + amount;
+                luck.text = currentNumber.ToString();
                 break;
-            case (int)AbilityStats.Ranged:
-                currentNumber = int.Parse(ranged.text) + amount;
-                ranged.text = currentNumber.ToString();
-                break;
-            case (int)AbilityStats.FireAffinity:
-                currentNumber = int.Parse(fireAffinity.text) + amount;
-                fireAffinity.text = currentNumber.ToString();
-                break;
-            case (int)AbilityStats.AirAffinity:
-                currentNumber = int.Parse(airAffinity.text) + amount;
-                airAffinity.text = currentNumber.ToString();
-                break;
-            case (int)AbilityStats.WaterAffinity:
-                currentNumber = int.Parse(waterAffinity.text) + amount;
-                waterAffinity.text = currentNumber.ToString();
-                break;
-            case (int)AbilityStats.EarthAffinity:
-                currentNumber = int.Parse(earthAffinity.text) + amount;
-                earthAffinity.text = currentNumber.ToString();
+            case (int)AbilityStats.Charisma:
+                currentNumber = int.Parse(charisma.text) + amount;
+                charisma.text = currentNumber.ToString();
                 break;
         }
         int pointsLeft = int.Parse(availablePointsAbility.text) - amount;
@@ -222,14 +197,10 @@ public class PlayerInGame : MonoBehaviour, ILoadingData
         constitution.text = player.GetComponent<PlayerStats>().constitution.ToString();
         wits.text = player.GetComponent<PlayerStats>().wits.ToString();
 
-        oneHanded.text = player.GetComponent<PlayerStats>().oneHanded.ToString();
-        twoHanded.text = player.GetComponent<PlayerStats>().twoHanded.ToString();
-        dualWielding.text = player.GetComponent<PlayerStats>().dualWielding.ToString();
-        ranged.text = player.GetComponent<PlayerStats>().ranged.ToString();
-        fireAffinity.text = player.GetComponent<PlayerStats>().fireAffinity.ToString();
-        airAffinity.text = player.GetComponent<PlayerStats>().airAffinity.ToString();
-        waterAffinity.text = player.GetComponent<PlayerStats>().waterAffinity.ToString();
-        earthAffinity.text = player.GetComponent<PlayerStats>().earthAffinity.ToString();
+        shadow.text = player.GetComponent<PlayerStats>().shadow.ToString();
+        chaos.text = player.GetComponent<PlayerStats>().chaos.ToString();
+        luck.text = player.GetComponent<PlayerStats>().luck.ToString();
+        charisma.text = player.GetComponent<PlayerStats>().charisma.ToString();
 
         availablePointsAbility.text = player.GetComponent<PlayerStats>().availableAbilityPoints.ToString();
         availablePointsAttribute.text = player.GetComponent<PlayerStats>().availableAttributePoints.ToString();
@@ -237,43 +208,41 @@ public class PlayerInGame : MonoBehaviour, ILoadingData
 
     public void LoadGameData(CharacterData characterData)
     {
-        //try
-        //{
-        //    this.male = characterData.isMale;
-        //    if (male)
-        //    {
-        //        maleCharacter.GetComponent<CharacterCreation>().LoadGameData(characterData);
-        //        maleCharacter.GetComponent<PlayerStats>().LoadGameData(characterData);
-        //        SetAbilityValues(ref maleCharacter);
-        //    }
-        //    else
-        //    {
-        //        femaleCharacter.GetComponent<CharacterCreation>().LoadGameData(characterData);
-        //        femaleCharacter.GetComponent<PlayerStats>().LoadGameData(characterData);
-        //        SetAbilityValues(ref femaleCharacter);
-        //    }
-        //} catch (NullReferenceException ex)
-        //{
-            
-        //}
-            
-        
-        
+        try
+        {
+            this.male = characterData.isMale;
+            if (male)
+            {
+                maleCharacter.GetComponent<CharacterCreation>().LoadGameData(characterData);
+                maleCharacter.GetComponent<Stats>().LoadGameData(characterData);
+                SetAbilityValues(ref maleCharacter);
+           }
+           else
+            {
+                femaleCharacter.GetComponent<CharacterCreation>().LoadGameData(characterData);
+                femaleCharacter.GetComponent<Stats>().LoadGameData(characterData);
+                SetAbilityValues(ref femaleCharacter);
+            }
+        } catch (NullReferenceException ex)
+        {
+           
+        }
 
     }
 
     public void SaveGameData(ref CharacterData characterData)
     {
+        Debug.Log("Is char data null: " + characterData == null);
         characterData.isMale = this.male;
         if (male)
         {
             maleCharacter.GetComponent<CharacterCreation>().SaveGameData(ref characterData);
-            maleCharacter.GetComponent<PlayerStats>().SaveGameData(ref characterData);
+            maleCharacter.GetComponent<Stats>().SaveGameData(ref characterData);
         }
         else
         {
             femaleCharacter.GetComponent<CharacterCreation>().SaveGameData(ref characterData);
-            femaleCharacter.GetComponent<PlayerStats>().SaveGameData(ref characterData);
+            femaleCharacter.GetComponent<Stats>().SaveGameData(ref characterData);
         }
 
     }

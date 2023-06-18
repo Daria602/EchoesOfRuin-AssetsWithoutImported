@@ -30,42 +30,18 @@ public class Stats : MonoBehaviour
     // Combat abilities
     public enum AbilityStats
     {
-        OneHanded,
-        TwoHanded,
-        DualWielding,
-        Ranged,
-        FireAffinity,
-        AirAffinity,
-        WaterAffinity,
-        EarthAffinity
+        Shadow,
+        Chaos,
+        Luck,
+        Charisma
     }
     public int availableAbilityPoints = 3;
-    public int oneHanded = 0;
-    public int twoHanded = 0;
-    public int dualWielding = 0;
-    public int ranged = 0;
-    public int fireAffinity = 0;
-    public int airAffinity = 0;
-    public int waterAffinity = 0;
-    public int earthAffinity = 0;
+    public int shadow = 0;
+    public int chaos = 0;
+    public int luck = 0;
+    public int charisma = 0;
 
     private const int MIN_ABILITY_VALUE = 0;
-
-
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public bool IncreaseAttributeStat(int statType)
     {
@@ -120,29 +96,17 @@ public class Stats : MonoBehaviour
         bool result = false;
         switch (statType)
         {
-            case (int)AbilityStats.OneHanded:
-                result = Increase(ref oneHanded, ref availableAbilityPoints);
+            case (int)AbilityStats.Shadow:
+                result = Increase(ref shadow, ref availableAbilityPoints);
                 break;
-            case (int)AbilityStats.TwoHanded:
-                result = Increase(ref twoHanded, ref availableAbilityPoints);
+            case (int)AbilityStats.Chaos:
+                result = Increase(ref chaos, ref availableAbilityPoints);
                 break;
-            case (int)AbilityStats.DualWielding:
-                result = Increase(ref dualWielding, ref availableAbilityPoints);
+            case (int)AbilityStats.Luck:
+                result = Increase(ref luck, ref availableAbilityPoints);
                 break;
-            case (int)AbilityStats.Ranged:
-                result = Increase(ref ranged, ref availableAbilityPoints);
-                break;
-            case (int)AbilityStats.FireAffinity:
-                result = Increase(ref fireAffinity, ref availableAbilityPoints);
-                break;
-            case (int)AbilityStats.AirAffinity:
-                result = Increase(ref airAffinity, ref availableAbilityPoints);
-                break;
-            case (int)AbilityStats.WaterAffinity:
-                result = Increase(ref waterAffinity, ref availableAbilityPoints);
-                break;
-            case (int)AbilityStats.EarthAffinity:
-                result = Increase(ref earthAffinity, ref availableAbilityPoints);
+            case (int)AbilityStats.Charisma:
+                result = Increase(ref charisma, ref availableAbilityPoints);
                 break;
         }
         return result;
@@ -153,29 +117,17 @@ public class Stats : MonoBehaviour
         bool result = false;
         switch (statType)
         {
-            case (int)AbilityStats.OneHanded:
-                result = Decrease(ref oneHanded, ref availableAbilityPoints, MIN_ABILITY_VALUE);
+            case (int)AbilityStats.Shadow:
+                result = Decrease(ref shadow, ref availableAbilityPoints, MIN_ABILITY_VALUE);
                 break;
-            case (int)AbilityStats.TwoHanded:
-                result = Decrease(ref twoHanded, ref availableAbilityPoints, MIN_ABILITY_VALUE);
+            case (int)AbilityStats.Chaos:
+                result = Decrease(ref chaos, ref availableAbilityPoints, MIN_ABILITY_VALUE);
                 break;
-            case (int)AbilityStats.DualWielding:
-                result = Decrease(ref dualWielding, ref availableAbilityPoints, MIN_ABILITY_VALUE);
+            case (int)AbilityStats.Luck:
+                result = Decrease(ref luck, ref availableAbilityPoints, MIN_ABILITY_VALUE);
                 break;
-            case (int)AbilityStats.Ranged:
-                result = Decrease(ref ranged, ref availableAbilityPoints, MIN_ABILITY_VALUE);
-                break;
-            case (int)AbilityStats.FireAffinity:
-                result = Decrease(ref fireAffinity, ref availableAbilityPoints, MIN_ABILITY_VALUE);
-                break;
-            case (int)AbilityStats.AirAffinity:
-                result = Decrease(ref airAffinity, ref availableAbilityPoints, MIN_ABILITY_VALUE);
-                break;
-            case (int)AbilityStats.WaterAffinity:
-                result = Decrease(ref waterAffinity, ref availableAbilityPoints, MIN_ABILITY_VALUE);
-                break;
-            case (int)AbilityStats.EarthAffinity:
-                result = Decrease(ref earthAffinity, ref availableAbilityPoints, MIN_ABILITY_VALUE);
+            case (int)AbilityStats.Charisma:
+                result = Decrease(ref charisma, ref availableAbilityPoints, MIN_ABILITY_VALUE);
                 break;
         }
         return result;
@@ -215,14 +167,10 @@ public class Stats : MonoBehaviour
         this.wits = characterData.wits;
 
         this.availableAbilityPoints = characterData.availableAbilityPoints;
-        this.oneHanded = characterData.oneHanded;
-        this.twoHanded = characterData.twoHanded;
-        this.dualWielding = characterData.dualWielding;
-        this.ranged = characterData.ranged;
-        this.fireAffinity = characterData.fireAffinity;
-        this.airAffinity = characterData.airAffinity;
-        this.waterAffinity = characterData.waterAffinity;
-        this.earthAffinity = characterData.earthAffinity;
+        this.shadow = characterData.shadow;
+        this.chaos = characterData.chaos;
+        this.luck = characterData.luck;
+        this.charisma = characterData.charisma;
     }
     public void SaveGameData(ref CharacterData characterData)
     {
@@ -234,16 +182,11 @@ public class Stats : MonoBehaviour
         characterData.wits = this.wits;
 
         characterData.availableAbilityPoints = this.availableAbilityPoints;
-        characterData.oneHanded = this.oneHanded;
-        characterData.twoHanded = this.twoHanded;
-        characterData.dualWielding= this.dualWielding;
-        characterData.ranged = this.ranged;
-        characterData.fireAffinity = this.fireAffinity;
-        characterData.airAffinity = this.airAffinity;
-        characterData.waterAffinity = this.waterAffinity;
-        characterData.earthAffinity = this.earthAffinity;
+        characterData.shadow = this.shadow;
+        characterData.chaos = this.chaos;
+        characterData.luck= this.luck;
+        characterData.charisma = this.charisma;
     }
-
 
     public int GetInitiative()
     {

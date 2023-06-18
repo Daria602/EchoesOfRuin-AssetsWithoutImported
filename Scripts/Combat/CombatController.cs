@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class CombatController : MonoBehaviour
 {
+
     public int characterId;
     public bool m_isInCombat = false;
     public int[] skillsIds;
@@ -29,11 +30,6 @@ public class CombatController : MonoBehaviour
     protected DoAction doAction;
 
     public bool endedTurn = true;
-
-
-
-
-
     public int actionPointsLeft = 5;
     public const int MAX_ACTION_POINTS = 5;
 
@@ -51,11 +47,21 @@ public class CombatController : MonoBehaviour
     private void Start()
     {
         Debug.Log("Combat controller thing");
+        AddSkills();
+        EquipWeapon();
+    }
+
+    protected void AddSkills()
+    {
         for (int i = 0; i < skillsIds.Length; i++)
         {
             Skill skillInstantiated = Instantiate(Constants.GetInstance().skillMap[skillsIds[i]]);
             skills.Add(skillInstantiated);
         }
+    }
+
+    protected void EquipWeapon()
+    {
         if (hasWeapon)
         {
             weaponObject = Instantiate(Constants.GetInstance().weaponMap[weaponId].weaponPrefab, rightHand);

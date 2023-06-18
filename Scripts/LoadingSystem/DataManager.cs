@@ -8,7 +8,6 @@ public class DataManager : MonoBehaviour
 {
     public static DataManager instance;
 
-
     private CharacterData characterData;
 
     private List<ILoadingData> loadingDataScripts;
@@ -30,6 +29,11 @@ public class DataManager : MonoBehaviour
         {
             Debug.Log("Something went wrong.");
         }
+    }
+
+    public static DataManager GetInstance()
+    {
+        return instance;
     }
 
     private void Start()

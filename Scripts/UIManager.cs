@@ -5,32 +5,50 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    private bool shouldDisplayUI = false;
-    public GameObject canvas;
+    private bool shouldDisplayOptionsMenu = false;
+    public GameObject escapeMenu;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+       
+
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            shouldDisplayUI = !shouldDisplayUI;
-            if (shouldDisplayUI)
+            shouldDisplayOptionsMenu = !shouldDisplayOptionsMenu;
+            if (shouldDisplayOptionsMenu)
             {
-                ActivateUI();
-            } 
+                ActivateOptionsMenu();
+            }
             else
             {
-                DeactivateUI();
+                DeactivateOptionsMenu();
             }
         }
 
     }
 
-    private void ActivateUI()
+    private void ActivateOptionsMenu()
     {
-        canvas.SetActive(true);
+        escapeMenu.SetActive(true);
     }
 
-    private void DeactivateUI()
+    private void DeactivateOptionsMenu()
     {
-        canvas?.SetActive(false);
+        escapeMenu.SetActive(false);
+    }
+
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void ClickSaveGame()
+    {
+        DataManager.GetInstance().SaveState();
+        
+    }
+    public void ClickLoadGame()
+    {
+        DataManager.GetInstance().LoadSave();
     }
 }

@@ -41,8 +41,6 @@ public class PlayerCombat : CombatController
     //    }
     //}
 
-    
-
     public void DoSomething()
     {
         
@@ -242,5 +240,38 @@ public class PlayerCombat : CombatController
         Debug.Log("Got here");
         endedTurn = true;
         
+    }
+
+    public void LoadGameData(CharacterData characterData)
+    {
+        this.IsInCombat = characterData.IsInCombat;
+        this.characterId = characterData.characterId;
+        this.m_isInCombat = characterData.m_isInCombat;
+        this.skillsIds = characterData.skillsIds;
+        this.hasWeapon = characterData.hasWeapon;
+        this.weaponId = characterData.weaponId;
+        //this.rightHand = characterData.rightHand;
+        this.isPerformingAction = characterData.isPerformingAction;
+        this.finishedPerforming = characterData.finishedPerforming;
+        this.actionIndex = characterData.actionIndex;
+        this.charactersTurn = characterData.charactersTurn;
+
+        //Most likely we don't need to call the below methods from here since they're in the Start() method of CombatController, but to be tested
+
+        //AddSkills();  
+        //EquipWeapon();
+}
+    public void SaveGameData(ref CharacterData characterData)
+    {
+        characterData.IsInCombat = this.IsInCombat;
+        characterData.characterId = this.characterId;
+        characterData.m_isInCombat = this.m_isInCombat;
+        characterData.skillsIds = this.skillsIds;
+        characterData.hasWeapon = this.hasWeapon;
+        characterData.weaponId = this.weaponId;
+        characterData.isPerformingAction = this.isPerformingAction;
+        characterData.finishedPerforming = this.finishedPerforming;
+        characterData.actionIndex = this.actionIndex;
+        characterData.charactersTurn = this.charactersTurn;
     }
 }
