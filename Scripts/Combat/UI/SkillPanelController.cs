@@ -78,8 +78,12 @@ public class SkillPanelController : MonoBehaviour
                 {
                     if (index < skills.Count)
                     {
-                        tooltips[index].infoLeft = skills[index].description;
-                        tooltips[index].infoRight = skills[index].name;
+                        string finalString = "";
+                        //finalString = "~Dark Style `I'll only be in your game if it's $dark `and $scary`. The other tooltips are total losers.";
+                        finalString += "~" + skills[index].skillName + "  `*" + skills[index].cost + " AP\n`";
+                        finalString += skills[index].description + "\n";
+                        finalString += "$Damage: "+ skills[index].baseDamageMin +" - " + skills[index].baseDamageMax + "`";
+                        tooltips[index].infoLeft = finalString;
                     }
                     index++;
                     
@@ -119,6 +123,7 @@ public class SkillPanelController : MonoBehaviour
     public void SetButtonInactive(bool activity, int buttonIndex, int cooldown)
     {
         slots[buttonIndex].interactable = activity;
+        Debug.Log("Should be: " + activity + ", is actually: " + slots[buttonIndex].interactable);
         if (cooldown == 0)
         {
             slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = "";

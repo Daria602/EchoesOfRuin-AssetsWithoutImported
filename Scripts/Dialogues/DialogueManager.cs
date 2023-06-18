@@ -18,6 +18,9 @@ public class DialogueManager : MonoBehaviour
     private Story currentStory;
     private bool dialogueIsActive;
 
+    private GameObject currentNPC;
+    public GameObject player;
+
     private static DialogueManager instance;
 
     private void Awake()
@@ -60,8 +63,16 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON, Inventory inventory = null)
+    public void EnterDialogueMode(TextAsset inkJSON, GameObject npc)
     {
+        // Stop the movement for both NPC and Player
+        currentNPC = npc;
+        currentNPC.GetComponent<NPCMovement>().IsAllowedToMove = false;
+        currentNPC.GetComponent<Animator>().SetBool("isRunning", false);
+        player.GetComponent<PlayerMovement>().IsAllowedToMove = false;
+        currentNPC.transform.LookAt((player.transform.position + currentNPC.transform.position) / 2);
+        player.transform.LookAt((player.transform.position + currentNPC.transform.position) / 2);
+
         currentStory = new Story(inkJSON.text);
         dialogueIsActive = true;
         dialoguePanel.SetActive(true);
@@ -70,23 +81,33 @@ public class DialogueManager : MonoBehaviour
         {
             // Print the new value
             ExitDialogueMode();
-            FindObjectOfType<PlayerController>().StartFight();
+            player.GetComponent<PlayerController>().StartFight();
         });
 
         currentStory.ObserveVariable("choseToTrade", (variableName, newValue) =>
         {
             // Print the new value
             ExitDialogueMode();
-            TradeManager.GetInstance().TriggerTrade(inventory);
+            TradeManager.GetInstance().TriggerTrade(currentNPC.GetComponent<Inventory>());
         });
     }
 
     private void ExitDialogueMode()
     {
+        
+        
         dialogueIsActive = false;
         dialoguePanel.SetActive(false);
 
         dialogueText.text = "";
+    }
+
+    public void ExitTrade()
+    {
+        currentNPC.GetComponent<NPCMovement>().IsAllowedToMove = true;
+        currentNPC.GetComponent<Animator>().SetBool("isRunning", true);
+        player.GetComponent<PlayerMovement>().IsAllowedToMove = true;
+        currentNPC = null;
     }
 
     private void ContinueStory()

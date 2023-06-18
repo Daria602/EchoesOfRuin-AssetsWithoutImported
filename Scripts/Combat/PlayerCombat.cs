@@ -227,8 +227,24 @@ public class PlayerCombat : CombatController
         // If the first set of 10 is displayed and the character clicks on button_0
         // actionIndex = 0, 
         // else actionIndex should recalculate
-        int skillIndex = 0;
-        PerformAction(buttonIndex);
+        if (CombatManager.GetInstance().isCombatGoing)
+        {
+            //int skillIndex = 0;
+            if (buttonIndex < skills.Count)
+            {
+                PerformAction(buttonIndex);
+            }
+            else
+            {
+                return;
+            }
+        }
+        else
+        {
+            return;
+        }
+        
+        
     }
 
     public void SetDoneCasting()

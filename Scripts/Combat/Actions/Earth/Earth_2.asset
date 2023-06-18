@@ -28,8 +28,8 @@ MonoBehaviour:
   cooldown: 0
   maxCooldown: 4
   cost: 2
-  baseDamageMin: 0
-  baseDamageMax: 0
+  baseDamageMin: 2
+  baseDamageMax: 4
   spell: 0
   requiresWeapon: 0
   weaponTypeRequired: 0
