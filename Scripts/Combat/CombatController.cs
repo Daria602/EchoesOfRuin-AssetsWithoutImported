@@ -1,3 +1,4 @@
+using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,7 +11,7 @@ public class CombatController : MonoBehaviour
     public bool m_isInCombat = false;
     public int[] skillsIds;
     public bool hasWeapon = true;
-    public Weapon weapon;
+    public int weaponId;
     public Transform rightHand;
 
     public bool isPerformingAction = false;
@@ -19,6 +20,8 @@ public class CombatController : MonoBehaviour
     public bool charactersTurn = false;
     //[HideInInspector()]
     public List<Skill> skills = new List<Skill>();
+    private Weapon weapon = null;
+    private GameObject weaponObject = null;
 
     
 
@@ -53,7 +56,14 @@ public class CombatController : MonoBehaviour
             Skill skillInstantiated = Instantiate(Constants.GetInstance().skillMap[skillsIds[i]]);
             skills.Add(skillInstantiated);
         }
+        if (hasWeapon)
+        {
+            weaponObject = Instantiate(Constants.GetInstance().weaponMap[weaponId].weaponPrefab, rightHand);
+            weapon = Instantiate(Constants.GetInstance().weaponMap[weaponId], rightHand);
+        }
     }
+
+    
 
 
     protected void Move()
@@ -89,9 +99,13 @@ public class CombatController : MonoBehaviour
 
     private void CombatStateIsChanged(bool value)
     {
-        if (value && hasWeapon)
+        if (value)
         {
-            GameObject go = Instantiate(weapon.weaponPrefab, rightHand);
+            AddWeapon();
+        }
+        else
+        {
+            RemoveWeapon();
         }
         m_isInCombat = value;
         ResetMovement();
@@ -118,6 +132,23 @@ public class CombatController : MonoBehaviour
         // TODO: apply stats here
         baseDamage = ApplyAttributes(baseDamage);
         return Mathf.Round(baseDamage);
+    }
+
+    public void RemoveWeapon()
+    {
+        if (hasWeapon)
+        {
+            Destroy(weapon);
+        }
+        
+    }
+
+    public void AddWeapon()
+    {
+        if (hasWeapon)
+        {
+            weapon = Instantiate(Constants.GetInstance().weaponMap[weaponId], rightHand);
+        }
     }
 
     private float ApplyAttributes(float baseDamage)

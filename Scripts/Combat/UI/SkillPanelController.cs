@@ -18,6 +18,7 @@ public class SkillPanelController : MonoBehaviour
     private bool afterStart = true;
 
     public static SkillPanelController instance;
+    public SimpleTooltip[] tooltips;
     private void Awake()
     {
         if (instance == null)
@@ -33,7 +34,7 @@ public class SkillPanelController : MonoBehaviour
 
     private void Start()
     {
-        
+        tooltips = skillPanel.GetComponentsInChildren<SimpleTooltip>();
         //skillPanel.SetActive(false);
     }
 
@@ -45,6 +46,7 @@ public class SkillPanelController : MonoBehaviour
             skills = pc.skills;
             Debug.Log("Skill panel thing " + skills.Count);
             AssignSkillsToButtons();
+            AssignTooltips();
             afterStart = false;
         }
         
@@ -63,6 +65,27 @@ public class SkillPanelController : MonoBehaviour
             isInCombat = setInCombat;
         }
         
+    }
+
+    public void AssignTooltips()
+    {
+        if (tooltips.Length > 0)
+        {
+            if (skills.Count > 0)
+            {
+                int index = 0;
+                foreach (Button slot in slots)
+                {
+                    if (index < skills.Count)
+                    {
+                        tooltips[index].infoLeft = skills[index].description;
+                        tooltips[index].infoRight = skills[index].name;
+                    }
+                    index++;
+                    
+                }
+            }
+        }
     }
     public void AssignSkillsToButtons()
     {

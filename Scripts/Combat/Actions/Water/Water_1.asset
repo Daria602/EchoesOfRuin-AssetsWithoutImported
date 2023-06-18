@@ -15,11 +15,22 @@ MonoBehaviour:
   skillName: Soothing Waters
   skillIcon: {fileID: 21300000, guid: 65b94a0ecfa94ef4092e01598f132025, type: 3}
   hasVisuals: 0
-  visualEffectPrefab: {fileID: 0}
-  prepareAnimationBoolName: 
+  visualEffectPrefab: {fileID: 9017484664307500583, guid: 1245b8d2997d5b34fb1637be70a7eb05, type: 3}
+  prepareAnimationBoolName: isMagicAoE
   affectAnimationBoolName: 
-  minDistance: 0
-  description: Surround yourself with healing waters, restoring health and providing
-    a temporary your maximum health
+  hasAnimTrigger: 1
+  castTrigger: CastMagicAoE
+  maxDistance: 10
+  description: Surround yourself with healing waters, restoring 20% of your health
   spellType: 1
+  isInCooldown: 0
+  cooldown: 0
+  maxCooldown: 4
   cost: 1
+  baseDamageMin: 0
+  baseDamageMax: 0
+  spell: 0
+  requiresWeapon: 0
+  weaponTypeRequired: 0
+  affectedByAttributes: 
+  affectedByAbilities: 

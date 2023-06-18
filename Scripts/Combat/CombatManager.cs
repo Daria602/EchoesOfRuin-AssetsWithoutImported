@@ -22,7 +22,8 @@ public class CombatManager : MonoBehaviour
     public int[] characterIdKeys;
     public GameObject[] characterObjectValues;
     public Dictionary<int, GameObject> characters = new Dictionary<int, GameObject>();
-    public bool isCombatGoing = false;
+    private bool m_isCombatGoing = false;
+    public bool isCombatGoing { get => m_isCombatGoing; set => CombatValueChanged(value); }
     public int turnIndex = 0;
     public int round = 1;
 
@@ -69,6 +70,33 @@ public class CombatManager : MonoBehaviour
             }
         }
     }
+
+    public void CombatValueChanged(bool value)
+    {
+        if (value != m_isCombatGoing)
+        {
+            m_isCombatGoing = value;
+            if (!value)
+            {
+                ResetAftermath();
+            }
+        }
+    }
+
+    public void ResetAftermath()
+    {
+        player.GetComponent<CombatController>().IsInCombat = false;
+        player.GetComponent<Animator>().SetTrigger("CombatOver");
+        player.GetComponent<CombatController>().DecreaseCooldown(true);
+        //player.GetComponent<CombatController>().RemoveWeapon();
+        CombatOver();
+        ToggleSkillsVisibility(CombatController.MAX_ACTION_POINTS);
+
+    }
+
+
+
+
     private void Update()
     {
         if (isCombatGoing)
@@ -76,8 +104,7 @@ public class CombatManager : MonoBehaviour
             if (characterInitiativeList.Count <= 1)
             {
                 isCombatGoing = false;
-                player.GetComponent<CombatController>().IsInCombat = false;
-                player.GetComponent<Animator>().SetTrigger("CombatOver");
+                
                 // TODO: end combat
                 
             }

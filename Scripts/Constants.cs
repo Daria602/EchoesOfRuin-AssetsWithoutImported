@@ -13,6 +13,10 @@ public class Constants : MonoBehaviour
     public Skill[] allSkills;
     public Dictionary<int, Skill> skillMap = new Dictionary<int, Skill>();
 
+    public int[] weaponIds;
+    public Weapon[] allWeapons;
+    public Dictionary<int, Weapon> weaponMap = new Dictionary<int, Weapon>();
+
 
     public enum SpellType
     {
@@ -77,6 +81,18 @@ public class Constants : MonoBehaviour
             for (int i = 0; i < skillIds.Length; i++)
             {
                 skillMap.Add(skillIds[i], allSkills[i]);
+            }
+        }
+
+        if (weaponIds.Length != allWeapons.Length)
+        {
+            Debug.LogError("weapon id's should have the same number of elements as all weapons array");
+        }
+        else
+        {
+            for (int i = 0; i < weaponIds.Length; i++)
+            {
+                weaponMap.Add(weaponIds[i], allWeapons[i]);
             }
         }
     }

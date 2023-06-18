@@ -76,4 +76,9 @@ public class Skill : ScriptableObject
             
         }
     }
+
+    public void Something()
+    {
+
+    }
 }

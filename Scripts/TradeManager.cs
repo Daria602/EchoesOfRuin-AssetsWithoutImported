@@ -110,6 +110,11 @@ public class TradeManager : MonoBehaviour
         //playerInventory.SetActive(false);
     }
 
+    public void ExitTrade()
+    {
+        tradePanel.SetActive(false);
+    }
+
     public void IsWillingToPurchaseItem(Item item, InventorySlot itemHolder)
     {
         currentItem = item;

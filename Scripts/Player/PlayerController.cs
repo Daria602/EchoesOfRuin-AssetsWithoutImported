@@ -113,15 +113,18 @@ public class PlayerController : MonoBehaviour
                 switch (clickType)
                 {
                     case ClickType.UI:
+                        RemoveFocus();
                         Debug.Log("Clicked over UI");
                         break;
                     case ClickType.Move:
+                        RemoveFocus();
                         movement.MovePlayer(point);
                         animator.SetBool("isRunning", true);
                         break;
                     case ClickType.Interact:
                         animator.SetBool("isRunning", true);
                         movement.MovePlayer(point);
+                        RemoveFocus();
                         SetFocus(interactable);
                         Debug.Log("Clicked to interract");
                         break;
@@ -139,6 +142,14 @@ public class PlayerController : MonoBehaviour
 
         //ShowDistance();
         
+    }
+
+    public void RemoveFocus(Interactable interactable = null)
+    {
+        if (focus != null && focus != interactable)
+        {
+            focus.IsFocus = false;
+        }
     }
 
     public void StartFight()
