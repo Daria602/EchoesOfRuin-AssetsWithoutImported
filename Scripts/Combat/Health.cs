@@ -7,7 +7,7 @@ public class Health : MonoBehaviour
     public int currentHealth;
     public int healthModifier;
     public int maxHealth;
-    private int m_currentMaxHealth;
+    public int m_currentMaxHealth;
     public delegate void UpdateHealth();
     public UpdateHealth OnHealthUpdateCallback;
     private void Awake()

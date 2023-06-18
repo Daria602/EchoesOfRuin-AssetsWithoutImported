@@ -41,10 +41,10 @@ public class CharacterData
 
     // Character health
 
-    public float currentHealth;
-    public float healthModifier;
-    public float maxHealth;
-    public float m_currentMaxHealth;
+    public int currentHealth;
+    public int healthModifier;
+    public int maxHealth;
+    public int m_currentMaxHealth;
 
     // Creating initial values
     public CharacterData()
