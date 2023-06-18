@@ -43,6 +43,6 @@ public class Portrait : MonoBehaviour
 
     public void SetAsAlly()
     {
-        backgroundImage.color = Color.green;
+        backgroundImage.color = Color.green; // and yellow something, set
     }
 }
