@@ -65076,6 +65076,10 @@ PrefabInstance:
       propertyPath: maximumTravelDistance
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 6889665758937958039, guid: d4566591229e830419e6bdc30792a648, type: 3}
+      propertyPath: initiative
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6889665758937958044, guid: d4566591229e830419e6bdc30792a648, type: 3}
       propertyPath: m_Name
       value: PlayerInGame
