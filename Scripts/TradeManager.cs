@@ -112,6 +112,7 @@ public class TradeManager : MonoBehaviour
 
     public void ExitTrade()
     {
+        DialogueManager.GetInstance().ExitTrade();
         tradePanel.SetActive(false);
     }
 

@@ -123,7 +123,7 @@ public class CombatController : MonoBehaviour
 
     }
 
-    protected float CalculateAffectedDamage()
+    protected int CalculateAffectedDamage()
     {
         float baseDamage = 0f;
         if (skills[actionIndex].requiresWeapon)
@@ -137,7 +137,7 @@ public class CombatController : MonoBehaviour
 
         // TODO: apply stats here
         baseDamage = ApplyAttributes(baseDamage);
-        return Mathf.Round(baseDamage);
+        return (int)baseDamage;
     }
 
     public void RemoveWeapon()

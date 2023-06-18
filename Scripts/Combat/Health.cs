@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public float currentHealth;
-    public float healthModifier;
-    public float maxHealth;
-    protected float m_currentMaxHealth;
-
+    public int currentHealth;
+    public int healthModifier;
+    public int maxHealth;
+    private int m_currentMaxHealth;
+    public delegate void UpdateHealth();
+    public UpdateHealth OnHealthUpdateCallback;
     private void Awake()
     {
         healthModifier = 0;
@@ -16,16 +17,16 @@ public class Health : MonoBehaviour
         currentHealth = m_currentMaxHealth;
     }
 
-    public float CurrentMaxHealth {  get => m_currentMaxHealth; set { ModifyCurrentMaxHealth(value); } }
+    public int CurrentMaxHealth {  get => m_currentMaxHealth; set { ModifyCurrentMaxHealth(value); } }
 
-    private void ModifyCurrentMaxHealth(float value)
+    private void ModifyCurrentMaxHealth(int value)
     {
         healthModifier = value;
         m_currentMaxHealth += m_currentMaxHealth * value;
 
     }
 
-    public void Heal(float amount)
+    public void Heal(int amount)
     {
         if (currentHealth + amount > m_currentMaxHealth)
         {

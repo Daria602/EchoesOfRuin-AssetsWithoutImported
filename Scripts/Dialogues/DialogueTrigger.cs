@@ -15,13 +15,8 @@ public class DialogueTrigger : Interactable
     public override void Interact()
     {
         base.Interact();
-        gameObject.GetComponent<NPCMovement>().IsAllowedToMove = false;
-        gameObject.GetComponent<Animator>().SetBool("isRunning", false);
-        var player = FindObjectOfType<PlayerController>();
-        player.GetComponent<PlayerMovement>().IsAllowedToMove = false;
-        DialogueManager.GetInstance().EnterDialogueMode(inkJSON, gameObject.GetComponent<Inventory>());
-        transform.LookAt(player.transform.position);
-        player.transform.LookAt(transform.position);
+        DialogueManager.GetInstance().EnterDialogueMode(inkJSON, gameObject);
+        
     }
 
 

@@ -350,6 +350,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4167977843194600878}
   - component: {fileID: 3539591000160375141}
+  - component: {fileID: 256327021051761036}
   m_Layer: 5
   m_Name: Slot
   m_TagString: Untagged
@@ -392,3 +393,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 4167977842160867635}
   removeItemButton: {fileID: 4167977842088945627}
+--- !u!114 &256327021051761036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4167977843194600879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99634edca86565b4a96a0b7b261787f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleTooltipStyle: {fileID: 11400000, guid: a104288cd74ebc84d80f27ae9b51d26c, type: 2}
+  infoLeft: Hello
+  infoRight: 
