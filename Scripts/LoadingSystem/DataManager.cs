@@ -29,6 +29,9 @@ public class DataManager : MonoBehaviour
         {
             Debug.Log("Something went wrong.");
         }
+        this.loadingFileHandler = new LoadingFileHandler(Application.persistentDataPath, fileNameForSave);
+        this.loadingDataScripts = GetAllLoadingDataScripts();
+        LoadSave();
     }
 
     public static DataManager GetInstance()
@@ -38,9 +41,7 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
-        this.loadingFileHandler = new LoadingFileHandler(Application.persistentDataPath, fileNameForSave);
-        this.loadingDataScripts = GetAllLoadingDataScripts();
-        LoadSave();
+        
     }
 
     public void CreateNewSave()

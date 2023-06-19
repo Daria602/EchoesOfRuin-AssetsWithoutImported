@@ -10,7 +10,7 @@ public class CombatController : MonoBehaviour
 
     public int characterId;
     private bool m_isInCombat = false;
-    public int[] skillsIds;
+    public List<int> skillsIds;
     public bool hasWeapon = true;
     public int weaponId;
     public Transform rightHand;
@@ -53,7 +53,9 @@ public class CombatController : MonoBehaviour
 
     protected void AddSkills()
     {
-        for (int i = 0; i < skillsIds.Length; i++)
+
+        skills.Clear();
+        for (int i = 0; i < skillsIds.Count; i++)
         {
             Skill skillInstantiated = Instantiate(Constants.GetInstance().skillMap[skillsIds[i]]);
             skills.Add(skillInstantiated);

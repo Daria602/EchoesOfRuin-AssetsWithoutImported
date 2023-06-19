@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -29,7 +30,7 @@ public class CharacterData
     // Character combat state
     public int characterId;
     public bool m_isInCombat;
-    public int[] skillsIds;
+    public List<int> skillsIds;
     public bool hasWeapon;
     public int weaponId;
     //public Transform rightHand;
@@ -46,6 +47,9 @@ public class CharacterData
     public int healthModifier;
     public int maxHealth;
     public int m_currentMaxHealth;
+
+    // Items present in the world visually
+    public int[] itemsStillPresent;
 
     // Creating initial values
     public CharacterData()
@@ -71,14 +75,14 @@ public class CharacterData
         this.luck = 0;
         this.charisma = 0;
 
-        // Character position
-        this.characterPosition = Vector3.zero;
-
+        // Character position  Vector3(183.199997,2.16000009,305.399994)
+        // this.characterPosition = Vector3.zero;
+        this.characterPosition = new Vector3(183.199997f, 2.16000009f, 305.399994f);
         // Character combat state
         this.IsInCombat = false;
         this.characterId = 0;
         this.m_isInCombat = false;
-        this.skillsIds = null;
+        this.skillsIds = new List<int>() { 6, 5 };
         this.hasWeapon = false;
         this.weaponId = 0;
         //this.rightHand = Vector3.zero;
@@ -87,13 +91,16 @@ public class CharacterData
         this.actionIndex = 0;
         this.charactersTurn = false;
 
-        this.currentHealth = 0;
+        this.currentHealth = 10;
         this.healthModifier = 0;
         this.maxHealth = 10;
         this.m_currentMaxHealth = 10;
 
         //Character level & xp
         this.characterLevel = 1;
+
+        // Items still present
+        this.itemsStillPresent = null;
     }
 
 }

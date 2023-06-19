@@ -14,9 +14,6 @@ public class NPCMovement : BaseMovement
 
     private CombatController combat;
 
-    private float secondsToWait = 0;
-    private float maxSecondsToWait = 1500f;
-
     private void Start()
     {
         combat = GetComponent<CombatController>();

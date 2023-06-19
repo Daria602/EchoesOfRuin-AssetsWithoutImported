@@ -41,6 +41,20 @@ public class PlayerCombat : CombatController
     //    }
     //}
 
+    public bool AddNewSkill(int skillId)
+    {
+        for (int i = 0; i < skillsIds.Count; i++)
+        {
+            if (skillsIds[i] == skillId)
+            {
+                return false;
+            }
+        }
+        skillsIds.Add(skillId);
+        AddSkills();
+        return true;
+    }
+
     public void DoSomething()
     {
         

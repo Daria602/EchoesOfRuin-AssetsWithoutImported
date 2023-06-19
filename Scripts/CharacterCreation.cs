@@ -79,7 +79,7 @@ public class CharacterCreation : MonoBehaviour
                 {
                     headParts[i].item.GetComponent<SkinnedMeshRenderer>().material = headParts[i].materialsApplied[darkSkinColor ? 1 : 0].material;
                 }
-                catch (MissingComponentException ex)
+                catch (MissingComponentException)
                 {
                     headParts[i].item.GetComponent<MeshRenderer>().material = headParts[i].materialsApplied[darkSkinColor ? 1 : 0].material;
                 }
@@ -109,7 +109,7 @@ public class CharacterCreation : MonoBehaviour
                     }
                     
                 }
-                catch (MissingComponentException ex)
+                catch (MissingComponentException)
                 {
                     int materialLength = torsoParts[i].item.GetComponent<MeshRenderer>().materials.Length;
                     if (materialLength > 1)
@@ -151,7 +151,7 @@ public class CharacterCreation : MonoBehaviour
                     }
 
                 }
-                catch (MissingComponentException ex)
+                catch (MissingComponentException)
                 {
                     int materialLength = legsParts[i].item.GetComponent<MeshRenderer>().materials.Length;
                     if (materialLength > 1)
@@ -227,7 +227,7 @@ public class CharacterCreation : MonoBehaviour
         {
             bodyPart.GetComponent<SkinnedMeshRenderer>().material = material;
         }
-        catch (MissingComponentException ex)
+        catch (MissingComponentException)
         {
             bodyPart.GetComponent<MeshRenderer>().material = material;
         }

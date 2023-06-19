@@ -36,7 +36,7 @@ public class LoadingFileHandler
                 return data;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Debug.Log("Error while reading the file");
             }

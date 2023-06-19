@@ -5,8 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Skill", menuName = "Skills/Create New Skill")]
 public class Skill : ScriptableObject
 {
+    public int skillId;
     public string skillName;
     public Sprite skillIcon;
+    public Constants.SkillBelongsTo skillBelongsTo;
     
     public bool hasVisuals = false;
     public GameObject visualEffectPrefab = null;

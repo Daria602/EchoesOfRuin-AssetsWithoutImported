@@ -15,6 +15,8 @@ public class ItemPickup : Interactable
         isItemPicked = InventoryManager.instance.Add(item);
 
         if (isItemPicked) {
+
+            GetComponent<VisualItem>().RemoveItemFromConst();
             Destroy(gameObject);
         }      
     }

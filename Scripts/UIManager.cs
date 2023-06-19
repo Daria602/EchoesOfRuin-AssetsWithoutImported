@@ -51,4 +51,6 @@ public class UIManager : MonoBehaviour
     {
         DataManager.GetInstance().LoadSave();
     }
+
+
 }

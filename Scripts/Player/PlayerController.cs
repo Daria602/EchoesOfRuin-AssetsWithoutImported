@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour, ILoadingData
                         RemoveFocus();
                         movement.MovePlayer(point);
                         animator.SetBool("isRunning", true);
-                        Debug.Log(point);
+                        //Debug.Log(point);
                         break;
                     case ClickType.Interact:
                         animator.SetBool("isRunning", true);

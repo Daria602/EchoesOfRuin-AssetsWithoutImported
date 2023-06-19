@@ -10,6 +10,6 @@ public class Book : Item
     public override void Use()
     {
         base.Use();
-        Debug.Log("I am using this skill: " + skill.skillName);
+        SkillPanelController.GetInstance().PromptLearningSkill(skill.skillId, this);
     }
 }

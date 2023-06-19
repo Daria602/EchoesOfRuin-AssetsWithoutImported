@@ -5,12 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class DialogueTrigger : Interactable
 {
-    // TODO: rethink this so that the player is not attached here
+    [SerializeField] private int questId;
 
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
 
-    //public GameObject p;
 
     public override void Interact()
     {

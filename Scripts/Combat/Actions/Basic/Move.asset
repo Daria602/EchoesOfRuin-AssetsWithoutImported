@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8793a39f5d9e804d93e93fb68a190dc, type: 3}
   m_Name: Move
   m_EditorClassIdentifier: 
+  skillId: 12
   skillName: Move
   skillIcon: {fileID: 21300000, guid: 6960c6bd5088317429f7e0e033bee813, type: 3}
+  skillBelongsTo: 6
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: isRunning

@@ -223,7 +223,7 @@ public class PlayerInGame : MonoBehaviour, ILoadingData
                 femaleCharacter.GetComponent<Stats>().LoadGameData(characterData);
                 SetAbilityValues(ref femaleCharacter);
             }
-        } catch (NullReferenceException ex)
+        } catch (NullReferenceException)
         {
            
         }
@@ -232,7 +232,6 @@ public class PlayerInGame : MonoBehaviour, ILoadingData
 
     public void SaveGameData(ref CharacterData characterData)
     {
-        Debug.Log("Is char data null: " + characterData == null);
         characterData.isMale = this.male;
         if (male)
         {

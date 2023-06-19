@@ -16,9 +16,15 @@ public class SkillPanelController : MonoBehaviour
     public bool skillPanelVisibility = false;
     public PlayerCombat pc;
     private bool afterStart = true;
+    public SimpleTooltip[] tooltips;
+
+
+    public GameObject learnSkillPanel;
+    public TextMeshProUGUI skillName;
+    private int skillToLearnId = -1;
+    public Item skillToLearnInventory = null;
 
     public static SkillPanelController instance;
-    public SimpleTooltip[] tooltips;
     private void Awake()
     {
         if (instance == null)
@@ -35,7 +41,7 @@ public class SkillPanelController : MonoBehaviour
     private void Start()
     {
         tooltips = skillPanel.GetComponentsInChildren<SimpleTooltip>();
-        //skillPanel.SetActive(false);
+        learnSkillPanel.SetActive(false);
     }
 
     private void Update()
@@ -93,6 +99,7 @@ public class SkillPanelController : MonoBehaviour
     }
     public void AssignSkillsToButtons()
     {
+        Debug.Log("Got to asign skills and the length is " + skills.Count);
         if (skills.Count == 0)
         {
             Debug.LogError("Object " + transform.name + " doesn't have any skills assigned");
@@ -145,6 +152,68 @@ public class SkillPanelController : MonoBehaviour
         else
         {
             slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = cooldown.ToString();
+        }
+        
+    }
+
+    public void PromptLearningSkill(int id, Item item)
+    {
+        learnSkillPanel.SetActive(true);
+        skillName.text = Constants.GetInstance().skillMap[id].skillName;
+        Color textColor = Color.magenta;
+        switch (Constants.GetInstance().skillMap[id].skillBelongsTo)
+        {
+            case Constants.SkillBelongsTo.Axe:
+                textColor = Color.red;
+                break;
+            case Constants.SkillBelongsTo.Bow:
+                textColor = Color.green;
+                break;
+            case Constants.SkillBelongsTo.Fire:
+                textColor = Color.yellow;
+                break;
+            case Constants.SkillBelongsTo.Water:
+                textColor = Color.blue;
+                break;
+            case Constants.SkillBelongsTo.Earth:
+                Debug.Log("Got here");
+                textColor = new Color(0.4245283f, 0.1902367f, 0.1902367f); // brown
+                break;
+            case Constants.SkillBelongsTo.Air:
+                textColor = Color.grey;
+                break;
+            case Constants.SkillBelongsTo.Other:
+                textColor = Color.magenta;
+                break;
+        }
+        skillName.color = textColor;
+        skillToLearnId = id;
+        skillToLearnInventory = item;
+    }
+
+    public void CancelLearning()
+    {
+        learnSkillPanel.SetActive(false);
+        skillName.text = "";
+        skillToLearnId = -1;
+    }
+
+    public void ConfirmLearning()
+    {
+        learnSkillPanel.SetActive(false);
+        skillName.text = "";
+        if (skillToLearnId == -1 || Constants.GetInstance().skillMap[skillToLearnId] == null)
+        {
+            Debug.LogError("This skill doesn't exist in the map or in the context of this object");
+        }
+        else
+        {
+            pc.AddNewSkill(skillToLearnId);
+            skillToLearnId = -1;
+            skills = pc.skills;
+            AssignSkillsToButtons();
+            AssignTooltips();
+            InventoryManager.instance.Remove(skillToLearnInventory);
         }
         
     }

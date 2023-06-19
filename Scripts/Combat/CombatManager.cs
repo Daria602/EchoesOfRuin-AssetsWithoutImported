@@ -176,11 +176,8 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public void StartCombat(List<int> characterIds)
+    public void AddParticipants(List<int> characterIds)
     {
-        // Clear the list from previous fight
-        characterInitiativeList.Clear();
-        // Iterate through the list of characters that participate in the fight
         for (int i = 0; i < characterIds.Count; i++)
         {
             // For each character in the list, set the animation trigger EnterBattle
@@ -198,11 +195,10 @@ public class CombatManager : MonoBehaviour
             characterInitiativeList.Add(new CharacterInitiative(characterIds[i], CalculateInitiative(characterIds[i])));
 
         }
-        // Sort the list in descending order
-        characterInitiativeList.Sort((a, b) => b.characterInitiative.CompareTo(a.characterInitiative));
-        // Set the current character to take turn
-        currentCharacter = characters[characterInitiativeList[0].characterId];
-        currentCharacter.GetComponent<CombatController>().endedTurn = false;
+    }
+
+    public void EnableUI()
+    {
         if (characterInitiativeList[0].characterId == Constants.PLAYER_ID)
         {
             // enable action point UI
@@ -214,10 +210,22 @@ public class CombatManager : MonoBehaviour
             // say that it's enemies turn
             EnableEnemyTurnUI();
         }
+    }
 
+    public void StartCombat(List<int> characterIds)
+    {
+        // Clear the list from previous fight
+        characterInitiativeList.Clear();
+        // Iterate through the list of characters that participate in the fight
+        AddParticipants(characterIds);
+        // Sort the list in descending order based on initiative
+        characterInitiativeList.Sort((a, b) => b.characterInitiative.CompareTo(a.characterInitiative));
+        // Set the current character to take turn
+        currentCharacter = characters[characterInitiativeList[0].characterId];
+        currentCharacter.GetComponent<CombatController>().endedTurn = false;
+        // Show combat UI
+        EnableUI();
         ShowPortraits();
-
-
     }
     private void ClearPortraits()
     {

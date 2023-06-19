@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Constants : MonoBehaviour 
+public class Constants : MonoBehaviour, ILoadingData 
 {
     private static Constants instance;
     public const int PLAYER_ID = 0;
@@ -17,7 +17,19 @@ public class Constants : MonoBehaviour
     public Weapon[] allWeapons;
     public Dictionary<int, Weapon> weaponMap = new Dictionary<int, Weapon>();
 
+    public int[] itemsStillPresent;
+    public List<GameObject> itemsGOStillPresent;
 
+    public enum SkillBelongsTo
+    {
+        Axe,
+        Bow,
+        Fire,
+        Water,
+        Earth,
+        Air,
+        Other
+    }
     public enum SpellType
     {
         Special,
@@ -58,6 +70,13 @@ public class Constants : MonoBehaviour
         Water
     }
 
+    public enum QuestType
+    {
+        Kill,
+        Explore,
+        Talk
+    }
+
     public static Constants GetInstance()
     {
         return instance;
@@ -95,5 +114,23 @@ public class Constants : MonoBehaviour
                 weaponMap.Add(weaponIds[i], allWeapons[i]);
             }
         }
+    }
+
+    public void LoadGameData(CharacterData characterData)
+    {
+        if (characterData.itemsStillPresent == null)
+        {
+            return;
+        }
+        else
+        {
+            itemsStillPresent = characterData.itemsStillPresent;
+        }
+    }
+
+    public void SaveGameData(ref CharacterData characterData)
+    {
+        characterData.itemsStillPresent = itemsStillPresent;
+        Debug.Log(characterData.itemsStillPresent.Length);
     }
 }
