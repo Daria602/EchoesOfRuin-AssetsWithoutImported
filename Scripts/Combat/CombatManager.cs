@@ -120,6 +120,7 @@ public class CombatManager : MonoBehaviour
             {
                 if (characterInitiativeList[turnIndex].characterId == 0)
                 {
+                    Debug.Log(characters[characterInitiativeList[turnIndex].characterId].GetComponent<PlayerCombat>().skills.Count);   
                     UpdateActionPointsUI(currentCharacter.GetComponent<PlayerCombat>().actionPointsLeft);
                     ToggleSkillsVisibility(currentCharacter.GetComponent<CombatController>().actionPointsLeft);
                     currentCharacter.GetComponent<PlayerCombat>().DoSomething();

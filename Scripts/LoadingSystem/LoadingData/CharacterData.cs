@@ -38,6 +38,7 @@ public class CharacterData
     public int actionIndex;
     public bool charactersTurn;
     public bool IsInCombat;
+    public int characterLevel;
 
     // Character health
 
@@ -90,6 +91,9 @@ public class CharacterData
         this.healthModifier = 0;
         this.maxHealth = 10;
         this.m_currentMaxHealth = 10;
+
+        //Character level & xp
+        this.characterLevel = 1;
     }
 
 }

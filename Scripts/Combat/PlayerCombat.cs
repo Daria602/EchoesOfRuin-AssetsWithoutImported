@@ -46,9 +46,10 @@ public class PlayerCombat : CombatController
         
         if (isPreparingToAffect)
         {
+            
             // do the animation and circle around
             WaitForClick();
-            // Debug.Log("Waiting for a click");
+            
         }
         else if (isPerformingAction)
         {
@@ -262,7 +263,6 @@ public class PlayerCombat : CombatController
     {
         this.IsInCombat = characterData.IsInCombat;
         this.characterId = characterData.characterId;
-        this.m_isInCombat = characterData.m_isInCombat;
         this.skillsIds = characterData.skillsIds;
         this.hasWeapon = characterData.hasWeapon;
         this.weaponId = characterData.weaponId;
@@ -281,7 +281,6 @@ public class PlayerCombat : CombatController
     {
         characterData.IsInCombat = this.IsInCombat;
         characterData.characterId = this.characterId;
-        characterData.m_isInCombat = this.m_isInCombat;
         characterData.skillsIds = this.skillsIds;
         characterData.hasWeapon = this.hasWeapon;
         characterData.weaponId = this.weaponId;

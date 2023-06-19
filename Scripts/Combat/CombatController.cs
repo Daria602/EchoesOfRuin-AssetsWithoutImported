@@ -9,7 +9,7 @@ public class CombatController : MonoBehaviour
 {
 
     public int characterId;
-    public bool m_isInCombat = false;
+    private bool m_isInCombat = false;
     public int[] skillsIds;
     public bool hasWeapon = true;
     public int weaponId;

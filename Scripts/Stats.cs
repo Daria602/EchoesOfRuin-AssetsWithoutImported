@@ -165,6 +165,7 @@ public class Stats : MonoBehaviour
         this.intelligence = characterData.intelligence;
         this.constitution = characterData.constitution;
         this.wits = characterData.wits;
+        this.characterLevel = characterData.characterLevel;
 
         this.availableAbilityPoints = characterData.availableAbilityPoints;
         this.shadow = characterData.shadow;
@@ -186,6 +187,7 @@ public class Stats : MonoBehaviour
         characterData.chaos = this.chaos;
         characterData.luck= this.luck;
         characterData.charisma = this.charisma;
+        characterData.characterLevel = this.characterLevel;
     }
 
     public int GetInitiative()
