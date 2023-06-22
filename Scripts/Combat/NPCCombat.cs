@@ -46,7 +46,7 @@ public class NPCCombat : CombatController
         else if (isPerformingAction)
         {
             //Debug.Log(skills[actionIndex].name);
-            Debug.Log("Performing the action");
+            //Debug.Log("Performing the action");
             //doAction();
             if (donePerforming)
             {

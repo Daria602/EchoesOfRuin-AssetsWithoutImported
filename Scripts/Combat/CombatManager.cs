@@ -107,6 +107,7 @@ public class CombatManager : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(m_isCombatGoing);
         if (isCombatGoing)
         {
             if (characterInitiativeList.Count <= 1)
@@ -120,7 +121,7 @@ public class CombatManager : MonoBehaviour
             {
                 if (characterInitiativeList[turnIndex].characterId == 0)
                 {
-                    Debug.Log(characters[characterInitiativeList[turnIndex].characterId].GetComponent<PlayerCombat>().skills.Count);   
+                    //Debug.Log(characters[characterInitiativeList[turnIndex].characterId].GetComponent<PlayerCombat>().skills.Count);   
                     UpdateActionPointsUI(currentCharacter.GetComponent<PlayerCombat>().actionPointsLeft);
                     ToggleSkillsVisibility(currentCharacter.GetComponent<CombatController>().actionPointsLeft);
                     currentCharacter.GetComponent<PlayerCombat>().DoSomething();
@@ -148,7 +149,7 @@ public class CombatManager : MonoBehaviour
                     {
                         turnIndex++;
                     }
-                    ShowPortraits();
+                    //ShowPortraits();
 
                     currentCharacter = characters[characterInitiativeList[turnIndex].characterId];
                     currentCharacter.GetComponent<CombatController>().endedTurn = false;
@@ -192,6 +193,7 @@ public class CombatManager : MonoBehaviour
             // Set their combat boolean value to true and add them to a list
             characters[characterIds[i]].GetComponent<CombatController>().IsInCombat = true;
             characters[characterIds[i]].GetComponent<Health>().OnHealthUpdateCallback += ShowPortraits;
+            characters[characterIds[i]].GetComponent<Health>().OnDeathCallback += () => Debug.Log("this got triggered");
             characterInitiativeList.Add(new CharacterInitiative(characterIds[i], CalculateInitiative(characterIds[i])));
 
         }
@@ -244,38 +246,42 @@ public class CombatManager : MonoBehaviour
         // clear the previous ones
         ClearPortraits();
 
-        // Set new ones
-        for (int i = 0; i < characterInitiativeList.Count; i++)
+        if (m_isCombatGoing)
         {
-            int currentTurnIndex;
-            if (i + turnIndex >= characterInitiativeList.Count)
+            // Set new ones
+            for (int i = 0; i < characterInitiativeList.Count; i++)
             {
-                currentTurnIndex = characterInitiativeList.Count - (i + turnIndex);
-            }
-            else
-            {
-                currentTurnIndex = i + turnIndex;
-            }
-            int characterId = characterInitiativeList[currentTurnIndex].characterId;
-            Sprite characterPortrait = characters[characterId].GetComponent<CharacterAppearance>().image;
-            int currentHealth = characters[characterId].GetComponent<Health>().currentHealth;
-            int maxHealth = characters[characterId].GetComponent<Health>().CurrentMaxHealth;
-            string characterName = characters[characterId].name == "PlayerInGame" ? "You" : characters[characterId].name;
-            GameObject go = Instantiate(portraitPrefab, portraitsGrid.GetComponent<RectTransform>());
-            Portrait portrait = go.GetComponent<Portrait>();
-            portrait.SetImage(characterPortrait);
-            portrait.SetHealthMinMax(0, maxHealth);
-            portrait.SetHealthValue(currentHealth);
-            portrait.SetName(characterName);
-            if (characterId == 0)
-            {
-                portrait.SetAsAlly();
-            }
-            else
-            {
-                portrait.SetAsEnemy();
+                int currentTurnIndex;
+                if (i + turnIndex >= characterInitiativeList.Count)
+                {
+                    currentTurnIndex = characterInitiativeList.Count - (i + turnIndex);
+                }
+                else
+                {
+                    currentTurnIndex = i + turnIndex;
+                }
+                int characterId = characterInitiativeList[currentTurnIndex].characterId;
+                Sprite characterPortrait = characters[characterId].GetComponent<CharacterAppearance>().image;
+                int currentHealth = characters[characterId].GetComponent<Health>().currentHealth;
+                int maxHealth = characters[characterId].GetComponent<Health>().CurrentMaxHealth;
+                string characterName = characters[characterId].name == "PlayerInGame" ? "You" : characters[characterId].name;
+                GameObject go = Instantiate(portraitPrefab, portraitsGrid.GetComponent<RectTransform>());
+                Portrait portrait = go.GetComponent<Portrait>();
+                portrait.SetImage(characterPortrait);
+                portrait.SetHealthMinMax(0, maxHealth);
+                portrait.SetHealthValue(currentHealth);
+                portrait.SetName(characterName);
+                if (characterId == 0)
+                {
+                    portrait.SetAsAlly();
+                }
+                else
+                {
+                    portrait.SetAsEnemy();
+                }
             }
         }
+        
     }
 
 
@@ -330,6 +336,11 @@ public class CombatManager : MonoBehaviour
             {
                 characterInitiativeList.RemoveAt(i);
             }
+        }
+        turnIndex--;
+        if (id == Constants.PLAYER_ID)
+        {
+            isCombatGoing = false;
         }
     }
 

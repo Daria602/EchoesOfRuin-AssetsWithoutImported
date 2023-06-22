@@ -90,6 +90,29 @@ public class DialogueManager : MonoBehaviour
             ExitDialogueMode();
             TradeManager.GetInstance().TriggerTrade(currentNPC.GetComponent<Inventory>());
         });
+        currentStory.ObserveVariable("choseTheQuest", (variableName, newValue) =>
+        {
+            ExitDialogueMode();
+            Debug.Log(newValue);
+            GiveTheQuest();
+            ExitTrade();
+            //TradeManager.GetInstance().TriggerTrade(currentNPC.GetComponent<Inventory>());
+        });
+    }
+
+    public void GiveTheQuest()
+    {
+        if (QuestManager.GetInstance().AddQuest(currentNPC.GetComponent<DialogueTrigger>().questId))
+        {
+            Constants.GetInstance().questMap[currentNPC.GetComponent<DialogueTrigger>().questId].isActive = true;
+            UpdateJournal();
+        }
+        
+    }
+
+    public void UpdateJournal()
+    {
+        QuestManager.GetInstance().UpdateJournal();
     }
 
     private void ExitDialogueMode()
@@ -114,13 +137,13 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentStory.canContinue)
         {
-            Debug.Log("Story can continue");
+            //Debug.Log("Story can continue");
             dialogueText.text = currentStory.Continue();
             DisplayChoices();
         }
         else
         {
-            Debug.Log("Story cannot continue");
+            //Debug.Log("Story cannot continue");
             ExitDialogueMode();
         }
     }

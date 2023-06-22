@@ -5,7 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class DialogueTrigger : Interactable
 {
-    [SerializeField] private int questId;
+    public int questId;
+    public bool wasTalkedTo = false;
 
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
@@ -14,8 +15,8 @@ public class DialogueTrigger : Interactable
     public override void Interact()
     {
         base.Interact();
+        wasTalkedTo = true;
         DialogueManager.GetInstance().EnterDialogueMode(inkJSON, gameObject);
-        
     }
 
 

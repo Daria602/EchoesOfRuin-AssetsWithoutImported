@@ -10,6 +10,8 @@ public class Health : MonoBehaviour
     public int m_currentMaxHealth;
     public delegate void UpdateHealth();
     public UpdateHealth OnHealthUpdateCallback;
+    public delegate void OnDeath();
+    public OnDeath OnDeathCallback;
     private void Awake()
     {
         healthModifier = 0;

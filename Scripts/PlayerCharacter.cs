@@ -320,9 +320,9 @@ public class PlayerCharacter : MonoBehaviour, ILoadingData
             this.male = true;
             CharacterData cd = new CharacterData();
             maleCharacter.GetComponent<CharacterCreation>().LoadGameData(cd);
-            maleCharacter.GetComponent<PlayerStats>().LoadGameData(cd);
+            maleCharacter.GetComponent<Stats>().LoadGameData(cd);
             femaleCharacter.GetComponent<CharacterCreation>().LoadGameData(cd);
-            femaleCharacter.GetComponent<PlayerStats>().LoadGameData(cd);
+            femaleCharacter.GetComponent<Stats>().LoadGameData(cd);
         }
         else
         {
@@ -345,12 +345,12 @@ public class PlayerCharacter : MonoBehaviour, ILoadingData
         if (male)
         {
             maleCharacter.GetComponent<CharacterCreation>().SaveGameData(ref characterData);
-            maleCharacter.GetComponent<PlayerStats>().SaveGameData(ref characterData);
+            maleCharacter.GetComponent<Stats>().SaveGameData(ref characterData);
         }
         else
         {
             femaleCharacter.GetComponent<CharacterCreation>().SaveGameData(ref characterData);
-            femaleCharacter.GetComponent<PlayerStats>().SaveGameData(ref characterData);
+            femaleCharacter.GetComponent<Stats>().SaveGameData(ref characterData);
         }
         
     }

@@ -12,11 +12,11 @@ public class NPCHealth : Health
         
         if (currentHealth - damage <= 0)
         {
-            Die();
-            if (OnHealthUpdateCallback != null)
+            if (OnDeathCallback != null)
             {
-                OnHealthUpdateCallback.Invoke();
+                OnDeathCallback.Invoke();
             }
+            Die();
             return false;
         }
         else

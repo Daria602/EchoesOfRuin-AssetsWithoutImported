@@ -46,7 +46,7 @@ public class CombatController : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Combat controller thing");
+        //Debug.Log("Combat controller thing");
         AddSkills();
         EquipWeapon();
     }

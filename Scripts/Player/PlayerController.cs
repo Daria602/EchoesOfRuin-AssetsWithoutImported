@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -83,6 +84,7 @@ public class PlayerController : MonoBehaviour, ILoadingData
     }
 
     public int currentThreshold = 1000;
+    public TextMeshProUGUI xpPopUp;
 
     public void CalculateNewThreshold()
     {
@@ -96,7 +98,7 @@ public class PlayerController : MonoBehaviour, ILoadingData
 
     public void AddXP(int XPValue)
     {
-        
+        StartCoroutine(ShowXPGranted("helllooooooo", 1f));
         XP += XPValue;
         
 
@@ -127,7 +129,7 @@ public class PlayerController : MonoBehaviour, ILoadingData
                 {
                     case ClickType.UI:
                         RemoveFocus();
-                        Debug.Log("Clicked over UI");
+                        //Debug.Log("Clicked over UI");
                         break;
                     case ClickType.Move:
                         RemoveFocus();
@@ -140,7 +142,7 @@ public class PlayerController : MonoBehaviour, ILoadingData
                         movement.MovePlayer(point);
                         RemoveFocus();
                         SetFocus(interactable);
-                        Debug.Log("Clicked to interract");
+                        //Debug.Log("Clicked to interract");
                         break;
                 }
 
@@ -150,12 +152,15 @@ public class PlayerController : MonoBehaviour, ILoadingData
                 animator.SetBool("isRunning", false);
             }
         }
+        
+    }
 
-        
-        
-
-        //ShowDistance();
-        
+    IEnumerator ShowXPGranted(string message, float delay)
+    {
+        xpPopUp.gameObject.SetActive(true);
+        xpPopUp.text = message;
+        yield return new WaitForSeconds(delay);
+        xpPopUp.gameObject.SetActive(false);
     }
 
     public void RemoveFocus(Interactable interactable = null)

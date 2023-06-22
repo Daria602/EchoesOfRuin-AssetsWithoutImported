@@ -9,11 +9,11 @@ public class PlayerHealth : Health
         
         if (currentHealth - damage <= 0)
         {
-            Die();
-            if (OnHealthUpdateCallback != null)
+            if (OnDeathCallback != null)
             {
-                OnHealthUpdateCallback.Invoke();
+                OnDeathCallback.Invoke();
             }
+            Die();
             return false;
         }
         else
@@ -30,6 +30,8 @@ public class PlayerHealth : Health
     public override void Die()
     {
         base.Die();
+        CombatManager.GetInstance().SignalDeath(gameObject.GetComponent<CombatController>().characterId);
+        gameObject.SetActive(false);
         Debug.Log("Player dies");
     }
     //public void Die()

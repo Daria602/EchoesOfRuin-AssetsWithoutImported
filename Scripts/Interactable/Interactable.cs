@@ -15,7 +15,7 @@ public class Interactable : MonoBehaviour
     //Implement this for interactable objects
     public virtual void Interact()
     {
-        Debug.Log("Interacting with " + transform.name);
+        //Debug.Log("Interacting with " + transform.name);
     }
 
     private void Start()
@@ -31,7 +31,7 @@ public class Interactable : MonoBehaviour
             float distance = Vector3.Distance(player.position, transform.position);
             if (distance <= radius)
             {
-                Debug.Log("Got here");
+                //Debug.Log("Got here");
                 Interact();
                 hasInteracted = true;
                 IsFocus = false;

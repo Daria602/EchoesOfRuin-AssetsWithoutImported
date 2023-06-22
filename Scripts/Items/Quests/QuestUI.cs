@@ -7,6 +7,7 @@ public class QuestUI : MonoBehaviour
 {
     public TextMeshProUGUI questText;
     public SimpleTooltip tooltip;
+    private string tooltipText;
 
     public void SetText(string text)
     {
@@ -15,12 +16,18 @@ public class QuestUI : MonoBehaviour
 
     public void SetTooltip(string title, string description)
     {
-        tooltip.infoLeft = "$" + title + "`\n" + description;
+        tooltipText = "$" + title + "`\n" + description;
     }
 
     private void OnEnable()
     {
         tooltip = GetComponent<SimpleTooltip>();
+        tooltip.infoLeft = tooltipText;
+    }
+
+    public void SelfDestroy()
+    {
+        Destroy(gameObject);
     }
 
 }

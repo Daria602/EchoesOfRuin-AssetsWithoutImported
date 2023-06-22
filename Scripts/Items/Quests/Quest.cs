@@ -6,6 +6,7 @@ using UnityEngine;
 public class Quest : ScriptableObject
 {
     public int XPGranted;
+    public bool isActive = false;
     public Constants.QuestType questType;
     
     [Header("For Kill type")]
@@ -16,4 +17,10 @@ public class Quest : ScriptableObject
 
     [Header("For Talk type")]
     public int idNPC;
+
+    [Header("Quest description")]
+    public string questTitle;
+    public string questDescription;
+
+    
 }

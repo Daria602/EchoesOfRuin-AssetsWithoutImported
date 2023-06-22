@@ -6,7 +6,6 @@ public class Constants : MonoBehaviour, ILoadingData
 {
     private static Constants instance;
     public const int PLAYER_ID = 0;
-
     public const float DISTANCE_COST_UNIT = 1.5f;
 
     public int[] skillIds;
@@ -19,6 +18,10 @@ public class Constants : MonoBehaviour, ILoadingData
 
     public int[] itemsStillPresent;
     public List<GameObject> itemsGOStillPresent;
+
+    public int[] questIds;
+    public Quest[] quests;
+    public Dictionary<int, Quest> questMap = new Dictionary<int, Quest>();
 
     public enum SkillBelongsTo
     {
@@ -112,6 +115,18 @@ public class Constants : MonoBehaviour, ILoadingData
             for (int i = 0; i < weaponIds.Length; i++)
             {
                 weaponMap.Add(weaponIds[i], allWeapons[i]);
+            }
+        }
+
+        if (questIds.Length != quests.Length)
+        {
+            Debug.LogError("weapon id's should have the same number of elements as all weapons array");
+        }
+        else
+        {
+            for (int i = 0; i < questIds.Length; i++)
+            {
+                questMap.Add(questIds[i], quests[i]);
             }
         }
     }

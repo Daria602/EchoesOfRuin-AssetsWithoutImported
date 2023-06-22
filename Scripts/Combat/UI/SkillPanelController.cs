@@ -50,7 +50,7 @@ public class SkillPanelController : MonoBehaviour
         {
             
             skills = pc.skills;
-            Debug.Log("Skill panel thing " + skills.Count);
+            //Debug.Log("Skill panel thing " + skills.Count);
             AssignSkillsToButtons();
             AssignTooltips();
             afterStart = false;
@@ -99,7 +99,7 @@ public class SkillPanelController : MonoBehaviour
     }
     public void AssignSkillsToButtons()
     {
-        Debug.Log("Got to asign skills and the length is " + skills.Count);
+        //Debug.Log("Got to asign skills and the length is " + skills.Count);
         if (skills.Count == 0)
         {
             Debug.LogError("Object " + transform.name + " doesn't have any skills assigned");
@@ -130,7 +130,7 @@ public class SkillPanelController : MonoBehaviour
     public void SetButtonInactive(bool activity, int buttonIndex, int cooldown)
     {
         slots[buttonIndex].interactable = activity;
-        Debug.Log("Should be: " + activity + ", is actually: " + slots[buttonIndex].interactable);
+        //Debug.Log("Should be: " + activity + ", is actually: " + slots[buttonIndex].interactable);
         if (cooldown == 0)
         {
             slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = "";
