@@ -103,10 +103,10 @@ public class PlayerCombat : CombatController
     }
     private void WaitForClick()
     {
-        if (LeftMouseClicked())
+        if (InputManager.GetInstance().LeftMouseClicked())
         {
             
-            PlayerController.ClickType clickType = gameObject.GetComponent<PlayerController>().GetClickType(out pointInScene, out interactable);
+            Constants.ClickType clickType = InputManager.GetInstance().GetClickType(out pointInScene, out interactable);
             Debug.Log(skills[actionIndex].name == "Move(Clone)");
             Debug.Log(skills[actionIndex].name);
             if (skills[actionIndex].name == "Move(Clone)")
@@ -137,7 +137,7 @@ public class PlayerCombat : CombatController
             }
             else
             {
-                if (clickType == PlayerController.ClickType.Interact)
+                if (clickType == Constants.ClickType.Interact)
                 {
                     Debug.Log("Clicked interract");
                     // TODO: check if Interractable is enemy (and not a potion bottle, for example)
@@ -164,21 +164,13 @@ public class PlayerCombat : CombatController
                 }
             }
         }
-        else if (RightMouseClicked())
+        else if (InputManager.GetInstance().RightMouseClicked())
         {
             CancelAction();
         }
     }
 
-    private bool LeftMouseClicked()
-    {
-        return Input.GetMouseButtonDown(0);
-    }
-
-    private bool RightMouseClicked()
-    {
-        return Input.GetMouseButtonDown(1);
-    }
+    
 
     private void CancelPrepare()
     {

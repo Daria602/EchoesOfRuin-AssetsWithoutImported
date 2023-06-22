@@ -166,18 +166,18 @@ public class CombatController : MonoBehaviour
         {
             switch (skills[actionIndex].affectedByAttributes[i])
             {
-                case Constants.AffectedByAttributes.Strength:
+                case Constants.Attributes.Strength:
                     break;
-                case Constants.AffectedByAttributes.Agility:
+                case Constants.Attributes.Agility:
                     break;
-                case Constants.AffectedByAttributes.Intelligence:
+                case Constants.Attributes.Intelligence:
                     additions.Add(
                         baseDamage * gameObject.GetComponent<Stats>().intelligence * 0.05f
                         );
                     break;
-                case Constants.AffectedByAttributes.Constitution:
+                case Constants.Attributes.Constitution:
                     break;
-                case Constants.AffectedByAttributes.Wits:
+                case Constants.Attributes.Wits:
                     break;
             }
         }

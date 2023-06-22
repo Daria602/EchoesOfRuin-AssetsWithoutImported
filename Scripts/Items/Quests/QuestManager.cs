@@ -134,7 +134,7 @@ public class QuestManager : MonoBehaviour
 
     public bool CheckIfTalked(Quest quest)
     {
-        GameObject personToTalkTo = CombatManager.GetInstance().characters[quest.idNPC];
+        GameObject personToTalkTo = Constants.GetInstance().characters[quest.idNPC];
         if (personToTalkTo.GetComponent<DialogueTrigger>().wasTalkedTo)
         {
             return true;

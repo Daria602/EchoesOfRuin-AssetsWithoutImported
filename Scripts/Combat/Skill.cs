@@ -38,8 +38,8 @@ public class Skill : ScriptableObject
     // TODO: afflict enemies with debuffs
 
 
-    public Constants.AffectedByAttributes[] affectedByAttributes;
-    public Constants.AffectedByAbilities[] affectedByAbilities;
+    public Constants.Attributes[] affectedByAttributes;
+    //public Constants.AffectedByAbilities[] affectedByAbilities;
 
     private void Awake()
     {

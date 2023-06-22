@@ -19,9 +19,7 @@ public class CombatManager : MonoBehaviour
     }
     public List<CharacterInitiative> characterInitiativeList = new List<CharacterInitiative>();
 
-    public int[] characterIdKeys;
-    public GameObject[] characterObjectValues;
-    public Dictionary<int, GameObject> characters = new Dictionary<int, GameObject>();
+    
     private bool m_isCombatGoing = false;
     public bool isCombatGoing { get => m_isCombatGoing; set => CombatValueChanged(value); }
     public int turnIndex = 0;
@@ -60,17 +58,7 @@ public class CombatManager : MonoBehaviour
 
     private void Start()
     {
-        if (characterIdKeys.Length != characterObjectValues.Length)
-        {
-            Debug.LogError("Keys and values of character id's dictionary have different size");
-        }
-        else
-        {
-            for (int i = 0; i < characterIdKeys.Length; i++)
-            {
-                characters.Add(characterIdKeys[i], characterObjectValues[i]);
-            }
-        }
+        
     }
 
     public void CombatValueChanged(bool value)
@@ -107,7 +95,6 @@ public class CombatManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(m_isCombatGoing);
         if (isCombatGoing)
         {
             if (characterInitiativeList.Count <= 1)
@@ -142,7 +129,7 @@ public class CombatManager : MonoBehaviour
                         round++;
                         for (int i = 0; i < characterInitiativeList.Count; i++)
                         {
-                            characters[characterInitiativeList[i].characterId].GetComponent<CombatController>().DecreaseCooldown(false);
+                            Constants.GetInstance().characters[characterInitiativeList[i].characterId].GetComponent<CombatController>().DecreaseCooldown(false);
                         }
                     }
                     else
@@ -151,7 +138,7 @@ public class CombatManager : MonoBehaviour
                     }
                     //ShowPortraits();
 
-                    currentCharacter = characters[characterInitiativeList[turnIndex].characterId];
+                    currentCharacter = Constants.GetInstance().characters[characterInitiativeList[turnIndex].characterId];
                     currentCharacter.GetComponent<CombatController>().endedTurn = false;
                     if (characterInitiativeList[turnIndex].characterId == Constants.PLAYER_ID)
                     {
@@ -182,18 +169,18 @@ public class CombatManager : MonoBehaviour
         for (int i = 0; i < characterIds.Count; i++)
         {
             // For each character in the list, set the animation trigger EnterBattle
-            characters[characterIds[i]].GetComponent<Animator>().SetTrigger("EnterBattle");
+            Constants.GetInstance().characters[characterIds[i]].GetComponent<Animator>().SetTrigger("EnterBattle");
             // If the character is not a player, look at the player
             if (characterIds[i] != Constants.PLAYER_ID)
             {
-                characters[characterIds[i]].transform.LookAt(characters[Constants.PLAYER_ID].transform);
-                characters[characterIds[i]].GetComponent<OutlineController>().IsEnabled = true;
-                characters[characterIds[i]].GetComponent<OutlineController>().ChangeColor(0);
+                Constants.GetInstance().characters[characterIds[i]].transform.LookAt(Constants.GetInstance().characters[Constants.PLAYER_ID].transform);
+                Constants.GetInstance().characters[characterIds[i]].GetComponent<OutlineController>().IsEnabled = true;
+                Constants.GetInstance().characters[characterIds[i]].GetComponent<OutlineController>().ChangeColor(0);
             }
             // Set their combat boolean value to true and add them to a list
-            characters[characterIds[i]].GetComponent<CombatController>().IsInCombat = true;
-            characters[characterIds[i]].GetComponent<Health>().OnHealthUpdateCallback += ShowPortraits;
-            characters[characterIds[i]].GetComponent<Health>().OnDeathCallback += () => Debug.Log("this got triggered");
+            Constants.GetInstance().characters[characterIds[i]].GetComponent<CombatController>().IsInCombat = true;
+            Constants.GetInstance().characters[characterIds[i]].GetComponent<Health>().OnHealthUpdateCallback += ShowPortraits;
+            Constants.GetInstance().characters[characterIds[i]].GetComponent<Health>().OnDeathCallback += () => Debug.Log("this got triggered");
             characterInitiativeList.Add(new CharacterInitiative(characterIds[i], CalculateInitiative(characterIds[i])));
 
         }
@@ -223,7 +210,7 @@ public class CombatManager : MonoBehaviour
         // Sort the list in descending order based on initiative
         characterInitiativeList.Sort((a, b) => b.characterInitiative.CompareTo(a.characterInitiative));
         // Set the current character to take turn
-        currentCharacter = characters[characterInitiativeList[0].characterId];
+        currentCharacter = Constants.GetInstance().characters[characterInitiativeList[0].characterId];
         currentCharacter.GetComponent<CombatController>().endedTurn = false;
         // Show combat UI
         EnableUI();
@@ -261,10 +248,10 @@ public class CombatManager : MonoBehaviour
                     currentTurnIndex = i + turnIndex;
                 }
                 int characterId = characterInitiativeList[currentTurnIndex].characterId;
-                Sprite characterPortrait = characters[characterId].GetComponent<CharacterAppearance>().image;
-                int currentHealth = characters[characterId].GetComponent<Health>().currentHealth;
-                int maxHealth = characters[characterId].GetComponent<Health>().CurrentMaxHealth;
-                string characterName = characters[characterId].name == "PlayerInGame" ? "You" : characters[characterId].name;
+                Sprite characterPortrait = Constants.GetInstance().characters[characterId].GetComponent<CharacterAppearance>().image;
+                int currentHealth = Constants.GetInstance().characters[characterId].GetComponent<Health>().currentHealth;
+                int maxHealth = Constants.GetInstance().characters[characterId].GetComponent<Health>().CurrentMaxHealth;
+                string characterName = Constants.GetInstance().characters[characterId].name == "PlayerInGame" ? "You" : Constants.GetInstance().characters[characterId].name;
                 GameObject go = Instantiate(portraitPrefab, portraitsGrid.GetComponent<RectTransform>());
                 Portrait portrait = go.GetComponent<Portrait>();
                 portrait.SetImage(characterPortrait);
@@ -288,7 +275,7 @@ public class CombatManager : MonoBehaviour
 
     public int CalculateInitiative(int id)
     {
-        return characters[id].GetComponent<Stats>().GetInitiative();
+        return Constants.GetInstance().characters[id].GetComponent<Stats>().GetInitiative();
 
     }
 

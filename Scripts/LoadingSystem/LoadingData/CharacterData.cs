@@ -62,11 +62,11 @@ public class CharacterData
 
         // Attributes
         this.availableAttributePoints = 5;
-        this.strength = 10;
-        this.agility = 10;
-        this.intelligence = 10;
-        this.constitution = 10;
-        this.wits = 10;
+        this.strength = 0;
+        this.agility = 0;
+        this.intelligence = 0;
+        this.constitution = 0;
+        this.wits = 0;
 
         // Abilities
         this.availableAbilityPoints = 3;

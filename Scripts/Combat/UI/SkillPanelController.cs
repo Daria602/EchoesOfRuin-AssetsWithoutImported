@@ -213,7 +213,7 @@ public class SkillPanelController : MonoBehaviour
             skills = pc.skills;
             AssignSkillsToButtons();
             AssignTooltips();
-            InventoryManager.instance.Remove(skillToLearnInventory);
+            InventoryManager.GetInstance().Remove(skillToLearnInventory);
         }
         
     }

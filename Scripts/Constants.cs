@@ -5,8 +5,16 @@ using UnityEngine;
 public class Constants : MonoBehaviour, ILoadingData 
 {
     private static Constants instance;
+    public static Constants GetInstance()
+    {
+        return instance;
+    }
     public const int PLAYER_ID = 0;
     public const float DISTANCE_COST_UNIT = 1.5f;
+
+    public int[] characterIdKeys;
+    public GameObject[] characterObjectValues;
+    public Dictionary<int, GameObject> characters = new Dictionary<int, GameObject>();
 
     public int[] skillIds;
     public Skill[] allSkills;
@@ -54,7 +62,7 @@ public class Constants : MonoBehaviour, ILoadingData
         NONE, Axe, Bow, Wand
     }
 
-    public enum AffectedByAttributes
+    public enum Attributes
     {
         Strength,
         Agility,
@@ -62,16 +70,23 @@ public class Constants : MonoBehaviour, ILoadingData
         Constitution,
         Wits
     }
-
-    public enum AffectedByAbilities
+    public enum Abilities
     {
-        Melee,
-        Ranged,
-        Fire,
-        Air,
-        Earth,
-        Water
+        Shadow,
+        Chaos,
+        Luck,
+        Charisma
     }
+
+    //public enum AffectedByAbilities
+    //{
+    //    Melee,
+    //    Ranged,
+    //    Fire,
+    //    Air,
+    //    Earth,
+    //    Water
+    //}
 
     public enum QuestType
     {
@@ -79,11 +94,15 @@ public class Constants : MonoBehaviour, ILoadingData
         Explore,
         Talk
     }
-
-    public static Constants GetInstance()
+    public enum ClickType
     {
-        return instance;
+        NONE,
+        UI,
+        Move,
+        Interact
     }
+
+    
 
 
     private void Awake()
@@ -127,6 +146,18 @@ public class Constants : MonoBehaviour, ILoadingData
             for (int i = 0; i < questIds.Length; i++)
             {
                 questMap.Add(questIds[i], quests[i]);
+            }
+        }
+
+        if (characterIdKeys.Length != characterObjectValues.Length)
+        {
+            Debug.LogError("Keys and values of character id's dictionary have different size");
+        }
+        else
+        {
+            for (int i = 0; i < characterIdKeys.Length; i++)
+            {
+                characters.Add(characterIdKeys[i], characterObjectValues[i]);
             }
         }
     }

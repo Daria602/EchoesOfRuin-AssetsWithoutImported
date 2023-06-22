@@ -12,11 +12,11 @@ public class ItemPickup : Interactable
     void PickItemUp()
     {
         //If the item was added to the list return true        
-        isItemPicked = InventoryManager.instance.Add(item);
+        isItemPicked = InventoryManager.GetInstance().Add(item);
 
         if (isItemPicked) {
 
-            GetComponent<VisualItem>().RemoveItemFromConst();
+            //GetComponent<VisualItem>().RemoveItemFromConst();
             Destroy(gameObject);
         }      
     }

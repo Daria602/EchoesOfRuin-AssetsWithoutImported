@@ -5,7 +5,12 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     //Singleton pattern, shared by all instances of this class
-    public static InventoryManager instance;
+    private static InventoryManager instance;
+    public static InventoryManager GetInstance()
+    {
+        return instance;
+    }
+
     public List<Item> items = new List<Item>();
     public int inventorySpace = 25;
     //Trigger this callback to inform UI of inventory changes

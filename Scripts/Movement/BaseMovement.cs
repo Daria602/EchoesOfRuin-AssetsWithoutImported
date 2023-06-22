@@ -5,8 +5,7 @@ using UnityEngine.AI;
 
 public class BaseMovement : MonoBehaviour
 {
-    [HideInInspector]
-    public NavMeshAgent agent;
+    protected NavMeshAgent agent;
     private bool m_isAllowedToMove = true;
     protected NavMeshPath path = null;
     public float maximumTravelDistance;
@@ -19,7 +18,7 @@ public class BaseMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         maximumTravelDistance = agent.stoppingDistance * 10;
     }
- 
+
     public void SetPath()
     {
         agent.SetPath(path);
@@ -76,9 +75,13 @@ public class BaseMovement : MonoBehaviour
 
     void MovementStateIsChanged(bool value)
     {
-        agent.ResetPath();
-        gameObject.GetComponent<Animator>().SetBool("isRunning", false);
-        m_isAllowedToMove = value;
+        if (agent != null)
+        {
+            agent.ResetPath();
+            gameObject.GetComponent<Animator>().SetBool("isRunning", false);
+            m_isAllowedToMove = value;
+        }
+        
     }
 
 

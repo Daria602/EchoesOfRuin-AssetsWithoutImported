@@ -60,7 +60,7 @@ public class SlotScript : MonoBehaviour
 
     public void OnClickRemoveItemButton()
     {
-        InventoryManager.instance.Remove(item);
+        InventoryManager.GetInstance().Remove(item);
         Debug.Log("Removing item " + item);
     }
 
