@@ -28,8 +28,8 @@ public class Skill : ScriptableObject
 
     public int cost;
 
-    public float baseDamageMin;
-    public float baseDamageMax;
+    public int baseDamageMin;
+    public int baseDamageMax;
 
 
     public Constants.Spell spell;

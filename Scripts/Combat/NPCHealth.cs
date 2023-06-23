@@ -12,21 +12,19 @@ public class NPCHealth : Health
         
         if (currentHealth - damage <= 0)
         {
-            if (OnDeathCallback != null)
-            {
-                OnDeathCallback.Invoke();
-            }
-            Die();
-            return false;
+            //Die();
+            // NPC dies
+            return true;
         }
         else
         {
             currentHealth -= damage;
-            if (OnHealthUpdateCallback != null)
-            {
-                OnHealthUpdateCallback.Invoke();
-            }
-            return true;
+            //if (OnHealthUpdateCallback != null)
+            //{
+            //    OnHealthUpdateCallback.Invoke();
+            //}
+            // NPC was damaged, but didn't die
+            return false;
         }
     }
     public override void Die()

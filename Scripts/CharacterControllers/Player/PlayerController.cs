@@ -1,11 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.EventSystems;
-//using UnityEngine.UIElements;
-using UnityEngine.UI;
 
 public class PlayerController : CharacterController, ILoadingData
 {
@@ -126,7 +120,7 @@ public class PlayerController : CharacterController, ILoadingData
             {
                 if (hitCollider.gameObject.tag == "Attackable")
                 {
-                    participants.Add(hitCollider.gameObject.GetComponent<CombatController>().characterId);
+                    participants.Add(hitCollider.gameObject.GetComponent<CharacterController>().characterId);
                 }
             }
             if (participants.Count > 0)
@@ -143,7 +137,7 @@ public class PlayerController : CharacterController, ILoadingData
     {
         
         CombatManager.GetInstance().StartCombat(participantsIds);
-        CombatManager.GetInstance().isCombatGoing = true;
+        
 
     }
 

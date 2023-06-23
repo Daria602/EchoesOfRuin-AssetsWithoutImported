@@ -91,19 +91,19 @@ public class CombatController : MonoBehaviour
         
     }
 
-    protected void Attack()
-    {
-        if (finishedPerforming)
-        {
-            finishedPerforming = false;
-            // Deal damage here
-            Debug.Log("Got into Attack");
-            isPerformingAction = false;
-            gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].affectAnimationBoolName, false);
-            skills[actionIndex].RemoveEffect();
+    //protected void Attack()
+    //{
+    //    if (finishedPerforming)
+    //    {
+    //        finishedPerforming = false;
+    //        // Deal damage here
+    //        Debug.Log("Got into Attack");
+    //        isPerformingAction = false;
+    //        gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].affectAnimationBoolName, false);
+    //        skills[actionIndex].RemoveEffect();
 
-        }
-    }
+    //    }
+    //}
 
     private void CombatStateIsChanged(bool value)
     {

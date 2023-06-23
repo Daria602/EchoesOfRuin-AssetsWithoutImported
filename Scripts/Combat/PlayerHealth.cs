@@ -9,21 +9,13 @@ public class PlayerHealth : Health
         
         if (currentHealth - damage <= 0)
         {
-            if (OnDeathCallback != null)
-            {
-                OnDeathCallback.Invoke();
-            }
-            Die();
-            return false;
+            //Die();
+            return true;
         }
         else
         {
             currentHealth -= damage;
-            if (OnHealthUpdateCallback != null)
-            {
-                OnHealthUpdateCallback.Invoke();
-            }
-            return true;
+            return false;
         }
         
     }

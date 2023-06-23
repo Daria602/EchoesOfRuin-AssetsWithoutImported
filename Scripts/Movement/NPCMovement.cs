@@ -6,7 +6,13 @@ public class NPCMovement : BaseMovement
 {
     public Vector3[] positionsToMove = null;
     private int posToMoveIndex = -1;
-    private WaitCoroutine waitCoroutine = new WaitCoroutine();
+    private enum NPCState
+    {
+        ChoosingDirection,
+        Walking,
+        Staying
+    }
+    private NPCState state = NPCState.ChoosingDirection;
 
 
     // To set the positions
@@ -44,6 +50,7 @@ public class NPCMovement : BaseMovement
             }
             else
             {
+                state = NPCState.ChoosingDirection;
                 agent.ResetPath();
             }
         }
@@ -57,25 +64,41 @@ public class NPCMovement : BaseMovement
             SetPath();
         }
     }
-
+    
     private void MoveStatic()
     {
-        if (HasArrived())
+        switch (state)
         {
-            gameObject.GetComponent<Animator>().SetBool("isRunning", false);
-            posToMoveIndex =
+            case NPCState.ChoosingDirection:
+                // choose position to move to
+                posToMoveIndex =
                 (posToMoveIndex + 1 == positionsToMove.Length) ? 0 : posToMoveIndex + 1;
-            if (CanGetToDestination(positionsToMove[posToMoveIndex]))
-            {
-                gameObject.GetComponent<Animator>().SetBool("isRunning", true);
-                SetPath();
+                if (CanGetToDestination(positionsToMove[posToMoveIndex]))
+                {
+                    SetPath();
+                    state = NPCState.Walking;
+                    gameObject.GetComponent<Animator>().SetBool("isRunning", true);
 
-            }
-
+                }
+                break;
+            case NPCState.Walking:
+                if (HasArrived())
+                {
+                    state = NPCState.Staying;
+                    gameObject.GetComponent<Animator>().SetBool("isRunning", false);
+                }
+                // walk untill there and check if arrived
+                break;
+            case NPCState.Staying:
+                // wait for few seconds
+                StartCoroutine(WaitBeforeLeaving(3f));
+                break;
         }
 
     }
-
-    
-
+    IEnumerator WaitBeforeLeaving(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        state = NPCState.ChoosingDirection;
+    }
 }
