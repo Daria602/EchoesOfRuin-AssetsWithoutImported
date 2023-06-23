@@ -106,86 +106,104 @@ public class CombatManager : MonoBehaviour
             //else
             //{
                 
-                if (currentCharacter.GetComponent<CombatController>().endedTurn)
+            if (currentCharacter.GetComponent<CombatController>().endedTurn)
+            {
+
+                if (turnIndex + 1 == characterInitiativeList.Count)
                 {
-
-                    if (turnIndex + 1 == characterInitiativeList.Count)
+                    turnIndex = 0;
+                    round++;
+                    for (int i = 0; i < characterInitiativeList.Count; i++)
                     {
-                        turnIndex = 0;
-                        round++;
-                        //for (int i = 0; i < characterInitiativeList.Count; i++)
-                        //{
-                        //    Constants.GetInstance().characters[characterInitiativeList[i].characterId].GetComponent<CombatController>().DecreaseCooldown(false);
-                        //}
+                        Constants.GetInstance().characters[characterInitiativeList[i].characterId].GetComponent<CombatController>().DecreaseCooldown(false);
+                        Constants.GetInstance().characters[characterInitiativeList[i].characterId].GetComponent<CombatController>().actionPointsLeft = 5;
+                        Debug.Log("Got to decrease cooldowns of " + Constants.GetInstance().characters[characterInitiativeList[i].characterId].name);
+                        foreach (Skill skill in Constants.GetInstance().characters[characterInitiativeList[i].characterId].GetComponent<CombatController>().skills)
+                        {
+                            Debug.Log(skill.skillName + " of cooldown " + skill.cooldown);
+                        }
                     }
-                    else
-                    {
-                        turnIndex++;
-                    }
-                    //ShowPortraits();
-
-                    currentCharacter = Constants.GetInstance().characters[characterInitiativeList[turnIndex].characterId];
-                    currentCharacter.GetComponent<CombatController>().endedTurn = false;
-                    //if (characterInitiativeList[turnIndex].characterId == Constants.PLAYER_ID)
-                    //{
-                    //    // enable action point UI
-                    //    //EnableActionPointsUI();
-                    //    //UpdateActionPointsUI(CombatController.MAX_ACTION_POINTS);
-                    //    List<Skill> skills = currentCharacter.GetComponent<CombatController>().skills;
-                    //    for (int i = 0; i < skills.Count; i++)
-                    //    {
-                    //        SkillPanelController.GetInstance().UpdateCooldown(i, skills[i].cooldown);
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    // say that it's enemies turn
-                    //    //EnableEnemyTurnUI();
-                    //}
-                    //currentCharacter.GetComponent<CombatController>().actionPointsLeft = CombatController.MAX_ACTION_POINTS;
-
-
                 }
                 else
                 {
-                    if (characterInitiativeList[turnIndex].characterId == 0)
-                    {
-                        //Debug.Log("Player is doing the turn");
-                        if (Input.GetKeyDown(KeyCode.P))
-                        {
-                            Debug.Log("Player ended turn");
-                            currentCharacter.GetComponent<CombatController>().endedTurn = true;
-                        }
-                        bool targetDied = currentCharacter.GetComponent<PlayerCombat>().PlayersTurn();
-                        if (targetDied)
-                        {
-                            GameObject deadParticipant = currentCharacter.GetComponent<PlayerCombat>().interactable.gameObject;
-                            RecalculateBattle(deadParticipant);
-                            Debug.Log("The enemy dies");
-                        }
-                        //Debug.Log(characters[characterInitiativeList[turnIndex].characterId].GetComponent<PlayerCombat>().skills.Count);   
-                        //UpdateActionPointsUI(currentCharacter.GetComponent<PlayerCombat>().actionPointsLeft);
-                        //ToggleSkillsVisibility(currentCharacter.GetComponent<CombatController>().actionPointsLeft);
-                        //currentCharacter.GetComponent<PlayerCombat>().DoSomething();
-                    }
-                    else
-                    {
-                        bool playerDied = currentCharacter.GetComponent<NPCCombat>().NPCTurn();
-                        if (playerDied)
-                        {
-                        Debug.Log("player dies");
-                        }
-                        //Debug.Log("NPC is doing the turn");
-                        if (Input.GetKeyDown(KeyCode.N))
-                        {
-                            Debug.Log("NPC ended turn");
-                            currentCharacter.GetComponent<CombatController>().endedTurn = true;
-                        }
-                        //currentCharacter.GetComponent<NPCCombat>().DoSomething();
-                    }
+                    turnIndex++;
                 }
+                //ShowPortraits();
+
+                currentCharacter = Constants.GetInstance().characters[characterInitiativeList[turnIndex].characterId];
+                currentCharacter.GetComponent<CombatController>().endedTurn = false;
+                EnableUI();
+                //if (characterInitiativeList[turnIndex].characterId == Constants.PLAYER_ID)
+                //{
+                //    // enable action point UI
+                //    //EnableActionPointsUI();
+                //    //UpdateActionPointsUI(CombatController.MAX_ACTION_POINTS);
+                //    List<Skill> skills = currentCharacter.GetComponent<CombatController>().skills;
+                //    for (int i = 0; i < skills.Count; i++)
+                //    {
+                //        SkillPanelController.GetInstance().UpdateCooldown(i, skills[i].cooldown);
+                //    }
+                //}
+                //else
+                //{
+                //    // say that it's enemies turn
+                //    //EnableEnemyTurnUI();
+                //}
+                //currentCharacter.GetComponent<CombatController>().actionPointsLeft = CombatController.MAX_ACTION_POINTS;
+
+
+            }
+            else
+            {
+                if (characterInitiativeList[turnIndex].characterId == 0)
+                {
+                    //Debug.Log("Player is doing the turn");
+                    if (Input.GetKeyDown(KeyCode.P))
+                    {
+                        currentCharacter.GetComponent<CombatController>().endedTurn = true;
+                    }
+                    bool targetDied = currentCharacter.GetComponent<PlayerCombat>().PlayersTurn();
+                    if (targetDied)
+                    {
+                        GameObject deadParticipant = currentCharacter.GetComponent<PlayerCombat>().interactable.gameObject;
+                        RecalculateBattle(deadParticipant);
+                    }
+                    //Debug.Log(characters[characterInitiativeList[turnIndex].characterId].GetComponent<PlayerCombat>().skills.Count);   
+                    //UpdateActionPointsUI(currentCharacter.GetComponent<PlayerCombat>().actionPointsLeft);
+                    //ToggleSkillsVisibility(currentCharacter.GetComponent<CombatController>().actionPointsLeft);
+                    //currentCharacter.GetComponent<PlayerCombat>().DoSomething();
+                }
+                else
+                {
+                    bool playerDied = currentCharacter.GetComponent<NPCCombat>().NPCTurn();
+                    if (playerDied)
+                    {
+                    Debug.Log("player dies");
+                    }
+                    //Debug.Log("NPC is doing the turn");
+                    if (Input.GetKeyDown(KeyCode.N))
+                    {
+                        Debug.Log("NPC ended turn");
+                        currentCharacter.GetComponent<CombatController>().endedTurn = true;
+                    }
+                    //currentCharacter.GetComponent<NPCCombat>().DoSomething();
+                }
+            }
             //}
         }
+    }
+
+    public void PlayerEndsTurn()
+    {
+        if (currentCharacter.GetComponent<CharacterController>().characterId == Constants.PLAYER_ID)
+        {
+            currentCharacter.GetComponent<CombatController>().endedTurn = true;
+        }
+        else
+        {
+            Debug.LogWarning("Something went wrong. A character other than player tried to end the turn");
+        }
+        
     }
 
     private void RecalculateBattle(GameObject deadParticipant)
@@ -231,7 +249,7 @@ public class CombatManager : MonoBehaviour
         currentCharacter.GetComponent<CombatController>().endedTurn = false;
         isCombatGoing = true;
         // Show combat UI
-        //EnableUI();
+        EnableUI();
         //ShowPortraits();
     }
     public void AddParticipants(List<int> characterIds)
@@ -260,6 +278,11 @@ public class CombatManager : MonoBehaviour
     {
         return Constants.GetInstance().characters[id].GetComponent<Stats>().GetInitiative();
 
+    }
+
+    public void EnableUI()
+    {
+        CombatUI.GetInstance().EnableUI(currentCharacter.GetComponent<CharacterController>().characterId);
     }
 
 

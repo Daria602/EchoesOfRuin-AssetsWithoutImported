@@ -30,7 +30,6 @@ public class OutlineController : MonoBehaviour
             }
             m_isEnabled = value;
         }
-        
     }
 
     // yellow for hover, stay yellow while coming to it 

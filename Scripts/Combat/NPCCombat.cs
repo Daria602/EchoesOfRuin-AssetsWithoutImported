@@ -24,7 +24,7 @@ public class NPCCombat : CombatController
     private NPCAttackState state = NPCAttackState.SelectingSkill;
     public bool NPCTurn()
     {
-        Debug.Log(state);
+        //Debug.Log(state);
         switch (state)
         {
             case NPCAttackState.SelectingSkill:
@@ -44,12 +44,16 @@ public class NPCCombat : CombatController
             case NPCAttackState.Done:
                 if (selectedSkill == null)
                 {
-                    Debug.Log("no more skills to do");
+                    // say argh
+                    StartCoroutine(WaitBeforeFinishingTurn());
+                    
+                    //Debug.Log("no more skills to do");
                 }
                 else
                 {
                     state = NPCAttackState.SelectingSkill;
                 }
+                
                 break;
         }
         if (playerDied)
@@ -61,6 +65,15 @@ public class NPCCombat : CombatController
         {
             return false;
         }
+    }
+
+    IEnumerator WaitBeforeFinishingTurn()
+    {
+        CombatUI.GetInstance().ShowEnemySpeech(gameObject.GetComponent<CharacterController>().characterId);
+        yield return new WaitForSeconds(3f);
+        CombatUI.GetInstance().HideEnemySpeech(gameObject.GetComponent<CharacterController>().characterId);
+        endedTurn = true;
+        state = NPCAttackState.SelectingSkill;
     }
 
     public void Attack()
@@ -103,6 +116,7 @@ public class NPCCombat : CombatController
     {
         if (actionPointsLeft == 0)
         {
+            Debug.Log("Registered that there were no action points left");
             return null;
         }
         List<Skill> possibleSkills = new List<Skill>();
@@ -111,7 +125,7 @@ public class NPCCombat : CombatController
         {
             AddSkillToPossible(ref possibleSkills, skill, playerPosition);
         }
-
+        Debug.Log("Possible skill count for " + gameObject.name + " is " + possibleSkills.Count);
         // skills where found
         if (possibleSkills.Count > 0)
         {

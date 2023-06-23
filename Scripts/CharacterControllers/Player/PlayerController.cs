@@ -72,6 +72,10 @@ public class PlayerController : CharacterController, ILoadingData
                 animator.SetBool("isRunning", false);
             }
         }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            StartFight();
+        }
         
     }
     private void MakeClickDecision(Constants.ClickType clickType, Vector3 point, Interactable interactable)
