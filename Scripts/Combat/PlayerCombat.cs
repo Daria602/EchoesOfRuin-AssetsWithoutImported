@@ -99,6 +99,8 @@ public class PlayerCombat : CombatController
         // deal damage to the enemy
         state = PlayerAttackStates.Done;
         enemyDied = DealDamageToEnemy();
+        skills[actionIndex].cooldown = skills[actionIndex].maxCooldown;
+        actionPointsLeft -= skills[actionIndex].cost;
     }
 
     public bool DealDamageToEnemy()
@@ -172,88 +174,6 @@ public class PlayerCombat : CombatController
         AddSkills();
         return true;
     }
-
-    public void Attack()
-    {
-        
-        if (isPreparingToAffect)
-        {
-            //WaitForClick();
-        }
-        else if (isPerformingAction)
-        {
-            PerformAttack();
-        }
-    }
-
-    private void PerformAttack()
-    {
-        //Debug.Log("During the performance");
-        //if (skills[actionIndex].name != "Move")
-        //{
-        //    if (GetComponent<BaseMovement>().HasArrived())
-        //    {
-        //        donePerforming = true;
-        //    }
-
-        //}
-
-        //doAction();
-        if (donePerforming)
-        {
-            //if (skills[actionIndex].name != "Move(Clone)")
-            //{
-            //    interactable.gameObject.GetComponent<NPCHealth>().GetDamaged(CalculateAffectedDamage());
-            //    gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].prepareAnimationBoolName, false);
-            //    skills[actionIndex].RemoveEffect();
-
-            //}
-            donePerforming = false;
-            isPerformingAction = false;
-            // set cooldown
-            skills[actionIndex].cooldown = skills[actionIndex].maxCooldown;
-            //Debug.Log(skills[actionIndex].name + " cool of " + skills[actionIndex].cooldown);
-            // make skill unclickable
-            SkillPanelController.GetInstance().SetButtonInactive(false, actionIndex, skills[actionIndex].cooldown);
-            //CombatManager.GetInstance().UpdateActionPointsUI(actionPointsLeft);
-            // decrease action point
-            actionPointsLeft -= skills[actionIndex].cost;
-        }
-    }
-    //private void WaitForClick()
-    //{
-    //    if (InputManager.GetInstance().LeftMouseClicked())
-    //    {
-    //        Constants.ClickType clickType = InputManager.GetInstance().GetClickType(out pointInScene, out interactable);
-    //        if (clickType == Constants.ClickType.Interact)
-    //        {
-    //            Debug.Log("Clicked interract");
-    //            // TODO: check if Interractable is enemy (and not a potion bottle, for example
-    //            // Is in distance
-    //            if (Vector3.Distance(transform.position, pointInScene) <= skills[actionIndex].maxDistance)
-    //            {
-    //                transform.LookAt(pointInScene);
-    //                CancelPrepare();
-    //                isPreparingToAffect = false;
-    //                isPerformingAction = true;
-    //            }
-    //            else
-    //            {
-    //                CancelAction();
-    //            }
-    //        }
-    //        else
-    //        {
-    //            isPerformingAction = false;
-    //        }
-            
-    //    }
-    //    else if (InputManager.GetInstance().RightMouseClicked())
-    //    {
-    //        CancelAction();
-    //    }
-    //}
-
     
 
     private void CancelPrepare()

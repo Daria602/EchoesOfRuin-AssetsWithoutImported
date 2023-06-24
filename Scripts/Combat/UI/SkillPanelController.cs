@@ -127,33 +127,47 @@ public class SkillPanelController : MonoBehaviour
         imageUI.sprite = skill.skillIcon;
     }
 
-    public void SetButtonInactive(bool activity, int buttonIndex, int cooldown)
+    public void SetButtonActive(int buttonIndex)
     {
-        slots[buttonIndex].interactable = activity;
-        //Debug.Log("Should be: " + activity + ", is actually: " + slots[buttonIndex].interactable);
-        if (cooldown == 0)
-        {
-            slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = "";
-        }
-        else
-        {
-            slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = cooldown.ToString();
-        }
-        
-        
+        slots[buttonIndex].interactable = true;
+        slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = "";
+
     }
+
+    public void SetButtonInactive(int buttonIndex, int cooldown)
+    {
+        slots[buttonIndex].interactable = false;
+        slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = cooldown.ToString();
+    }
+
+
+    //public void SetButtonInactive(bool activity, int buttonIndex, int cooldown)
+    //{
+    //    slots[buttonIndex].interactable = activity;
+    //    //Debug.Log("Should be: " + activity + ", is actually: " + slots[buttonIndex].interactable);
+    //    if (cooldown == 0)
+    //    {
+    //        slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = "";
+    //    }
+    //    else
+    //    {
+    //        slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = cooldown.ToString();
+    //    }
+        
+        
+    //}
 
     public void UpdateCooldown(int buttonIndex, int cooldown)
     {
         if (cooldown == 0)
         {
-            SetButtonInactive(true, buttonIndex, 0);
+            SetButtonActive(buttonIndex);
         }
         else
         {
-            slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = cooldown.ToString();
+            SetButtonInactive(buttonIndex, cooldown);
         }
-        
+
     }
 
     public void PromptLearningSkill(int id, Item item)

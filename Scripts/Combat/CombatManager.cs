@@ -83,7 +83,7 @@ public class CombatManager : MonoBehaviour
         List<Skill> skills = currentCharacter.GetComponent<CombatController>().skills;
         for (int i = 0; i < skills.Count; i++)
         {
-            SkillPanelController.GetInstance().SetButtonInactive(true, i, skills[i].cooldown);
+            // SkillPanelController.GetInstance().SetButtonInactive(true, i, skills[i].cooldown);
 
         }
 
@@ -160,38 +160,72 @@ public class CombatManager : MonoBehaviour
                     //Debug.Log("Player is doing the turn");
                     if (Input.GetKeyDown(KeyCode.P))
                     {
-                        currentCharacter.GetComponent<CombatController>().endedTurn = true;
+                        // currentCharacter.GetComponent<CombatController>().endedTurn = true;
+                        List<Skill> debugSkills = currentCharacter.GetComponent<CombatController>().skills;
+                        foreach (Skill skill in debugSkills)
+                        {
+                            Debug.Log(skill.cooldown);
+                        }
+
                     }
+                    
+                    int actionPointsLeft = currentCharacter.GetComponent<CombatController>().actionPointsLeft;
+                    CombatUI.GetInstance().UpdateActionPointsUI(actionPointsLeft);
+                    CombatUI.GetInstance().UpdateCooldownsOnSkills(currentCharacter.GetComponent<CombatController>().skills);
+
+
                     bool targetDied = currentCharacter.GetComponent<PlayerCombat>().PlayersTurn();
                     if (targetDied)
                     {
                         GameObject deadParticipant = currentCharacter.GetComponent<PlayerCombat>().interactable.gameObject;
                         RecalculateBattle(deadParticipant);
                     }
-                    //Debug.Log(characters[characterInitiativeList[turnIndex].characterId].GetComponent<PlayerCombat>().skills.Count);   
-                    //UpdateActionPointsUI(currentCharacter.GetComponent<PlayerCombat>().actionPointsLeft);
-                    //ToggleSkillsVisibility(currentCharacter.GetComponent<CombatController>().actionPointsLeft);
-                    //currentCharacter.GetComponent<PlayerCombat>().DoSomething();
                 }
                 else
                 {
                     bool playerDied = currentCharacter.GetComponent<NPCCombat>().NPCTurn();
                     if (playerDied)
                     {
-                    Debug.Log("player dies");
+                        Debug.Log("player dies");
                     }
-                    //Debug.Log("NPC is doing the turn");
-                    if (Input.GetKeyDown(KeyCode.N))
-                    {
-                        Debug.Log("NPC ended turn");
-                        currentCharacter.GetComponent<CombatController>().endedTurn = true;
-                    }
-                    //currentCharacter.GetComponent<NPCCombat>().DoSomething();
+                    
                 }
+                
+
+
             }
-            //}
+            UpdatePortraits();
         }
     }
+
+    public void ShowPortraits()
+    {
+        List<int> participantsIds = new List<int>();
+        for (int i = turnIndex; i < characterInitiativeList.Count; i++)
+        {
+            int characterId = characterInitiativeList[i].characterId;
+            participantsIds.Add(characterId);
+        }
+        if (turnIndex > 0)
+        {
+            for (int i = 0; i < turnIndex; i++)
+            {
+                int characterId = characterInitiativeList[i].characterId;
+                participantsIds.Add(characterId);
+            }
+        }
+        CombatUI.GetInstance().CreatePortraits(participantsIds);
+    }
+
+    public void UpdatePortraits()
+    {
+        CombatUI.GetInstance().ClearPortraits();
+        Debug.Log("Cleared portraits");
+        //Debug.Break();
+        ShowPortraits();
+    }
+
+    // TODO: update health + portraits
 
     public void PlayerEndsTurn()
     {
@@ -250,7 +284,7 @@ public class CombatManager : MonoBehaviour
         isCombatGoing = true;
         // Show combat UI
         EnableUI();
-        //ShowPortraits();
+        ShowPortraits();
     }
     public void AddParticipants(List<int> characterIds)
     {
@@ -346,7 +380,7 @@ public class CombatManager : MonoBehaviour
         {
             if (skills[i].cost > actionPointsLeft)
             {
-                SkillPanelController.GetInstance().SetButtonInactive(false, i, skills[i].cooldown);
+                //SkillPanelController.GetInstance().SetButtonInactive(false, i, skills[i].cooldown);
             }
             
         }

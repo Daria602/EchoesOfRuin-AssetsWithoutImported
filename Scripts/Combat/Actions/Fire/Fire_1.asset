@@ -27,7 +27,7 @@ MonoBehaviour:
     next damage taken.
   spellType: 1
   isInCooldown: 0
-  cooldown: 2
+  cooldown: 0
   maxCooldown: 4
   cost: 1
   baseDamageMin: 0
@@ -36,4 +36,3 @@ MonoBehaviour:
   requiresWeapon: 0
   weaponTypeRequired: 0
   affectedByAttributes: 
-  affectedByAbilities: 
