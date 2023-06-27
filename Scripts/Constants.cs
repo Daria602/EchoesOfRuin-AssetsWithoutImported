@@ -11,10 +11,13 @@ public class Constants : MonoBehaviour, ILoadingData
     }
     public const int PLAYER_ID = 0;
     public const float DISTANCE_COST_UNIT = 1.5f;
+    public const float ATTRIBUTE_MULTIPLIER = 0.5f;
+    public const int MAX_ACTION_POINTS = 5;
 
     public int[] characterIdKeys;
     public GameObject[] characterObjectValues;
     public Dictionary<int, GameObject> characters = new Dictionary<int, GameObject>();
+    public List<int> charactersDead = new List<int>();
 
     public int[] skillIds;
     public Skill[] allSkills;
@@ -31,6 +34,34 @@ public class Constants : MonoBehaviour, ILoadingData
     public Quest[] quests;
     public Dictionary<int, Quest> questMap = new Dictionary<int, Quest>();
 
+    //public string[] combatTextVariants =
+    //{
+
+    //};
+
+    private string[] combatText =
+    {
+        "You will pay for this!",
+        "Argh!!!",
+        "I will end you!",
+        "Your luck's run out.",
+        "No escape from defeat.",
+        "Feeble attempts won't save you.",
+        "Can't touch me, pathetic.",
+        "Is that your best? Disappointing.",
+        "Outmatched and outplayed.",
+        "Your failure is meaningless.",
+        "Prepare for the end.",
+        "Just an annoyance in my path.",
+        "Surrender while you can."
+    };
+
+    public string GetRandomCombatText()
+    {
+        int randomIndex = Random.Range(0, combatText.Length);
+        return combatText[randomIndex];
+    }
+
     public enum SkillBelongsTo
     {
         Axe,
@@ -45,14 +76,13 @@ public class Constants : MonoBehaviour, ILoadingData
     {
         Special,
         Buff,
-        IncreasedDamage,
-        AoE
+        Attack
     }
 
     public enum Spell
     {
         Magic,
-        Melee,
+        Axe,
         Bow
         
     }
@@ -99,7 +129,8 @@ public class Constants : MonoBehaviour, ILoadingData
         NONE,
         UI,
         Move,
-        Interact
+        Interact,
+        Self
     }
 
     

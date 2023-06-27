@@ -15,24 +15,18 @@ MonoBehaviour:
   skillId: 0
   skillName: Eagle's Eye
   skillIcon: {fileID: 21300000, guid: 5ddda372c30e5e740a6acd12b75243fd, type: 3}
-  skillBelongsTo: 1
+  description: Activate your keen senses, increasing your critical hit chance.
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: 
-  affectAnimationBoolName: 
   hasAnimTrigger: 1
   castTrigger: 
-  maxDistance: 10
-  description: Activate your keen senses, increasing your critical hit chance.
-  spellType: 1
-  isInCooldown: 0
   cooldown: 0
   maxCooldown: 4
-  cost: 0
   baseDamageMin: 0
   baseDamageMax: 0
-  spell: 0
+  maxDistance: 10
   requiresWeapon: 0
   weaponTypeRequired: 0
-  affectedByAttributes: 
-  affectedByAbilities: 
+  spellType: 1
+  cost: 0

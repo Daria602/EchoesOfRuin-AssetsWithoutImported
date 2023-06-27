@@ -7,6 +7,148 @@ public class Stats : MonoBehaviour
     // For combat
     public int initiative = 1;
 
+    [System.Serializable]
+    public class Attributes
+    {
+        public int strength;
+        int tempStrength;
+        public int agility;
+        int tempAgility;
+        public int intelligence;
+        int tempIntelligence;
+        public int constitution;
+        int tempConstitution;
+        public int wits;
+        int tempWits;
+        public void SetAttributes(int strength, int agility, int intelligence, int constitution, int wits)
+        {
+            this.strength = strength;
+            tempStrength = strength;
+            this.agility = agility;
+            tempAgility = agility;
+            this.intelligence = intelligence;
+            tempIntelligence = intelligence;
+            this.constitution = constitution;
+            tempConstitution = constitution;
+            this.wits = wits;
+            tempWits = wits;
+        }
+        public void TempModifyAttribute(Constants.Attributes attribute, bool increase)
+        {
+            int amount = increase ? 1 : -1;
+            switch (attribute)
+            {
+                case Constants.Attributes.Strength:
+                    if (this.strength + amount >= 0)
+                    {
+                        this.strength += amount;
+                    }
+                    break;
+                case Constants.Attributes.Agility:
+                    if (this.agility + amount >= 0)
+                    {
+                        this.agility += amount;
+                    }
+                    break;
+                case Constants.Attributes.Intelligence:
+                    if (this.intelligence + amount >= 0)
+                    {
+                        this.intelligence += amount;
+                    }
+                    break;
+                case Constants.Attributes.Constitution:
+                    if (this.constitution + amount >= 0)
+                    {
+                        this.constitution += amount;
+                    }
+                    break;
+                case Constants.Attributes.Wits:
+                    if (this.wits + amount >= 0)
+                    {
+                        this.wits += amount;
+                    }
+                    break;
+            }
+        }
+
+        public void ResetTempIncrease(Constants.Attributes attribute)
+        {
+            switch (attribute)
+            {
+                case Constants.Attributes.Strength:
+                    this.strength = tempStrength;
+                    break;
+                case Constants.Attributes.Agility:
+                    this.agility = tempAgility;
+                    break;
+                case Constants.Attributes.Intelligence:
+                    this.intelligence = tempIntelligence;
+                    break;
+                case Constants.Attributes.Constitution:
+                    this.constitution = tempConstitution;
+                    break;
+                case Constants.Attributes.Wits:
+                    this.wits = tempWits;
+                    break;
+            }
+        }
+
+        public bool PermModifyAttribute(Constants.Attributes attribute, bool increase)
+        {
+            int amount = increase ? 1 : -1;
+            bool wasModified = false;
+            switch (attribute)
+            {
+                case Constants.Attributes.Strength:
+                    if (this.strength + amount >= 0)
+                    {
+                        this.strength += amount;
+                        tempStrength = this.strength;
+                        wasModified = true;
+                    }
+                    break;
+                case Constants.Attributes.Agility:
+                    if (this.agility + amount >= 0)
+                    {
+                        this.agility += amount;
+                        tempAgility = this.agility;
+                        wasModified = true;
+                    }
+                    break;
+                case Constants.Attributes.Intelligence:
+                    if (this.intelligence + amount >= 0)
+                    {
+                        this.intelligence += amount;
+                        tempIntelligence = this.intelligence;
+                        wasModified = true;
+                    }
+                    break;
+                case Constants.Attributes.Constitution:
+                    if (this.constitution + amount >= 0)
+                    {
+                        this.constitution += amount;
+                        tempConstitution = this.constitution;
+                        wasModified = true;
+                    }
+                    break;
+                case Constants.Attributes.Wits:
+                    if (this.wits + amount >= 0)
+                    {
+                        this.wits += amount;
+                        tempWits = this.wits;
+                        wasModified = true;
+                    }
+                    break;
+            }
+            return wasModified;
+        }
+    }
+    public Attributes attributes = new Attributes();
+
+    private void Start()
+    {
+        //attributes.SetAttributes(strength, agility, intelligence, constitution, wits);
+    }
     // Attributes
     public enum AttributeStats
     {
@@ -17,15 +159,16 @@ public class Stats : MonoBehaviour
         Wits
     }
     public int availableAttributePoints = 5;
-    public int strength = 0;
-    public int agility = 0;
-    public int intelligence = 0;
-    public int constitution = 0;
-    public int wits = 0;
+    //public int strength = 0;
+    //public int agility = 0;
+    //public int intelligence = 0;
+    //public int constitution = 0;
+    //public int wits = 0;
 
     private const int MIN_ATTRIBUTE_VALUE = 0;
 
     public int characterLevel = 1;
+    public float criticalStrike = 0.3f;
     public int grantedXP = 1000;
     // Combat abilities
     public enum AbilityStats
@@ -45,50 +188,26 @@ public class Stats : MonoBehaviour
 
     public bool IncreaseAttributeStat(int statType)
     {
-        bool result = false;
-        switch (statType)
+        if (availableAttributePoints > 0)
         {
-            case (int)AttributeStats.Strength:
-                result = Increase(ref strength, ref availableAttributePoints);
-                break;
-            case (int)AttributeStats.Agility:
-                result = Increase(ref agility, ref availableAttributePoints);
-                break;
-            case (int)AttributeStats.Intelligence:
-                result = Increase(ref intelligence, ref availableAttributePoints);
-                break;
-            case (int)AttributeStats.Constitution:
-                result = Increase(ref constitution, ref availableAttributePoints);
-                break;
-            case (int)AttributeStats.Wits:
-                result = Increase(ref wits, ref availableAttributePoints);
-                break;
+            if (attributes.PermModifyAttribute((Constants.Attributes)statType, true))
+            {
+                availableAttributePoints--;
+                return true;
+            }
+          
         }
-        return result;
+        return false;
     }
 
     public bool DecreaseAttributeStat(int statType)
     {
-        bool result = false;
-        switch (statType)
+        if (attributes.PermModifyAttribute((Constants.Attributes)statType, false))
         {
-            case (int)AttributeStats.Strength:
-                result = Decrease(ref strength, ref availableAttributePoints, MIN_ATTRIBUTE_VALUE);
-                break;
-            case (int)AttributeStats.Agility:
-                result = Decrease(ref agility, ref availableAttributePoints, MIN_ATTRIBUTE_VALUE);
-                break;
-            case (int)AttributeStats.Intelligence:
-                result = Decrease(ref intelligence, ref availableAttributePoints, MIN_ATTRIBUTE_VALUE);
-                break;
-            case (int)AttributeStats.Constitution:
-                result = Decrease(ref constitution, ref availableAttributePoints, MIN_ATTRIBUTE_VALUE);
-                break;
-            case (int)AttributeStats.Wits:
-                result = Decrease(ref wits, ref availableAttributePoints, MIN_ATTRIBUTE_VALUE);
-                break;
+            availableAttributePoints++;
+            return true;
         }
-        return result;
+        return false;
     }
 
     public bool IncreaseAbilityStat(int statType)
@@ -160,12 +279,14 @@ public class Stats : MonoBehaviour
     public void LoadGameData(CharacterData characterData)
     {
         this.availableAttributePoints = characterData.availableAttributePoints;
-        this.strength = characterData.strength;
-        this.agility = characterData.agility;
-        this.intelligence = characterData.intelligence;
-        this.constitution = characterData.constitution;
-        this.wits = characterData.wits;
-        this.characterLevel = characterData.characterLevel;
+        this.attributes.SetAttributes
+        (
+            characterData.strength,
+            characterData.agility,
+            characterData.intelligence,
+            characterData.constitution,
+            characterData.wits
+        );
 
         this.availableAbilityPoints = characterData.availableAbilityPoints;
         this.shadow = characterData.shadow;
@@ -176,11 +297,11 @@ public class Stats : MonoBehaviour
     public void SaveGameData(ref CharacterData characterData)
     {
         characterData.availableAttributePoints = this.availableAttributePoints;
-        characterData.strength = this.strength;
-        characterData.agility = this.agility;
-        characterData.intelligence = this.intelligence;
-        characterData.constitution = this.constitution;
-        characterData.wits = this.wits;
+        characterData.strength = this.attributes.strength;
+        characterData.agility = this.attributes.agility;
+        characterData.intelligence = this.attributes.intelligence;
+        characterData.constitution = this.attributes.constitution;
+        characterData.wits = this.attributes.wits;
 
         characterData.availableAbilityPoints = this.availableAbilityPoints;
         characterData.shadow = this.shadow;
@@ -192,9 +313,13 @@ public class Stats : MonoBehaviour
 
     public int GetInitiative()
     {
-        return initiative + wits;
+        return initiative + attributes.wits;
     }
 
+    public void ApplyBuff(Constants.Attributes[] attributes, Constants.Abilities[] abilities)
+    {
+
+    }
 
 
 }

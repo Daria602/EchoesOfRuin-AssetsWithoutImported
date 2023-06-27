@@ -15,25 +15,19 @@ MonoBehaviour:
   skillId: 0
   skillName: Precision Shot
   skillIcon: {fileID: 21300000, guid: da4c50fc4d8dd264f88ae9268bce91eb, type: 3}
-  skillBelongsTo: 1
+  description: Take careful aim and release an arrow with pinpoint accuracy and increased
+    damage.
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: 
-  affectAnimationBoolName: 
   hasAnimTrigger: 1
   castTrigger: 
-  maxDistance: 10
-  description: Take careful aim and release an arrow with pinpoint accuracy and increased
-    damage.
-  spellType: 2
-  isInCooldown: 0
   cooldown: 0
   maxCooldown: 4
-  cost: 0
   baseDamageMin: 0
   baseDamageMax: 0
-  spell: 0
+  maxDistance: 10
   requiresWeapon: 0
   weaponTypeRequired: 0
-  affectedByAttributes: 
-  affectedByAbilities: 
+  spellType: 2
+  cost: 0

@@ -15,24 +15,18 @@ MonoBehaviour:
   skillId: 8
   skillName: Fire storm
   skillIcon: {fileID: 21300000, guid: 1714b9fbca19b3345b2f76541786c932, type: 3}
-  skillBelongsTo: 2
+  description: A blast, for sure
   hasVisuals: 0
   visualEffectPrefab: {fileID: 6721481256514249565, guid: c0adc518643d8da44b13a2ff1f3cceea, type: 3}
   prepareAnimationBoolName: isMagicAoE
-  affectAnimationBoolName: 
   hasAnimTrigger: 1
   castTrigger: CastMagicAoE
-  maxDistance: 10
-  description: A blast, for sure
-  spellType: 3
-  isInCooldown: 0
   cooldown: 0
   maxCooldown: 4
-  cost: 3
   baseDamageMin: 3
   baseDamageMax: 7
-  spell: 0
+  maxDistance: 10
   requiresWeapon: 0
   weaponTypeRequired: 0
-  affectedByAttributes: 
-  affectedByAbilities: 
+  spellType: 2
+  cost: 3

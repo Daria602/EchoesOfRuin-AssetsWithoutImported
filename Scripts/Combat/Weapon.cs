@@ -10,4 +10,5 @@ public class Weapon : ScriptableObject
     public GameObject weaponPrefab;
     public int level;
     public Constants.WeaponTypes weaponType;
+    //public int basicSkillId;
 }

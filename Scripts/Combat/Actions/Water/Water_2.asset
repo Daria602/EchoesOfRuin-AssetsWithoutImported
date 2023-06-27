@@ -15,25 +15,19 @@ MonoBehaviour:
   skillId: 10
   skillName: Frostbite Chill
   skillIcon: {fileID: 21300000, guid: 7d45136e385ccb2468b579474e9b7667, type: 3}
-  skillBelongsTo: 3
+  description: Infuse your water-based attack with freezing cold, dealing increased
+    damage and potentially freezing the target
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: 
-  affectAnimationBoolName: 
   hasAnimTrigger: 1
   castTrigger: 
-  maxDistance: 10
-  description: Infuse your water-based attack with freezing cold, dealing increased
-    damage and potentially freezing the target
-  spellType: 2
-  isInCooldown: 0
   cooldown: 0
   maxCooldown: 4
-  cost: 2
   baseDamageMin: 0
   baseDamageMax: 0
-  spell: 0
+  maxDistance: 10
   requiresWeapon: 0
   weaponTypeRequired: 0
-  affectedByAttributes: 
-  affectedByAbilities: 
+  spellType: 2
+  cost: 2

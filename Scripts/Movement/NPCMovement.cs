@@ -6,6 +6,8 @@ public class NPCMovement : BaseMovement
 {
     public Vector3[] positionsToMove = null;
     private int posToMoveIndex = -1;
+    float normalSpeed = 0.7f;
+    float combatSpeed = 3.5f;
     private enum NPCState
     {
         ChoosingDirection,
@@ -26,6 +28,15 @@ public class NPCMovement : BaseMovement
 
         // TODO: remove this
         combat.IsInCombat = false;
+    }
+
+    public void SetCombatSpeed()
+    {
+        agent.speed = combatSpeed;
+    }
+    public void ResetSpeed()
+    {
+        agent.speed = normalSpeed;
     }
 
     // Update is called once per frame

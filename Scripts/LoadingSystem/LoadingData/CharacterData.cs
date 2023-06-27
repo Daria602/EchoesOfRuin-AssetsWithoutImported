@@ -62,9 +62,9 @@ public class CharacterData
 
         // Attributes
         this.availableAttributePoints = 5;
-        this.strength = 0;
+        this.strength = 0; 
         this.agility = 0;
-        this.intelligence = 0;
+        this.intelligence = 5; // TODO: change here to 0
         this.constitution = 0;
         this.wits = 0;
 
@@ -82,9 +82,9 @@ public class CharacterData
         this.IsInCombat = false;
         this.characterId = 0;
         this.m_isInCombat = false;
-        this.skillsIds = new List<int>() { 6, 5 };
-        this.hasWeapon = false;
-        this.weaponId = 0;
+        this.skillsIds = new List<int>() { 12, 13, 0, 5 }; // { 12, 13, 6, 5 };
+        this.hasWeapon = true; // TODO: change here to false
+        this.weaponId = 1; // TODO: change here to 0
         //this.rightHand = Vector3.zero;
         this.isPerformingAction = false;
         this.finishedPerforming = true;

@@ -15,24 +15,18 @@ MonoBehaviour:
   skillId: 7
   skillName: Inferno Strike
   skillIcon: {fileID: 21300000, guid: 1714b9fbca19b3345b2f76541786c932, type: 3}
-  skillBelongsTo: 2
+  description: Channel intense flames into a single devastating strike
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: 
-  affectAnimationBoolName: 
   hasAnimTrigger: 1
   castTrigger: 
-  maxDistance: 10
-  description: Channel intense flames into a single devastating strike
-  spellType: 2
-  isInCooldown: 0
   cooldown: 0
   maxCooldown: 4
-  cost: 2
   baseDamageMin: 0
   baseDamageMax: 0
-  spell: 0
+  maxDistance: 10
   requiresWeapon: 0
   weaponTypeRequired: 0
-  affectedByAttributes: 
-  affectedByAbilities: 
+  spellType: 2
+  cost: 2

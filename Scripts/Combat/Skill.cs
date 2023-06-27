@@ -5,40 +5,51 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Skill", menuName = "Skills/Create New Skill")]
 public class Skill : ScriptableObject
 {
+    [Header("Unique identifier")]
     public int skillId;
+    [Header("Details")]
     public string skillName;
     public Sprite skillIcon;
-    public Constants.SkillBelongsTo skillBelongsTo;
-    
+    public string description;
+    [Header("Special effects")]
     public bool hasVisuals = false;
     public GameObject visualEffectPrefab = null;
     private GameObject visualEffect = null;
+    [Header("Animations")]
     public string prepareAnimationBoolName = "";
-    public string affectAnimationBoolName = "";
     public bool hasAnimTrigger = true;
     public string castTrigger;
-    public float maxDistance = 10;
-    public string description;
-    public Constants.SpellType spellType;
-
-    public bool isInCooldown = false;
-
+    [Header("Max Cooldown, Damage and Max Distance")]
     public int cooldown = 0;
     public int maxCooldown = 4;
-
-    public int cost;
-
     public int baseDamageMin;
     public int baseDamageMax;
-
-
-    public Constants.Spell spell;
+    public float maxDistance = 10;
+    [Header("Weapon realted")]
     public bool requiresWeapon = false;
     public Constants.WeaponTypes weaponTypeRequired;
+
+    public Constants.SpellType spellType;
+    public Constants.Attributes affectedByAttribute;
+    //public Constants.SkillBelongsTo skillBelongsTo;
+    [Header("Action points required")]
+    public int cost;
+    [Header("Buff related")]
+    public int buffsForTurns;
+    public bool buffsAttributes;
+    public Constants.Attributes[] attributes;
+    public bool buffsAbilities;
+    public Constants.Abilities[] abilities;
+
+    
+
+
+    //public Constants.Spell spell;
+    
     // TODO: afflict enemies with debuffs
 
 
-    public Constants.Attributes[] affectedByAttributes;
+    //public Constants.Attributes[] affectedByAttributes;
     //public Constants.AffectedByAbilities[] affectedByAbilities;
 
     private void Awake()

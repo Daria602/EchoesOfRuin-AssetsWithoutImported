@@ -106,6 +106,12 @@ public class InputManager : MonoBehaviour
             {
                 point = hit.point;
                 bool possibleInteractable = hit.collider.GetComponent<Interactable>() != null;
+                bool possibleSelfHit = hit.collider.GetComponent<PlayerController>() != null;
+                
+                if (possibleSelfHit)
+                {
+                    return Constants.ClickType.Self;
+                }
                 if (possibleInteractable)
                 {
                     interactable = hit.collider.GetComponent<Interactable>();
@@ -124,5 +130,17 @@ public class InputManager : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public Vector3? GetMouseWorldPosition()
+    {
+        Ray ray = CameraManager.GetInstance().GetSceneCamera().ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            return hit.point;
+        }
+        return null;
+
     }
 }

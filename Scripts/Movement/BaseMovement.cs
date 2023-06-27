@@ -8,6 +8,8 @@ public class BaseMovement : MonoBehaviour
     protected NavMeshAgent agent;
     private bool m_isAllowedToMove = true;
     protected NavMeshPath path = null;
+    private float normalStoppingDistance = 1.48f;
+    private float combatStoppingDistance = 0.5f;
     public float maximumTravelDistance;
 
     public bool IsAllowedToMove { get => m_isAllowedToMove; set => MovementStateIsChanged(value); }
@@ -23,6 +25,11 @@ public class BaseMovement : MonoBehaviour
     {
         agent.SetPath(path);
 
+    }
+
+    public void SetCombatStopDist()
+    {
+        agent.stoppingDistance = combatStoppingDistance;
     }
 
     public bool HasArrived()
@@ -79,6 +86,7 @@ public class BaseMovement : MonoBehaviour
         {
             agent.ResetPath();
             gameObject.GetComponent<Animator>().SetBool("isRunning", false);
+            agent.stoppingDistance = normalStoppingDistance;
             m_isAllowedToMove = value;
         }
         

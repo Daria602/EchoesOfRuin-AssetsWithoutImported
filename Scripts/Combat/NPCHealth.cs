@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class NPCHealth : Health
 {
-    //public static event EnemyDeathEventHandler OnEnemyDeath;
-    public int XPReward = 10;
     public bool GetDamaged(int damage)
     {
         
@@ -14,15 +12,12 @@ public class NPCHealth : Health
         {
             //Die();
             // NPC dies
+            FindObjectOfType<PlayerController>().AddXP(gameObject.GetComponent<Stats>().grantedXP);
             return true;
         }
         else
         {
             currentHealth -= damage;
-            //if (OnHealthUpdateCallback != null)
-            //{
-            //    OnHealthUpdateCallback.Invoke();
-            //}
             // NPC was damaged, but didn't die
             return false;
         }
@@ -30,10 +25,8 @@ public class NPCHealth : Health
     public override void Die()
     {
         base.Die();
-        //OnEnemyDeath.Invoke(this);
-        FindObjectOfType<PlayerController>().AddXP(gameObject.GetComponent<Stats>().grantedXP);
-        CombatManager.GetInstance().SignalDeath(gameObject.GetComponent<CombatController>().characterId);
-        Destroy(gameObject);
+        // TODO:  handle loot shooting out of the NPC here
+        //        and death animation as well
         Debug.Log("NPC dies");
 
     }

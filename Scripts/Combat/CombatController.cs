@@ -32,6 +32,7 @@ public class CombatController : MonoBehaviour
     public bool endedTurn = true;
     public int actionPointsLeft = 5;
     public const int MAX_ACTION_POINTS = 5;
+    public int actionsTakenThisTurn = 0;
 
     public bool IsInCombat 
     { 
@@ -49,6 +50,15 @@ public class CombatController : MonoBehaviour
         //Debug.Log("Combat controller thing");
         AddSkills();
         EquipWeapon();
+    }
+
+    public Weapon GetWeapon()
+    {
+        if (weapon != null)
+        {
+            return weapon;
+        }
+        return null;
     }
 
     protected void AddSkills()
@@ -83,7 +93,7 @@ public class CombatController : MonoBehaviour
             {
                 gameObject.GetComponent<BaseMovement>().IsAllowedToMove = false;
                 isPerformingAction = false;
-                gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].affectAnimationBoolName, false);
+                //gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].affectAnimationBoolName, false);
 
             }
 
@@ -91,19 +101,100 @@ public class CombatController : MonoBehaviour
         
     }
 
-    //protected void Attack()
-    //{
-    //    if (finishedPerforming)
-    //    {
-    //        finishedPerforming = false;
-    //        // Deal damage here
-    //        Debug.Log("Got into Attack");
-    //        isPerformingAction = false;
-    //        gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].affectAnimationBoolName, false);
-    //        skills[actionIndex].RemoveEffect();
+    public int GetDamageDealt(Skill skill)
+    {
+        bool isCrit = IsCriticalStrike();
+        int minBaseDamage = 0;
+        int maxBaseDamage = 0;
+        if (skill.requiresWeapon)
+        {
+            if (weapon.weaponType == skill.weaponTypeRequired)
+            {
+                minBaseDamage = weapon.minDamage;
+                maxBaseDamage = weapon.maxDamage;
+            }
+            else
+            {
+                Debug.LogError("Weapon is required for this skill, and the character doesn't have that weapon equipped");
+            }
+        }
+        else
+        {
+            minBaseDamage = skill.baseDamageMin;
+            maxBaseDamage = skill.baseDamageMax;
+        }
+        Debug.Log("Base damage is: " + "(" + minBaseDamage + ", " + maxBaseDamage + ");");
+        int attributeMultiplier;
+        if (skill.skillName == "Basic Attack")
+        {
+            if (weapon.weaponType == Constants.WeaponTypes.Axe)
+            {
+                attributeMultiplier = GetAttributeValue(Constants.Attributes.Strength);
+            }
+            else if (weapon.weaponType == Constants.WeaponTypes.Bow)
+            {
+                attributeMultiplier = GetAttributeValue(Constants.Attributes.Agility);
+            }
+            else if (weapon.weaponType == Constants.WeaponTypes.Wand)
+            {
+                attributeMultiplier = GetAttributeValue(Constants.Attributes.Intelligence);
+            }
+            else
+            {
+                attributeMultiplier = 0;
+            }
+        }
+        else
+        {
+            attributeMultiplier = GetAttributeValue(skill.affectedByAttribute);
+        }
+        
+        Debug.Log("Attribute value: " + attributeMultiplier);
+        float additionToTheDamage = attributeMultiplier * Constants.ATTRIBUTE_MULTIPLIER;
+        Debug.Log("Addition to mindamage: " + (int)(minBaseDamage * additionToTheDamage) +
+            "; Addition to maxdamage: " + (int)(maxBaseDamage * additionToTheDamage));
+        minBaseDamage += (int)(minBaseDamage * additionToTheDamage);
+        maxBaseDamage += (int)(maxBaseDamage * additionToTheDamage);
+        Debug.Log("Base damage after multiplying is: " + "(" + minBaseDamage + ", " + maxBaseDamage + ");");
+        int finalDamage = Random.Range(minBaseDamage, maxBaseDamage + 1);
+        if (isCrit)
+        {
+            finalDamage *= 2;
+        }
+        return finalDamage;
+    }
 
-    //    }
-    //}
+    private int GetAttributeValue(Constants.Attributes attribute)
+    {
+        Stats stats = GetComponent<Stats>();
+        switch (attribute)
+        {
+            case Constants.Attributes.Strength:
+                return stats.attributes.strength;
+            case Constants.Attributes.Agility:
+                return stats.attributes.agility;
+            case Constants.Attributes.Intelligence:
+                return stats.attributes.intelligence;
+            case Constants.Attributes.Constitution:
+                return stats.attributes.constitution;
+            case Constants.Attributes.Wits:
+                return stats.attributes.wits;
+        }
+        return -1000;
+    }
+
+
+
+    private bool IsCriticalStrike()
+    {
+        // 30% = 0.3
+        float randomNumber = Random.Range(0f, 1f);
+        if (randomNumber <= GetComponent<Stats>().criticalStrike)
+        {
+            return true;
+        }
+        return false;
+    }
 
     private void CombatStateIsChanged(bool value)
     {
@@ -138,7 +229,7 @@ public class CombatController : MonoBehaviour
         }
 
         // TODO: apply stats here
-        baseDamage = ApplyAttributes(baseDamage);
+        //baseDamage = ApplyAttributes(baseDamage);
         return (int)baseDamage;
     }
 
@@ -159,41 +250,7 @@ public class CombatController : MonoBehaviour
         }
     }
 
-    private float ApplyAttributes(float baseDamage)
-    {
-        List<float> additions = new List<float>();
-        for (int i = 0; i < skills[actionIndex].affectedByAttributes.Length; i++)
-        {
-            switch (skills[actionIndex].affectedByAttributes[i])
-            {
-                case Constants.Attributes.Strength:
-                    break;
-                case Constants.Attributes.Agility:
-                    break;
-                case Constants.Attributes.Intelligence:
-                    additions.Add(
-                        baseDamage * gameObject.GetComponent<Stats>().intelligence * 0.05f
-                        );
-                    break;
-                case Constants.Attributes.Constitution:
-                    break;
-                case Constants.Attributes.Wits:
-                    break;
-            }
-        }
-
-        foreach (float addition in additions)
-        {
-            baseDamage += addition;
-        }
-
-        return Mathf.Round(baseDamage);
-    }
-
-    //private void ApplyAbilities(out float damage)
-    //{
-
-    //}
+    
 
     public void DecreaseCooldown(bool resetCooldowns)
     {

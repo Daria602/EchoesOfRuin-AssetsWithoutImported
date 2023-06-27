@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerCombat : CombatController
 {
-    bool isPreparingToAffect = false;
+    //bool isPreparingToAffect = false;
     public Interactable interactable;
     Vector3 pointInScene;
 
@@ -16,6 +16,7 @@ public class PlayerCombat : CombatController
         SelectingSkill,
         SelectingTarget,
         Attacking,
+        Moving,
         Done
     }
     private PlayerAttackStates state = PlayerAttackStates.SelectingSkill;
@@ -27,27 +28,22 @@ public class PlayerCombat : CombatController
             case PlayerAttackStates.SelectingSkill:
                 // wait for click on skill
                 // ButtonIndexClicked
-                //Debug.Log("Selecting a skill");
                 break;
             case PlayerAttackStates.SelectingTarget:
                 // wait to select a target
-                //Debug.Log("Selecting a target");
                 SelectingTarget();
                 break;
             case PlayerAttackStates.Attacking:
                 // do the animation of attacking and deal damage
-                //Debug.Log("Attacking");
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    SetDoneCasting();
-                }
+                // animation event calls SetDoneCasting or SetDoneBuff
+                break;
+            case PlayerAttackStates.Moving:
+                CheckIfArrived();
                 break;
             case PlayerAttackStates.Done:
-                //Debug.Log("Done");
+                // done
                 state = PlayerAttackStates.SelectingSkill;
                 break;
-                // done
-                //break;
         }
         if (enemyDied)
         {
@@ -60,6 +56,8 @@ public class PlayerCombat : CombatController
         }
     }
 
+    
+
     public void ButtonIndexClicked(int buttonIndex)
     {
         actionIndex = buttonIndex;
@@ -69,22 +67,170 @@ public class PlayerCombat : CombatController
 
     public void SelectingTarget()
     {
+        DisplayDistance();
         if (InputManager.GetInstance().LeftMouseClicked())
         {
             Constants.ClickType clickType = InputManager.GetInstance().GetClickType(out pointInScene, out interactable);
             if (clickType == Constants.ClickType.Interact)
             {
-                GetComponent<Animator>().SetTrigger("CastMagicAoE");
-                state = PlayerAttackStates.Attacking;
+                if (IsInDistance())
+                {
+                    transform.LookAt(interactable.transform);
+                    if (skills[actionIndex].skillName == "Basic Attack")
+                    {
+                        SetBasicAttackAnimation();
+
+                    }
+                    else
+                    {
+                        GetComponent<Animator>().SetTrigger("CastMagicAoE");
+                    }
+
+                    state = PlayerAttackStates.Attacking;
+                }
+                else
+                {
+                    CancelAttack();
+                }
+                
+            }
+            else if (clickType == Constants.ClickType.Move)
+            {
+                MoveAction();
+                
+            }
+            else if (clickType == Constants.ClickType.Self)
+            {
+                Debug.Log("Self hit");
+                if (skills[actionIndex].spellType == Constants.SpellType.Buff)
+                {
+                    Debug.Log(skills[actionIndex].skillName);
+                    GetComponent<Animator>().SetTrigger("CastBuff");
+                    state = PlayerAttackStates.Attacking;
+
+
+                }
+                //CancelAttack();
+            }
+            else
+            {
+                CancelAttack();
             }
 
         }
         else if (InputManager.GetInstance().RightMouseClicked())
         {
-            // cancel the attack
-            // state = PlayerAttackStates.SelectingSkill;
+            CancelAttack();
         }
         
+    }
+
+    private void CheckIfArrived()
+    {
+        if (GetComponent<PlayerMovement>().HasArrived())
+        {
+            GetComponent<PlayerMovement>().IsAllowedToMove = false;
+            HideDistance();
+            skills[actionIndex].cooldown = skills[actionIndex].maxCooldown;
+
+            state = PlayerAttackStates.Done;
+        }
+    }
+    private void MoveAction()
+    {
+        if (skills[actionIndex].skillName == "Move")
+        {
+            int moveCost = MoveCost(pointInScene);
+            if (moveCost <= actionPointsLeft)
+            {
+                if (GetComponent<PlayerMovement>().CanGetToDestination(pointInScene))
+                {
+                    GetComponent<PlayerMovement>().IsAllowedToMove = true;
+                    GetComponent<PlayerMovement>().SetCombatStopDist();
+                    GetComponent<Animator>().SetBool("isMagicAoE", false);
+                    GetComponent<Animator>().SetBool("isRunning", true);
+                    GetComponent<PlayerMovement>().MovePlayer(pointInScene);
+                    actionPointsLeft -= moveCost;
+                    state = PlayerAttackStates.Moving;
+                }
+                else
+                {
+                    CancelAttack();
+                }
+            }
+            else
+            {
+                CancelAttack();
+            }
+        }
+        else
+        {
+            CancelAttack();
+        }
+    }
+
+    private int MoveCost(Vector3 pointInScene)
+    {
+        float distance = Vector3.Distance(transform.position, pointInScene);
+        int cost = (int)(distance / Constants.DISTANCE_COST_UNIT);
+        Debug.Log("Cost: " + cost + "; float is " + distance / Constants.DISTANCE_COST_UNIT);
+        return cost;
+    }
+    private void DisplayDistance()
+    {
+        bool isMoveSkill = skills[actionIndex].skillName == "Move";
+        CombatUI.GetInstance().ShowDistance(skills[actionIndex].maxDistance, isMoveSkill);
+    }
+
+    private void HideDistance()
+    {
+        CombatUI.GetInstance().DisableDistance();
+    }
+
+    private void CancelAttack()
+    {
+        HideDistance();
+        GetComponent<Animator>().SetBool("isMagicAoE", false);
+        state = PlayerAttackStates.SelectingSkill;
+    }
+    private bool IsInDistance()
+    {
+        float distance = Vector3.Distance(transform.position, interactable.transform.position);
+        float maxAllowedDistance = skills[actionIndex].maxDistance;
+        if ( distance <= maxAllowedDistance)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void SetBasicAttackAnimation()
+    {
+        if (hasWeapon)
+        {
+            Weapon currentWeapon = GetWeapon();
+            //Debug.Log("Weapon is null: " + currentWeapon == null);
+            if (currentWeapon != null)
+            {
+                switch (currentWeapon.weaponType)
+                {
+                    case Constants.WeaponTypes.Axe:
+                        GetComponent<Animator>().SetTrigger("BasicAxe");
+                        Debug.Log("Basic with Axe");
+                        break;
+                    case Constants.WeaponTypes.Bow:
+                        transform.Rotate(0, 90, 0);
+                        GetComponent<Animator>().SetTrigger("BasicBow");
+                        Debug.Log("Basic with Bow");
+                        break;
+                    case Constants.WeaponTypes.Wand:
+                        GetComponent<Animator>().SetTrigger("BasicWand");
+                        Debug.Log("Basic with Wand");
+                        break;
+                }
+            }
+
+        }
     }
 
     public void Attacking()
@@ -95,7 +241,16 @@ public class PlayerCombat : CombatController
     private bool enemyDied = false;
     public void SetDoneCasting()
     {
+        HideDistance();
         GetComponent<Animator>().SetBool("isMagicAoE", false);
+        if (GetWeapon() != null)
+        {
+            if (GetWeapon().weaponType == Constants.WeaponTypes.Bow)
+            {
+                transform.Rotate(0, -90, 0);
+            }
+        }
+        
         // deal damage to the enemy
         state = PlayerAttackStates.Done;
         enemyDied = DealDamageToEnemy();
@@ -103,9 +258,18 @@ public class PlayerCombat : CombatController
         actionPointsLeft -= skills[actionIndex].cost;
     }
 
+    public void SetDoneBuff()
+    {
+        state = PlayerAttackStates.Done;
+        enemyDied = false;
+        CombatManager.GetInstance().ApplyBuff(skills[actionIndex]);
+        skills[actionIndex].cooldown = skills[actionIndex].maxCooldown;
+        actionPointsLeft -= skills[actionIndex].cost;
+    }
+
     public bool DealDamageToEnemy()
     {
-        int damageAfflicted = GetDamageDealt();
+        int damageAfflicted = GetDamageDealt(skills[actionIndex]);
         // returns true if character died
         if (interactable.gameObject.GetComponent<NPCHealth>().GetDamaged(damageAfflicted))
         {
@@ -118,48 +282,8 @@ public class PlayerCombat : CombatController
         }
     }
 
-    public int GetDamageDealt()
-    {
-        return 5;
-        //return skills[actionIndex].baseDamageMax;
-    }
-
     
-    //public void SetDoneCasting()
-    //{
-    //    donePerforming = true;
-    //}
 
-    //private void Update()
-    //{
-    //    if (IsInCombat)
-    //    {
-    //        //Debug.Log("Player is in combat");
-
-    //        if (isPreparingToAffect)
-    //        {
-    //            // do the animation and circle around
-    //            WaitForClick();
-    //            Debug.Log("Waiting for a click");
-    //        }
-    //        else if (isPerformingAction)
-    //        {
-    //            //Debug.Log(skills[actionIndex].name);
-    //            Debug.Log("Performing the action");
-    //            //doAction();
-    //            if (donePerforming)
-    //            {
-    //                interactable.gameObject.GetComponent<NPCHealth>().GetDamaged(CalculateAffectedDamage());
-    //                gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].prepareAnimationBoolName, false);
-    //                skills[actionIndex].RemoveEffect();
-    //                donePerforming = false;
-    //                isPerformingAction = false;
-    //            }
-
-    //        }
-
-    //    }
-    //}
 
     public bool AddNewSkill(int skillId)
     {
@@ -174,96 +298,10 @@ public class PlayerCombat : CombatController
         AddSkills();
         return true;
     }
-    
-
-    private void CancelPrepare()
-    {
-        if (skills[actionIndex].hasAnimTrigger)
-        {
-            //Debug.Log("Got here");
-            gameObject.GetComponent<Animator>().SetTrigger(skills[actionIndex].castTrigger);
-            
-        }
-        else
-        {
-            gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].affectAnimationBoolName, true);
-        } 
-        
-    }
-
-    private void CancelAction()
-    {
-        isPreparingToAffect = false;
-        isPerformingAction = false;
-        finishedPerforming = true;
-        if (skills[actionIndex].prepareAnimationBoolName != "")
-        {
-            gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].prepareAnimationBoolName, false);
-        }
-        
-        //gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].affectAnimationBoolName, false);
-        skills[actionIndex].RemoveEffect();
-    }
-
-    private void PerformAction(int skillIndex)
-    {
-        isPerformingAction = false;
-        isPreparingToAffect = true;
-        finishedPerforming = false;
-        actionIndex = skillIndex;
-        // Sets the visual effect around the character
-        skills[skillIndex].SetEffect(gameObject);
-        //if (skills[skillIndex].prepareAnimationBoolName != "")
-        //{
-        //    GetComponent<Animator>().SetBool(skills[skillIndex].prepareAnimationBoolName, true);
-        //}
-        
-        //if (skills[skillIndex].name == "Move")
-        //{
-        //    //isPerformingAction = false;
-        //    //isPreparingToAffect = true;
-        //}
-
-        Debug.Log("Performing skill " + skills[skillIndex].name);
-        //Debug.Log("Animation is set to " + GetComponent<Animator>().GetBool(skills[skillIndex].prepareAnimationBoolName));
-    }
-
-    //public void ButtonIndexClicked(int buttonIndex)
-    //{
-    //    // TODO: create something to check what actions are displayed
-    //    // For example, character can have 11 skills
-    //    // But the bar can display only 10
-    //    // If the first set of 10 is displayed and the character clicks on button_0
-    //    // actionIndex = 0, 
-    //    // else actionIndex should recalculate
-    //    if (CombatManager.GetInstance().isCombatGoing)
-    //    {
-    //        //int skillIndex = 0;
-    //        if (buttonIndex < skills.Count)
-    //        {
-    //            PerformAction(buttonIndex);
-    //        }
-    //        else
-    //        {
-    //            return;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        return;
-    //    }
-        
-        
-    //}
-
-    
 
     public void EndTurn()
     {
-        
-        Debug.Log("Got here");
         endedTurn = true;
-        
     }
 
     public void LoadGameData(CharacterData characterData)

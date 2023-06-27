@@ -4,27 +4,26 @@ using UnityEngine;
 
 public class NPCCombat : CombatController
 {
-    public Skill moveSkill;
-    public Skill basicAttackSkill;
-
-
     private Skill selectedSkill = null;
+    public GameObject enemySaysPrefab;
+    private GameObject enemySaysInstance;
+    private bool startedSaying = false;
+    private bool playerDied = false;
 
-    public CombatManager combatManager;
-    public bool isChoosingAttack = true;
-    public bool donePerforming = false;
+
 
     private enum NPCAttackState
     {
         SelectingSkill,
         Attacking,
+        Moving,
         Done
 
     }
     private NPCAttackState state = NPCAttackState.SelectingSkill;
     public bool NPCTurn()
     {
-        //Debug.Log(state);
+        //Debug.Log("State: " + state.ToString() + "; selectedSkill is null: " + (selectedSkill == null).ToString());
         switch (state)
         {
             case NPCAttackState.SelectingSkill:
@@ -35,19 +34,25 @@ public class NPCCombat : CombatController
                 }
                 else
                 {
+                    actionsTakenThisTurn++;
                     state = NPCAttackState.Attacking;
                     Attack();
                 }
                 break;
             case NPCAttackState.Attacking:
                 break;
+            case NPCAttackState.Moving:
+                CheckIfArrived();
+                break;
             case NPCAttackState.Done:
                 if (selectedSkill == null)
                 {
                     // say argh
-                    StartCoroutine(WaitBeforeFinishingTurn());
-                    
-                    //Debug.Log("no more skills to do");
+                    if (!startedSaying)
+                    {
+                        StartCoroutine(WaitBeforeFinishingTurn());
+                        startedSaying = true;
+                    }
                 }
                 else
                 {
@@ -69,30 +74,149 @@ public class NPCCombat : CombatController
 
     IEnumerator WaitBeforeFinishingTurn()
     {
-        CombatUI.GetInstance().ShowEnemySpeech(gameObject.GetComponent<CharacterController>().characterId);
+        if (enemySaysInstance == null)
+        {
+            enemySaysInstance = Instantiate(enemySaysPrefab, transform);
+        }
         yield return new WaitForSeconds(3f);
-        CombatUI.GetInstance().HideEnemySpeech(gameObject.GetComponent<CharacterController>().characterId);
+        if (enemySaysInstance != null)
+        {
+            Destroy(enemySaysInstance);
+        }
         endedTurn = true;
+        startedSaying = false;
         state = NPCAttackState.SelectingSkill;
+    }
+
+    private void CheckIfArrived()
+    {
+        if (GetComponent<NPCMovement>().HasArrived())
+        {
+            GetComponent<NPCMovement>().IsAllowedToMove = false;
+            GetComponent<NPCMovement>().ResetSpeed();
+            state = NPCAttackState.Done;
+        }
     }
 
     public void Attack()
     {
-        GetComponent<Animator>().SetTrigger("CastMagicAoE");
+        if (selectedSkill.skillName == "Move")
+        {
+            MoveTowardsPlayer();
+            
+        }
+        else if (selectedSkill.spellType == Constants.SpellType.Buff)
+        {
+            GetComponent<Animator>().SetTrigger("CastBuff");
+            actionPointsLeft -= selectedSkill.cost;
+        }
+        else
+        {
+            GetComponent<Animator>().SetTrigger("CastMagicAoE");
+            actionPointsLeft -= selectedSkill.cost;
+        }
         selectedSkill.cooldown = selectedSkill.maxCooldown;
     }
+    private void MoveTowardsPlayer()
+    {
+        Vector3 playerPosition = FindObjectOfType<PlayerController>().transform.position;
+        Vector3? possiblePointToMoveTo = CalculatePointTomoveTo(playerPosition);
+        
+        if (possiblePointToMoveTo.HasValue)
+        {
+            Vector3 pointToMoveTo = possiblePointToMoveTo.Value;
+            if (GetComponent<NPCMovement>().CanGetToDestination(pointToMoveTo))
+            {
+                GetComponent<NPCMovement>().IsAllowedToMove = true;
+                GetComponent<NPCMovement>().SetCombatStopDist();
+                GetComponent<NPCMovement>().SetCombatSpeed();
+                GetComponent<Animator>().SetBool("isRunning", true);
+                GetComponent<NPCMovement>().MoveNPC(pointToMoveTo);
+                actionPointsLeft -= (int)(Vector3.Distance(playerPosition, pointToMoveTo) / Constants.DISTANCE_COST_UNIT);
+                state = NPCAttackState.Moving;
+            }
+            else
+            {
+                state = NPCAttackState.Done;
+                Debug.Log("NPCCombat, can't get to destination: " + pointToMoveTo);
+            }
+        }
+        else
+        {
+            state = NPCAttackState.Done;
+        }
+        
+    }
 
-    private bool playerDied = false;
+    private Vector3? CalculatePointTomoveTo(Vector3 playerPosition)
+    {
+        float maxDistance = -1;
+        for (int i = 1; i < skills.Count; i++)
+        {
+            if (CooldownDone(skills[i]) && skills[i].maxDistance > maxDistance)
+            {
+                maxDistance = skills[i].maxDistance;
+            }
+
+        }
+        // found some actions that could be taken this turn
+        // but is too far from the player
+        if (maxDistance != -1)
+        {
+            float distanceToPlayer = Vector3.Distance(playerPosition, transform.position);
+            if (distanceToPlayer > maxDistance)
+            {
+                float distToMove = distanceToPlayer - maxDistance;
+                int cost = (int)(distToMove / Constants.DISTANCE_COST_UNIT);
+                while (cost > actionPointsLeft)
+                {
+                    distToMove -= Constants.DISTANCE_COST_UNIT;
+                    cost = (int)(distToMove / Constants.DISTANCE_COST_UNIT);
+                }
+                while (distanceToPlayer - distToMove < 2f)
+                {
+                    distToMove -= 0.05f;
+                }
+                float t = distToMove / distanceToPlayer;
+                return Vector3.Lerp(transform.position, playerPosition, t);
+
+            }
+            
+
+        }
+        return null;
+    }
+
+    private bool CooldownDone(Skill skill)
+    {
+        if (skill.cooldown == 0)
+        {
+            return true;
+        }
+        else return false;
+    }
+
+    
     public void SetDoneCasting()
     {
         // deal damage to the enemy
         state = NPCAttackState.Done;
         playerDied = DealDamageToPlayer();
     }
+    public void SetDoneBuff()
+    {
+        // deal damage to the enemy
+        playerDied = false;
+        CombatManager.GetInstance().ApplyBuff(selectedSkill);
+        state = NPCAttackState.Done;
+        
+        // skills[actionIndex].cooldown = skills[actionIndex].maxCooldown;
+        // actionPointsLeft -= skills[actionIndex].cost;
+    }
 
     public bool DealDamageToPlayer()
     {
-        int damageAfflicted = GetDamageDealt();
+        int damageAfflicted = GetDamageDealt(selectedSkill);
         // returns true if character died
         PlayerHealth player = FindObjectOfType<PlayerHealth>();
         if (player.GetDamaged(damageAfflicted))
@@ -106,12 +230,6 @@ public class NPCCombat : CombatController
         }
     }
 
-    public int GetDamageDealt()
-    {
-        return 1;
-        //return skills[actionIndex].baseDamageMax;
-    }
-
     private Skill ChooseSkill()
     {
         if (actionPointsLeft == 0)
@@ -121,11 +239,17 @@ public class NPCCombat : CombatController
         }
         List<Skill> possibleSkills = new List<Skill>();
         Vector3 playerPosition = FindObjectOfType<PlayerCombat>().transform.position;
+        int skillIndex = 0;
         foreach (var skill in skills)
         {
-            AddSkillToPossible(ref possibleSkills, skill, playerPosition);
+            if (skillIndex > 0)
+            {
+                AddSkillToPossible(ref possibleSkills, skill, playerPosition);
+            }
+            skillIndex++;
         }
-        Debug.Log("Possible skill count for " + gameObject.name + " is " + possibleSkills.Count);
+        Debug.Log("Actions taken: " + actionsTakenThisTurn + "; possibleSkills.Count: " + possibleSkills.Count 
+            + "; AP left: " + actionPointsLeft);
         // skills where found
         if (possibleSkills.Count > 0)
         {
@@ -133,13 +257,10 @@ public class NPCCombat : CombatController
             Skill chosenSkill = possibleSkills[selectedSkillIndex];
             possibleSkills.Clear();
             return chosenSkill;
-            //foreach (var skill in skills)
-            //{
-            //    if (selectedSkill.name == skill.name)
-            //    {
-            //        skill.cooldown = skill.maxCooldown;
-            //    }
-            //}
+        }
+        if (possibleSkills.Count == 0 && actionsTakenThisTurn == 0)
+        {
+            return skills[0]; // return move skill
         }
         possibleSkills.Clear();
         return null;
@@ -148,13 +269,20 @@ public class NPCCombat : CombatController
 
     public void AddSkillToPossible(ref List<Skill> possibleSkills, Skill skill, Vector3 playerPosition)
     {
+        //Debug.Log("Name: " + skill.skillName +
+        //    "; cooldown: " + skill.cooldown +
+        //    "; cost: " + skill.cost +
+        //    "; AP left: " + actionPointsLeft +
+        //    "; can afford cost: " + (skill.cost <= actionPointsLeft).ToString() +
+        //    "; player is in distance: " + (Vector3.Distance(transform.position, playerPosition) <= skill.maxDistance).ToString() +
+        //    "; distance to player: " + Vector3.Distance(transform.position, playerPosition));
         if (skill.spellType != Constants.SpellType.Special)
         {
             // skill is not in cooldown 
             if (skill.cooldown == 0)
             {
                 // check if the target is too far
-                if (Vector3.Distance(transform.position, playerPosition) < skill.maxDistance)
+                if ((int)Vector3.Distance(transform.position, playerPosition) <= (int)skill.maxDistance)
                 {
                     if (skill.cost <= actionPointsLeft)
                     {
@@ -166,134 +294,4 @@ public class NPCCombat : CombatController
         }
     }
 
-    public void DoSomething()
-    {
-        if(isChoosingAttack)
-        {
-            Debug.Log("Was true");
-        }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            endedTurn = true;
-        }
-        if (isChoosingAttack)
-        {
-            Debug.Log("Choosing attack for " + gameObject.name);
-            // do the animation and circle around
-            ChooseSkill();
-            if (selectedSkill != null)
-            {
-                isChoosingAttack = false;
-                isPerformingAction = true;
-                PerformAction(selectedSkill);
-            }
-            else
-            {
-                isChoosingAttack = true;
-                endedTurn = true;
-            }
-            
-            
-        }
-        else if (isPerformingAction)
-        {
-            //Debug.Log(skills[actionIndex].name);
-            //Debug.Log("Performing the action");
-            //doAction();
-            if (donePerforming)
-            {
-                FindObjectOfType<PlayerHealth>().GetDamaged(CalculateAffectedDamage());
-                //gameObject.GetComponent<Animator>().SetBool(skills[actionIndex].prepareAnimationBoolName, false);
-                //skills[actionIndex].RemoveEffect();
-                skills[actionIndex].cooldown = skills[actionIndex].maxCooldown;
-                selectedSkill.RemoveEffect();
-                donePerforming = false;
-                isPerformingAction = false;
-                selectedSkill = null;
-                isChoosingAttack = true;
-                actionPointsLeft -= skills[actionIndex].cost;
-            }
-
-        }
-    }
-
-    private void PerformAction(Skill skill)
-    {
-        // Sets the visual effect around the character
-        skill.SetEffect(gameObject);
-        if (skill.hasAnimTrigger)
-        {
-            //Debug.Log("Got here");
-            gameObject.GetComponent<Animator>().SetTrigger(skill.castTrigger);
-
-        }
-    }
-
-    public bool finishedTurn = false;
-   
-
-    //private void ChooseSkill()
-    //{
-    //    if (actionPointsLeft == 0)
-    //    {
-    //        return;
-    //    }
-    //    List<Skill> possibleSkills = new List<Skill>();
-    //    Vector3 playerPosition = FindObjectOfType<PlayerCombat>().transform.position;
-    //    foreach (var skill in skills)
-    //    {
-            
-    //        if (skill.spellType != Constants.SpellType.Special && skill.spellType != Constants.SpellType.Buff)
-    //        {
-    //            // skill is not in cooldown 
-    //            if (skill.cooldown == 0)
-    //            {   
-    //                // check if the target is too far
-    //                if (Vector3.Distance(transform.position, playerPosition) < skill.maxDistance)
-    //                {
-    //                    if (skill.cost <= actionPointsLeft)
-    //                    {
-    //                        possibleSkills.Add(skill);
-    //                    }
-                        
-    //                }
-    //            }
-    //        }
-    //        // add buff separately, because it is self cast and doesn't require distance
-    //        else if (skill.spellType == Constants.SpellType.Buff)
-    //        {
-                
-    //            if (skill.cooldown == 0)
-    //            {
-    //                // skill is still in cooldown
-    //                possibleSkills.Add(skill);
-    //            }
-    //        }
-    //    }
-
-    //    // skills where found
-    //    if (possibleSkills.Count > 0)
-    //    {
-    //        int selectedSkillIndex = Random.Range(0, possibleSkills.Count - 1);
-    //        selectedSkill = possibleSkills[selectedSkillIndex];
-    //        foreach (var skill in skills)
-    //        {
-    //            if (selectedSkill.name == skill.name)
-    //            {
-    //                skill.cooldown = skill.maxCooldown;
-    //            }
-    //        }
-    //    }
-    //    possibleSkills.Clear();
-    //}
-
-    private bool HasAvailableSkills()
-    {
-        return true;
-    }
-
-    //public void SetDoneCasting()
-    //{
-    //    donePerforming = true;
-    //}
 }

@@ -15,25 +15,19 @@ MonoBehaviour:
   skillId: 3
   skillName: Barkskin
   skillIcon: {fileID: 21300000, guid: 567b3c6a8375ba14dae6cd51e7d46903, type: 3}
-  skillBelongsTo: 4
+  description: Invoke the essence of nature, encasing yourself a protective layer
+    of sturdy bark. This wooden skin grants damage absorption
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: 
-  affectAnimationBoolName: 
   hasAnimTrigger: 1
   castTrigger: 
-  maxDistance: 10
-  description: Invoke the essence of nature, encasing yourself a protective layer
-    of sturdy bark. This wooden skin grants damage absorption
-  spellType: 1
-  isInCooldown: 0
   cooldown: 0
   maxCooldown: 4
-  cost: 0
   baseDamageMin: 0
   baseDamageMax: 0
-  spell: 0
+  maxDistance: 10
   requiresWeapon: 0
   weaponTypeRequired: 0
-  affectedByAttributes: 
-  affectedByAbilities: 
+  spellType: 1
+  cost: 0

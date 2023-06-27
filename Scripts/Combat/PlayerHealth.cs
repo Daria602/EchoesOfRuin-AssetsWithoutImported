@@ -9,7 +9,6 @@ public class PlayerHealth : Health
         
         if (currentHealth - damage <= 0)
         {
-            //Die();
             return true;
         }
         else
@@ -19,17 +18,6 @@ public class PlayerHealth : Health
         }
         
     }
-    public override void Die()
-    {
-        base.Die();
-        CombatManager.GetInstance().SignalDeath(gameObject.GetComponent<CombatController>().characterId);
-        gameObject.SetActive(false);
-        Debug.Log("Player dies");
-    }
-    //public void Die()
-    //{
-    //    Debug.Log(gameObject.name + "dies");
-    //}
 
     public void LoadGameData(CharacterData characterData)
     {

@@ -15,26 +15,20 @@ MonoBehaviour:
   skillId: 1
   skillName: Lightning Bolt
   skillIcon: {fileID: 21300000, guid: 1e4994c7941b20f4581cf497593fc1de, type: 3}
-  skillBelongsTo: 5
-  hasVisuals: 0
-  visualEffectPrefab: {fileID: 0}
-  prepareAnimationBoolName: 
-  affectAnimationBoolName: 
-  hasAnimTrigger: 1
-  castTrigger: 
-  maxDistance: 10
   description: Channel the power of lightning, unleashing a powerful bolt of electrical
     energy that strikes a single target, dealing high damage and potentially stunning
     them
-  spellType: 2
-  isInCooldown: 0
+  hasVisuals: 0
+  visualEffectPrefab: {fileID: 0}
+  prepareAnimationBoolName: 
+  hasAnimTrigger: 1
+  castTrigger: 
   cooldown: 0
   maxCooldown: 4
-  cost: 0
   baseDamageMin: 0
   baseDamageMax: 0
-  spell: 0
+  maxDistance: 10
   requiresWeapon: 0
   weaponTypeRequired: 0
-  affectedByAttributes: 
-  affectedByAbilities: 
+  spellType: 2
+  cost: 0

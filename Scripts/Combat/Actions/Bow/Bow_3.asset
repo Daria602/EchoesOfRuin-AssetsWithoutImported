@@ -15,25 +15,19 @@ MonoBehaviour:
   skillId: 0
   skillName: Volley
   skillIcon: {fileID: 21300000, guid: 6ffa8ca51ad88354f98bac0198d82518, type: 3}
-  skillBelongsTo: 1
+  description: Fire a volley of arrows into the sky, raining them down on a targeted
+    area, hitting multiple enemies within that area.
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: 
-  affectAnimationBoolName: 
   hasAnimTrigger: 1
   castTrigger: 
-  maxDistance: 10
-  description: Fire a volley of arrows into the sky, raining them down on a targeted
-    area, hitting multiple enemies within that area.
-  spellType: 3
-  isInCooldown: 0
   cooldown: 0
   maxCooldown: 4
-  cost: 0
   baseDamageMin: 0
   baseDamageMax: 0
-  spell: 0
+  maxDistance: 10
   requiresWeapon: 0
   weaponTypeRequired: 0
-  affectedByAttributes: 
-  affectedByAbilities: 
+  spellType: 2
+  cost: 0

@@ -27,14 +27,21 @@ public class CombatUI : MonoBehaviour
     public TextMeshProUGUI enemyName;
 
     public GameObject actionPointsUI;
+    public GameObject portraitPrefab;
+    public GameObject portraitsGrid;
+    
+    public GameObject distanceUI;
+    public TextMeshProUGUI distanceNumberText;
+    public TextMeshProUGUI moveApCostText;
+
+    public GameObject youDiedMenu;
+
+    public Transform player;
 
     public void EnablePlayerUI()
     {
         enemyCombatUI.SetActive(false);
         playerCombatUI.SetActive(true);
-        //actionPointsUI.SetActive(true);
-        //endTurnButton.SetActive(true);
-        //enemyTurnUI.SetActive(false);
     }
     public void EnableEnemyUI(int characterId)
     {
@@ -42,9 +49,6 @@ public class CombatUI : MonoBehaviour
         enemyName.text = characterName;
         enemyCombatUI.SetActive(true);
         playerCombatUI.SetActive(false);
-        //actionPointsUI.SetActive(false);
-        //endTurnButton.SetActive(false);
-        //enemyTurnUI.SetActive(true);
     }
     public void ShowEnemySpeech(int characterId)
     {
@@ -89,9 +93,21 @@ public class CombatUI : MonoBehaviour
         }
     }
 
+    public void DisableUI()
+    {
+        enemyCombatUI.SetActive(false);
+        playerCombatUI.SetActive(false);
+        actionPointsUI.SetActive(false);
+        distanceUI.SetActive(false);
+        ClearPortraits();
+        UpdateCooldownsOnSkills(player.GetComponent<CombatController>().skills);
+    }
+
     public void ClearPortraits()
     {
+       // Debug.Log("Got to clear the portraints");
         Portrait[] portraits = portraitsGrid.GetComponentsInChildren<Portrait>();
+        
         if (portraits != null && portraits.Length > 0)
         {
             foreach (Portrait portrait in portraits)
@@ -99,6 +115,7 @@ public class CombatUI : MonoBehaviour
                 portrait.SelfDestroy();
             }
         }
+        // Debug.Log("Portraits length" + portraits.Length);
     }
 
     public void PlayerEndsTurn()
@@ -121,8 +138,7 @@ public class CombatUI : MonoBehaviour
 
         }
     }
-    public GameObject portraitPrefab;
-    public GameObject portraitsGrid;
+    
     public void CreatePortraits(List<int> participantsIds)
     {
         foreach (int characterId in participantsIds)
@@ -164,46 +180,80 @@ public class CombatUI : MonoBehaviour
         return Constants.GetInstance().characters[characterId].name == "PlayerInGame" ? "You" : Constants.GetInstance().characters[characterId].name;
     }
 
-    //public void ShowPortraits()
-    //{
-    //    // clear the previous ones
-    //    //ClearPortraits();
+    public void ShowDistance(float maxDistance, bool showAPCost)
+    {
+        Vector3? point = InputManager.GetInstance().GetMouseWorldPosition();
+        if (point == null)
+        {
+            Debug.Log("Vector3 point is null");
+        }
+        else
+        {
+            if (!distanceUI.activeSelf)
+            {
+                distanceUI.SetActive(true);
+            }
+            float distance = Vector3.Distance((Vector3)point, player.position);
+            distanceNumberText.text = distance.ToString("F2");
+            if (distance <= maxDistance)
+            {
+                distanceNumberText.color = Color.green;
+            }
+            else
+            {
+                distanceNumberText.color = Color.red;
+            }
+            if (showAPCost)
+            {
+                // show ap cost
+                ShowMoveAPCost(distance);
+            }
+            else
+            {
+                // disable ap cost ui
+                HideMoveAPCost();
+            }
+        }
+    }
 
-    //    if (m_isCombatGoing)
-    //    {
-    //        // Set new ones
-    //        for (int i = 0; i < characterInitiativeList.Count; i++)
-    //        {
-    //            int currentTurnIndex;
-    //            if (i + turnIndex >= characterInitiativeList.Count)
-    //            {
-    //                currentTurnIndex = characterInitiativeList.Count - (i + turnIndex);
-    //            }
-    //            else
-    //            {
-    //                currentTurnIndex = i + turnIndex;
-    //            }
-    //            int characterId = characterInitiativeList[currentTurnIndex].characterId;
-    //            //Sprite characterPortrait = Constants.GetInstance().characters[characterId].GetComponent<CharacterAppearance>().image;
-    //            int currentHealth = Constants.GetInstance().characters[characterId].GetComponent<Health>().currentHealth;
-    //            int maxHealth = Constants.GetInstance().characters[characterId].GetComponent<Health>().CurrentMaxHealth;
-    //            string characterName = Constants.GetInstance().characters[characterId].name == "PlayerInGame" ? "You" : Constants.GetInstance().characters[characterId].name;
-    //            GameObject go = Instantiate(portraitPrefab, portraitsGrid.GetComponent<RectTransform>());
-    //            Portrait portrait = go.GetComponent<Portrait>();
-    //            portrait.SetImage(characterPortrait);
-    //            portrait.SetHealthMinMax(0, maxHealth);
-    //            portrait.SetHealthValue(currentHealth);
-    //            portrait.SetName(characterName);
-    //            if (characterId == 0)
-    //            {
-    //                portrait.SetAsAlly();
-    //            }
-    //            else
-    //            {
-    //                portrait.SetAsEnemy();
-    //            }
-    //        }
-    //    }
+    public void DisableDistance()
+    {
+        if (distanceUI.activeSelf)
+        {
+            distanceUI.SetActive(false);
+        }
+    }
 
-    //}
+    private void ShowMoveAPCost(float distance)
+    {
+        if (!moveApCostText.gameObject.activeSelf)
+        {
+            moveApCostText.gameObject.SetActive(true);
+        }
+        int cost = (int)(distance / Constants.DISTANCE_COST_UNIT);
+        moveApCostText.text = cost + " AP";
+        if (cost <= FindObjectOfType<PlayerCombat>().actionPointsLeft)
+        {
+            moveApCostText.color = Color.green;
+            distanceNumberText.color = Color.green;
+        }
+        else
+        {
+            moveApCostText.color = Color.red;
+            distanceNumberText.color = Color.red;
+        }
+    }
+    private void HideMoveAPCost()
+    {
+        if (moveApCostText.gameObject.activeSelf)
+        {
+            moveApCostText.gameObject.SetActive(false);
+        }
+    }
+
+    
+    public void ShowPlayerDeath()
+    {
+        youDiedMenu.SetActive(true);
+    }
 }

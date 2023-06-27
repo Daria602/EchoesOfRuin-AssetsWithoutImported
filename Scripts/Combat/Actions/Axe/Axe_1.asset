@@ -12,13 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8793a39f5d9e804d93e93fb68a190dc, type: 3}
   m_Name: Axe_1
   m_EditorClassIdentifier: 
+  skillId: 0
   skillName: Executioner's Fury
   skillIcon: {fileID: 21300000, guid: 50b63c28447805a49956d89373286dc3, type: 3}
+  description: Enter a state of relentless fury, increasing your strength and precision.
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: 
-  affectAnimationBoolName: 
-  minDistance: 0
-  description: Enter a state of relentless fury, increasing your strength and precision.
+  hasAnimTrigger: 1
+  castTrigger: 
+  cooldown: 0
+  maxCooldown: 4
+  baseDamageMin: 0
+  baseDamageMax: 0
+  maxDistance: 10
+  requiresWeapon: 0
+  weaponTypeRequired: 0
   spellType: 1
   cost: 0

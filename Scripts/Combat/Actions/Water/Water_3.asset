@@ -15,26 +15,20 @@ MonoBehaviour:
   skillId: 11
   skillName: Sky Surge
   skillIcon: {fileID: 21300000, guid: ffa17ea0b8f649a4c9b23479944f1bab, type: 3}
-  skillBelongsTo: 3
-  hasVisuals: 1
-  visualEffectPrefab: {fileID: 3744133877081091469, guid: a2a060732547fe64581bb0cb3c2bdf1d, type: 3}
-  prepareAnimationBoolName: 
-  affectAnimationBoolName: 
-  hasAnimTrigger: 1
-  castTrigger: CastMagicAoE
-  maxDistance: 10
   description: Harness the power of water and the sky, summoning a colossal wave
     from above that crashes down upon a wide area, damaging all enemies caught in
     its path
-  spellType: 3
-  isInCooldown: 0
+  hasVisuals: 1
+  visualEffectPrefab: {fileID: 3744133877081091469, guid: a2a060732547fe64581bb0cb3c2bdf1d, type: 3}
+  prepareAnimationBoolName: 
+  hasAnimTrigger: 1
+  castTrigger: CastMagicAoE
   cooldown: 0
   maxCooldown: 4
-  cost: 3
   baseDamageMin: 0
   baseDamageMax: 0
-  spell: 0
+  maxDistance: 10
   requiresWeapon: 0
   weaponTypeRequired: 0
-  affectedByAttributes: 
-  affectedByAbilities: 
+  spellType: 2
+  cost: 3

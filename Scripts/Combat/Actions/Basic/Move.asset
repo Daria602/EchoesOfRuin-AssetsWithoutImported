@@ -15,24 +15,18 @@ MonoBehaviour:
   skillId: 12
   skillName: Move
   skillIcon: {fileID: 21300000, guid: 6960c6bd5088317429f7e0e033bee813, type: 3}
-  skillBelongsTo: 6
+  description: Move
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: isRunning
-  affectAnimationBoolName: 
   hasAnimTrigger: 0
   castTrigger: 
-  maxDistance: 10
-  description: Move
-  spellType: 0
-  isInCooldown: 0
   cooldown: 0
-  maxCooldown: 0
-  cost: 0
+  maxCooldown: 1
   baseDamageMin: 0
   baseDamageMax: 0
-  spell: 0
+  maxDistance: 1000
   requiresWeapon: 0
   weaponTypeRequired: 0
-  affectedByAttributes: 
-  affectedByAbilities: 
+  spellType: 0
+  cost: 0

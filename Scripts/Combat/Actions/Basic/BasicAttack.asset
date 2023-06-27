@@ -15,24 +15,18 @@ MonoBehaviour:
   skillId: 13
   skillName: Basic Attack
   skillIcon: {fileID: 21300000, guid: 08c71e4e0565fe4469d1e0a593047156, type: 3}
-  skillBelongsTo: 6
+  description: Attack with your current weapon
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: 
-  affectAnimationBoolName: 
-  hasAnimTrigger: 1
+  hasAnimTrigger: 0
   castTrigger: 
-  maxDistance: 10
-  description: Attack with your current weapon
-  spellType: 0
-  isInCooldown: 0
   cooldown: 0
-  maxCooldown: 4
-  cost: 0
-  baseDamageMin: 0
-  baseDamageMax: 0
-  spell: 0
+  maxCooldown: 1
+  baseDamageMin: 1
+  baseDamageMax: 2
+  maxDistance: 5
   requiresWeapon: 0
   weaponTypeRequired: 0
-  affectedByAttributes: 
-  affectedByAbilities: 
+  spellType: 2
+  cost: 0

@@ -64,13 +64,18 @@ public class SkillPanelController : MonoBehaviour
             }
         }
 
-        if (isInCombat != setInCombat)
-        {
-            skillPanelVisibility = !skillPanelVisibility;
-            skillPanel.SetActive(skillPanelVisibility);
-            isInCombat = setInCombat;
-        }
+        //if (isInCombat != setInCombat)
+        //{
+        //    skillPanelVisibility = !skillPanelVisibility;
+        //    skillPanel.SetActive(skillPanelVisibility);
+        //    isInCombat = setInCombat;
+        //}
         
+    }
+
+    public void DisableSkillPanel()
+    {
+        skillPanel.SetActive(false);
     }
 
     public void AssignTooltips()
@@ -172,37 +177,37 @@ public class SkillPanelController : MonoBehaviour
 
     public void PromptLearningSkill(int id, Item item)
     {
-        learnSkillPanel.SetActive(true);
-        skillName.text = Constants.GetInstance().skillMap[id].skillName;
-        Color textColor = Color.magenta;
-        switch (Constants.GetInstance().skillMap[id].skillBelongsTo)
-        {
-            case Constants.SkillBelongsTo.Axe:
-                textColor = Color.red;
-                break;
-            case Constants.SkillBelongsTo.Bow:
-                textColor = Color.green;
-                break;
-            case Constants.SkillBelongsTo.Fire:
-                textColor = Color.yellow;
-                break;
-            case Constants.SkillBelongsTo.Water:
-                textColor = Color.blue;
-                break;
-            case Constants.SkillBelongsTo.Earth:
-                Debug.Log("Got here");
-                textColor = new Color(0.4245283f, 0.1902367f, 0.1902367f); // brown
-                break;
-            case Constants.SkillBelongsTo.Air:
-                textColor = Color.grey;
-                break;
-            case Constants.SkillBelongsTo.Other:
-                textColor = Color.magenta;
-                break;
-        }
-        skillName.color = textColor;
-        skillToLearnId = id;
-        skillToLearnInventory = item;
+        //learnSkillPanel.SetActive(true);
+        //skillName.text = Constants.GetInstance().skillMap[id].skillName;
+        //Color textColor = Color.magenta;
+        //switch (Constants.GetInstance().skillMap[id].skillBelongsTo)
+        //{
+        //    case Constants.SkillBelongsTo.Axe:
+        //        textColor = Color.red;
+        //        break;
+        //    case Constants.SkillBelongsTo.Bow:
+        //        textColor = Color.green;
+        //        break;
+        //    case Constants.SkillBelongsTo.Fire:
+        //        textColor = Color.yellow;
+        //        break;
+        //    case Constants.SkillBelongsTo.Water:
+        //        textColor = Color.blue;
+        //        break;
+        //    case Constants.SkillBelongsTo.Earth:
+        //        Debug.Log("Got here");
+        //        textColor = new Color(0.4245283f, 0.1902367f, 0.1902367f); // brown
+        //        break;
+        //    case Constants.SkillBelongsTo.Air:
+        //        textColor = Color.grey;
+        //        break;
+        //    case Constants.SkillBelongsTo.Other:
+        //        textColor = Color.magenta;
+        //        break;
+        //}
+        //skillName.color = textColor;
+        //skillToLearnId = id;
+        //skillToLearnInventory = item;
     }
 
     public void CancelLearning()

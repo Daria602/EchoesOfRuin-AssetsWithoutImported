@@ -126,11 +126,11 @@ public class StatsUI : MonoBehaviour
 
     public void SetAbilityValues()
     {
-        strength.text = player.GetComponent<Stats>().strength.ToString();
-        agility.text = player.GetComponent<Stats>().agility.ToString();
-        intelligence.text = player.GetComponent<Stats>().intelligence.ToString();
-        constitution.text = player.GetComponent<Stats>().constitution.ToString();
-        wits.text = player.GetComponent<Stats>().wits.ToString();
+        strength.text = player.GetComponent<Stats>().attributes.strength.ToString();
+        agility.text = player.GetComponent<Stats>().attributes.agility.ToString();
+        intelligence.text = player.GetComponent<Stats>().attributes.intelligence.ToString();
+        constitution.text = player.GetComponent<Stats>().attributes.constitution.ToString();
+        wits.text = player.GetComponent<Stats>().attributes.wits.ToString();
 
         shadow.text = player.GetComponent<Stats>().shadow.ToString();
         chaos.text = player.GetComponent<Stats>().chaos.ToString();

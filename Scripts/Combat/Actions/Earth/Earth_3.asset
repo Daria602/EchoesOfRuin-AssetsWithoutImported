@@ -15,24 +15,24 @@ MonoBehaviour:
   skillId: 5
   skillName: Rock Blast
   skillIcon: {fileID: 21300000, guid: 63641fba9de1d984e951b330e5231940, type: 3}
-  skillBelongsTo: 4
+  description: Gather rocks into a dense sphere, then launch it at the target.
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: 
-  affectAnimationBoolName: 
   hasAnimTrigger: 1
   castTrigger: 
-  maxDistance: 10
-  description: Gather rocks into a dense sphere, then launch it at the target.
-  spellType: 2
-  isInCooldown: 0
   cooldown: 0
   maxCooldown: 4
-  cost: 2
-  baseDamageMin: 0
-  baseDamageMax: 0
-  spell: 0
+  baseDamageMin: 2
+  baseDamageMax: 4
+  maxDistance: 10
   requiresWeapon: 0
   weaponTypeRequired: 0
-  affectedByAttributes: 
-  affectedByAbilities: 
+  spellType: 2
+  affectedByAttribute: 2
+  cost: 2
+  buffsForTurns: 0
+  buffsAttributes: 0
+  attributes: 
+  buffsAbilities: 0
+  abilities: 

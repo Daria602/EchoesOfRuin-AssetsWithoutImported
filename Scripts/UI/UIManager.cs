@@ -44,6 +44,13 @@ public class UIManager : MonoBehaviour
         ToggleInventoryAndStats();
     }
 
+    public void RemoveUI()
+    {
+        XPSlider.gameObject.SetActive(false);
+        healthSlider.gameObject.SetActive(false);
+        healthText.gameObject.SetActive(false);
+        xpText.gameObject.SetActive(false);
+}
     private void ToggleInGameMenu()
     {
         if (InputManager.GetInstance().EscapeInput())
