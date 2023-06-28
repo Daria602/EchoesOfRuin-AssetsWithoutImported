@@ -123,7 +123,11 @@ public class CombatController : MonoBehaviour
             minBaseDamage = skill.baseDamageMin;
             maxBaseDamage = skill.baseDamageMax;
         }
-        Debug.Log("Base damage is: " + "(" + minBaseDamage + ", " + maxBaseDamage + ");");
+
+        int chaosPoints = GetComponent<Stats>().abilities.chaos;
+        minBaseDamage = (minBaseDamage - chaosPoints < 0) ? 0 : minBaseDamage - chaosPoints;
+        maxBaseDamage = maxBaseDamage + chaosPoints;
+
         int attributeMultiplier;
         if (skill.skillName == "Basic Attack")
         {
@@ -148,15 +152,13 @@ public class CombatController : MonoBehaviour
         {
             attributeMultiplier = GetAttributeValue(skill.affectedByAttribute);
         }
-        
-        Debug.Log("Attribute value: " + attributeMultiplier);
+
         float additionToTheDamage = attributeMultiplier * Constants.ATTRIBUTE_MULTIPLIER;
-        Debug.Log("Addition to mindamage: " + (int)(minBaseDamage * additionToTheDamage) +
-            "; Addition to maxdamage: " + (int)(maxBaseDamage * additionToTheDamage));
         minBaseDamage += (int)(minBaseDamage * additionToTheDamage);
         maxBaseDamage += (int)(maxBaseDamage * additionToTheDamage);
-        Debug.Log("Base damage after multiplying is: " + "(" + minBaseDamage + ", " + maxBaseDamage + ");");
+
         int finalDamage = Random.Range(minBaseDamage, maxBaseDamage + 1);
+
         if (isCrit)
         {
             finalDamage *= 2;
@@ -187,9 +189,14 @@ public class CombatController : MonoBehaviour
 
     private bool IsCriticalStrike()
     {
+        // crit chance starts from 10% and with each point in Shadow will increase with 5%
+        float baseCritStrikeStat = GetComponent<Stats>().critStrike;
+        int shadowPoints = GetComponent<Stats>().abilities.shadow;
+        float shadowAddition = shadowPoints * Constants.SHADOW_MULTIPLIER; // 0.05
+        float finalCritChance = baseCritStrikeStat + shadowAddition;
         // 30% = 0.3
         float randomNumber = Random.Range(0f, 1f);
-        if (randomNumber <= GetComponent<Stats>().criticalStrike)
+        if (randomNumber <= finalCritChance)
         {
             return true;
         }

@@ -64,12 +64,12 @@ public class CharacterData
         this.availableAttributePoints = 5;
         this.strength = 0; 
         this.agility = 0;
-        this.intelligence = 5; // TODO: change here to 0
+        this.intelligence = 0;
         this.constitution = 0;
         this.wits = 0;
 
         // Abilities
-        this.availableAbilityPoints = 3;
+        this.availableAbilityPoints = 5;
         this.shadow = 0;
         this.chaos = 0;
         this.luck = 0;

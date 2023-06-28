@@ -61,7 +61,6 @@ public class PlayerCombat : CombatController
     public void ButtonIndexClicked(int buttonIndex)
     {
         actionIndex = buttonIndex;
-        GetComponent<Animator>().SetBool("isMagicAoE", true);
         state = PlayerAttackStates.SelectingTarget;
     }
 
@@ -147,7 +146,6 @@ public class PlayerCombat : CombatController
                 {
                     GetComponent<PlayerMovement>().IsAllowedToMove = true;
                     GetComponent<PlayerMovement>().SetCombatStopDist();
-                    GetComponent<Animator>().SetBool("isMagicAoE", false);
                     GetComponent<Animator>().SetBool("isRunning", true);
                     GetComponent<PlayerMovement>().MovePlayer(pointInScene);
                     actionPointsLeft -= moveCost;
@@ -190,7 +188,6 @@ public class PlayerCombat : CombatController
     private void CancelAttack()
     {
         HideDistance();
-        GetComponent<Animator>().SetBool("isMagicAoE", false);
         state = PlayerAttackStates.SelectingSkill;
     }
     private bool IsInDistance()
@@ -242,7 +239,6 @@ public class PlayerCombat : CombatController
     public void SetDoneCasting()
     {
         HideDistance();
-        GetComponent<Animator>().SetBool("isMagicAoE", false);
         if (GetWeapon() != null)
         {
             if (GetWeapon().weaponType == Constants.WeaponTypes.Bow)

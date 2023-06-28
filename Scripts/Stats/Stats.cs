@@ -145,6 +145,104 @@ public class Stats : MonoBehaviour
     }
     public Attributes attributes = new Attributes();
 
+    [System.Serializable]
+    public class Abilities
+    {
+        public int shadow;
+        int tempShadow;
+        public int chaos;
+        int tempChaos;
+        public int luck;
+        int tempLuck;
+        public int charisma;
+        int tempCharisma;
+        public void SetAbilities(int shadow, int chaos, int luck, int charisma)
+        {
+            this.shadow = shadow;
+            tempShadow = shadow;
+            this.chaos = chaos;
+            tempChaos = chaos;
+            this.luck = luck;
+            tempLuck = luck;
+            this.charisma = charisma;
+            tempCharisma = charisma;
+        }
+        public void TempModifyAbility(Constants.Abilities ability, bool increase)
+        {
+            int amount = increase ? 1 : -1;
+            switch (ability)
+            {
+                case Constants.Abilities.Shadow:
+                    if (this.shadow + amount >= 0)
+                    {
+                        this.shadow += amount;
+                    }
+                    break;
+                case Constants.Abilities.Chaos:
+                    if (this.chaos + amount >= 0)
+                    {
+                        this.chaos += amount;
+                    }
+                    break;
+                case Constants.Abilities.Luck:
+                    if (this.luck + amount >= 0)
+                    {
+                        this.luck += amount;
+                    }
+                    break;
+                case Constants.Abilities.Charisma:
+                    if (this.charisma + amount >= 0)
+                    {
+                        this.charisma += amount;
+                    }
+                    break;
+            }
+        }
+        public bool PermModifyAttribute(Constants.Abilities ability, bool increase)
+        {
+            int amount = increase ? 1 : -1;
+            bool wasModified = false;
+            switch (ability)
+            {
+                case Constants.Abilities.Shadow:
+                    if (this.shadow + amount >= 0)
+                    {
+                        this.shadow += amount;
+                        tempShadow = this.shadow;
+                        wasModified = true;
+                    }
+                    break;
+                case Constants.Abilities.Chaos:
+                    if (this.chaos + amount >= 0)
+                    {
+                        this.chaos += amount;
+                        tempChaos = this.chaos;
+                        wasModified = true;
+                    }
+                    break;
+                case Constants.Abilities.Luck:
+                    if (this.luck + amount >= 0)
+                    {
+                        this.luck += amount;
+                        tempLuck = this.luck;
+                        wasModified = true;
+                    }
+                    break;
+                case Constants.Abilities.Charisma:
+                    if (this.charisma + amount >= 0)
+                    {
+                        this.charisma += amount;
+                        tempCharisma = this.charisma;
+                        wasModified = true;
+                    }
+                    break;
+            }
+            return wasModified;
+        }
+
+    }
+    public Abilities abilities = new Abilities();
+
     private void Start()
     {
         //attributes.SetAttributes(strength, agility, intelligence, constitution, wits);
@@ -168,7 +266,7 @@ public class Stats : MonoBehaviour
     private const int MIN_ATTRIBUTE_VALUE = 0;
 
     public int characterLevel = 1;
-    public float criticalStrike = 0.3f;
+    public float critStrike = 0.3f;
     public int grantedXP = 1000;
     // Combat abilities
     public enum AbilityStats
@@ -178,11 +276,11 @@ public class Stats : MonoBehaviour
         Luck,
         Charisma
     }
-    public int availableAbilityPoints = 3;
-    public int shadow = 0;
-    public int chaos = 0;
-    public int luck = 0;
-    public int charisma = 0;
+    public int availableAbilityPoints = 5;
+    //public int shadow = 0;
+    //public int chaos = 0;
+    //public int luck = 0;
+    //public int charisma = 0;
 
     private const int MIN_ABILITY_VALUE = 0;
 
@@ -212,44 +310,25 @@ public class Stats : MonoBehaviour
 
     public bool IncreaseAbilityStat(int statType)
     {
-        bool result = false;
-        switch (statType)
+        if (availableAbilityPoints > 0)
         {
-            case (int)AbilityStats.Shadow:
-                result = Increase(ref shadow, ref availableAbilityPoints);
-                break;
-            case (int)AbilityStats.Chaos:
-                result = Increase(ref chaos, ref availableAbilityPoints);
-                break;
-            case (int)AbilityStats.Luck:
-                result = Increase(ref luck, ref availableAbilityPoints);
-                break;
-            case (int)AbilityStats.Charisma:
-                result = Increase(ref charisma, ref availableAbilityPoints);
-                break;
+            if (abilities.PermModifyAttribute((Constants.Abilities)statType, true))
+            {
+                availableAbilityPoints--;
+                return true;
+            }
         }
-        return result;
+        return false;
     }
 
     public bool DecreaseAbilityStat(int statType)
     {
-        bool result = false;
-        switch (statType)
+        if (abilities.PermModifyAttribute((Constants.Abilities)statType, false))
         {
-            case (int)AbilityStats.Shadow:
-                result = Decrease(ref shadow, ref availableAbilityPoints, MIN_ABILITY_VALUE);
-                break;
-            case (int)AbilityStats.Chaos:
-                result = Decrease(ref chaos, ref availableAbilityPoints, MIN_ABILITY_VALUE);
-                break;
-            case (int)AbilityStats.Luck:
-                result = Decrease(ref luck, ref availableAbilityPoints, MIN_ABILITY_VALUE);
-                break;
-            case (int)AbilityStats.Charisma:
-                result = Decrease(ref charisma, ref availableAbilityPoints, MIN_ABILITY_VALUE);
-                break;
+            availableAbilityPoints++;
+            return true;
         }
-        return result;
+        return false;
     }
 
     // Special function for future modifications to this, maybe there is a ceiling to how much player can increase a stat
@@ -289,10 +368,13 @@ public class Stats : MonoBehaviour
         );
 
         this.availableAbilityPoints = characterData.availableAbilityPoints;
-        this.shadow = characterData.shadow;
-        this.chaos = characterData.chaos;
-        this.luck = characterData.luck;
-        this.charisma = characterData.charisma;
+        this.abilities.SetAbilities
+        (
+            characterData.shadow,
+            characterData.chaos,
+            characterData.luck,
+            characterData.charisma
+        );
     }
     public void SaveGameData(ref CharacterData characterData)
     {
@@ -304,10 +386,10 @@ public class Stats : MonoBehaviour
         characterData.wits = this.attributes.wits;
 
         characterData.availableAbilityPoints = this.availableAbilityPoints;
-        characterData.shadow = this.shadow;
-        characterData.chaos = this.chaos;
-        characterData.luck= this.luck;
-        characterData.charisma = this.charisma;
+        characterData.shadow = this.abilities.shadow;
+        characterData.chaos = this.abilities.chaos;
+        characterData.luck= this.abilities.luck;
+        characterData.charisma = this.abilities.charisma;
         characterData.characterLevel = this.characterLevel;
     }
 
@@ -315,11 +397,4 @@ public class Stats : MonoBehaviour
     {
         return initiative + attributes.wits;
     }
-
-    public void ApplyBuff(Constants.Attributes[] attributes, Constants.Abilities[] abilities)
-    {
-
-    }
-
-
 }

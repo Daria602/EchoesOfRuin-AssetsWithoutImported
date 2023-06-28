@@ -132,10 +132,10 @@ public class StatsUI : MonoBehaviour
         constitution.text = player.GetComponent<Stats>().attributes.constitution.ToString();
         wits.text = player.GetComponent<Stats>().attributes.wits.ToString();
 
-        shadow.text = player.GetComponent<Stats>().shadow.ToString();
-        chaos.text = player.GetComponent<Stats>().chaos.ToString();
-        luck.text = player.GetComponent<Stats>().luck.ToString();
-        charisma.text = player.GetComponent<Stats>().charisma.ToString();
+        shadow.text = player.GetComponent<Stats>().abilities.shadow.ToString();
+        chaos.text = player.GetComponent<Stats>().abilities.chaos.ToString();
+        luck.text = player.GetComponent<Stats>().abilities.luck.ToString();
+        charisma.text = player.GetComponent<Stats>().abilities.charisma.ToString();
 
         availablePointsAbility.text = player.GetComponent<Stats>().availableAbilityPoints.ToString();
         availablePointsAttribute.text = player.GetComponent<Stats>().availableAttributePoints.ToString();

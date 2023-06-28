@@ -71,6 +71,10 @@ public class CombatManager : MonoBehaviour
             {
                 Constants.GetInstance().characters[characterId].GetComponent<Stats>().attributes.TempModifyAttribute(attribute, false);
             }
+            foreach (Constants.Abilities ability in buff.abilitiesBuffed)
+            {
+                Constants.GetInstance().characters[characterId].GetComponent<Stats>().abilities.TempModifyAbility(ability, false);
+            }
         }
     }
     [Serializable]
@@ -202,6 +206,7 @@ public class CombatManager : MonoBehaviour
         currentCharacter = null;
         turnIndex = 0;
         round = 1;
+        SkillPanelController.GetInstance().MakeSkillsUnclickable();
 
     }
 
@@ -424,6 +429,7 @@ public class CombatManager : MonoBehaviour
         // Show combat UI
         EnableUI();
         ShowPortraits();
+        SkillPanelController.GetInstance().MakeSkillsClickable();
     }
     public void AddParticipants(List<int> characterIds)
     {
@@ -455,29 +461,22 @@ public class CombatManager : MonoBehaviour
 
     public void ApplyBuff(Skill skill)
     {
-        if (skill.buffsAttributes)
+        foreach (var attribute in skill.attributes)
         {
-            if (skill.attributes.Length == 0)
-            {
-                Debug.LogError("Skill affects attributes, but there were none listed");
-            }
-            else
-            {
-                foreach (var attribute in skill.attributes)
-                {
-                    currentCharacter.GetComponent<Stats>().attributes.TempModifyAttribute(attribute, true);
-                }
-                
-                int characterId = currentCharacter.GetComponent<CharacterController>().characterId;
-                int turnsCountdown = skill.buffsForTurns;
-                Constants.Attributes[] attributes = skill.attributes;
-                Constants.Abilities[] abilities = skill.abilities;
-                CharacterBuff cb = new CharacterBuff(characterId, turnsCountdown, attributes, abilities);
-                characterBuffs.Add(cb);
-                StatsUI.GetInstance().SetAbilityValues();
-            }
+            currentCharacter.GetComponent<Stats>().attributes.TempModifyAttribute(attribute, true);
         }
-        
+        foreach (var ability in skill.abilities)
+        {
+            currentCharacter.GetComponent<Stats>().abilities.TempModifyAbility(ability, true);
+        }
+
+        int characterId = currentCharacter.GetComponent<CharacterController>().characterId;
+        int turnsCountdown = skill.buffsForTurns;
+        Constants.Attributes[] attributes = skill.attributes;
+        Constants.Abilities[] abilities = skill.abilities;
+        CharacterBuff cb = new CharacterBuff(characterId, turnsCountdown, attributes, abilities);
+        characterBuffs.Add(cb);
+        StatsUI.GetInstance().SetAbilityValues(); 
     }
 
 

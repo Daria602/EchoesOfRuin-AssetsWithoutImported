@@ -42,6 +42,7 @@ public class SkillPanelController : MonoBehaviour
     {
         tooltips = skillPanel.GetComponentsInChildren<SimpleTooltip>();
         learnSkillPanel.SetActive(false);
+        MakeSkillsUnclickable();
     }
 
     private void Update()
@@ -142,7 +143,8 @@ public class SkillPanelController : MonoBehaviour
     public void SetButtonInactive(int buttonIndex, int cooldown)
     {
         slots[buttonIndex].interactable = false;
-        slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = cooldown.ToString();
+        slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = 
+            (cooldown == 0) ? "" : cooldown.ToString();
     }
 
 
@@ -173,6 +175,22 @@ public class SkillPanelController : MonoBehaviour
             SetButtonInactive(buttonIndex, cooldown);
         }
 
+    }
+
+    public void MakeSkillsUnclickable()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            SetButtonInactive(i, 0);
+        }
+    }
+
+    public void MakeSkillsClickable()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            SetButtonActive(i);
+        }
     }
 
     public void PromptLearningSkill(int id, Item item)

@@ -12,6 +12,7 @@ public class Constants : MonoBehaviour, ILoadingData
     public const int PLAYER_ID = 0;
     public const float DISTANCE_COST_UNIT = 1.5f;
     public const float ATTRIBUTE_MULTIPLIER = 0.5f;
+    public const float SHADOW_MULTIPLIER = 0.05f;
     public const int MAX_ACTION_POINTS = 5;
 
     public int[] characterIdKeys;
