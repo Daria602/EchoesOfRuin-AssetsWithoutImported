@@ -5342,6 +5342,7 @@ MonoBehaviour:
   learnSkillPanel: {fileID: 634840477}
   skillName: {fileID: 1968045659}
   skillToLearnInventory: {fileID: 0}
+  player: {fileID: 5085105933012305145}
 --- !u!1001 &133873886
 PrefabInstance:
   m_ObjectHideFlags: 0

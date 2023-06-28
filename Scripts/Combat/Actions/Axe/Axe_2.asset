@@ -24,14 +24,12 @@ MonoBehaviour:
   maxCooldown: 3
   baseDamageMin: 3
   baseDamageMax: 6
-  maxDistance: 1
-  requiresWeapon: 0
+  maxDistance: 2
+  requiresWeapon: 1
   weaponTypeRequired: 1
   spellType: 2
   affectedByAttribute: 0
   cost: 2
   buffsForTurns: 0
-  buffsAttributes: 0
   attributes: 
-  buffsAbilities: 0
   abilities: 
