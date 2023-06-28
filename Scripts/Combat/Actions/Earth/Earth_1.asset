@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: Earth_1
   m_EditorClassIdentifier: 
   skillId: 3
-  skillName: Barkskin
+  skillName: Barkskin (buff)
   skillIcon: {fileID: 21300000, guid: 567b3c6a8375ba14dae6cd51e7d46903, type: 3}
-  description: Invoke the essence of nature, encasing yourself a protective layer
-    of sturdy bark. This wooden skin grants damage absorption
+  description: Increases Strength (+1) and Constitution (+1), empowering powerful
+    strikes and fortifying maximum health.
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
-  prepareAnimationBoolName: 
-  hasAnimTrigger: 1
+  hasAnimTrigger: 0
   castTrigger: 
   cooldown: 0
   maxCooldown: 4
@@ -30,4 +29,10 @@ MonoBehaviour:
   requiresWeapon: 0
   weaponTypeRequired: 0
   spellType: 1
-  cost: 0
+  affectedByAttribute: 3
+  cost: 1
+  buffsForTurns: 2
+  buffsAttributes: 1
+  attributes: 0000000003000000
+  buffsAbilities: 0
+  abilities: 

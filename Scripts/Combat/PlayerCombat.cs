@@ -82,7 +82,15 @@ public class PlayerCombat : CombatController
                     }
                     else
                     {
-                        GetComponent<Animator>().SetTrigger("CastMagicAoE");
+                        if (skills[actionIndex].hasAnimTrigger)
+                        {
+                            GetComponent<Animator>().SetTrigger(skills[actionIndex].castTrigger);
+                        }
+                        else 
+                        {
+                            GetComponent<Animator>().SetTrigger("CastMagicAoE");
+                        }
+                        
                     }
 
                     state = PlayerAttackStates.Attacking;

@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: Fire_1
   m_EditorClassIdentifier: 
   skillId: 6
-  skillName: Blazing Aura
+  skillName: Blazing Aura (buff)
   skillIcon: {fileID: 21300000, guid: 22a867f2854984341a2866b952a6fa1d, type: 3}
-  description: Engulf yourself in a fiery aura, increasing your defences and reducing
-    next damage taken.
+  description: Boosts Intelligence (+1) and Chaos (+1), amplifying fire spells and
+    inflicting variable damage.
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
-  prepareAnimationBoolName: 
-  hasAnimTrigger: 1
+  hasAnimTrigger: 0
   castTrigger: 
   cooldown: 0
   maxCooldown: 4
@@ -30,4 +29,10 @@ MonoBehaviour:
   requiresWeapon: 0
   weaponTypeRequired: 0
   spellType: 1
+  affectedByAttribute: 2
   cost: 1
+  buffsForTurns: 2
+  buffsAttributes: 1
+  attributes: 02000000
+  buffsAbilities: 1
+  abilities: 01000000

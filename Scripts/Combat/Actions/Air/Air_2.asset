@@ -18,21 +18,21 @@ MonoBehaviour:
   description: Channel the power of lightning, unleashing a powerful bolt of electrical
     energy that strikes a single target, dealing high damage and potentially stunning
     them
-  hasVisuals: 0
-  visualEffectPrefab: {fileID: 0}
+  hasVisuals: 1
+  visualEffectPrefab: {fileID: 5766691976136461342, guid: 43d1d06cf70fcb2488255051aaae40a5, type: 3}
   prepareAnimationBoolName: 
   hasAnimTrigger: 1
-  castTrigger: 
+  castTrigger: CastMagicAoE
   cooldown: 0
-  maxCooldown: 4
-  baseDamageMin: 0
-  baseDamageMax: 0
-  maxDistance: 10
+  maxCooldown: 3
+  baseDamageMin: 1
+  baseDamageMax: 2
+  maxDistance: 4
   requiresWeapon: 0
   weaponTypeRequired: 0
   spellType: 2
   affectedByAttribute: 2
-  cost: 0
+  cost: 2
   buffsForTurns: 0
   buffsAttributes: 0
   attributes: 

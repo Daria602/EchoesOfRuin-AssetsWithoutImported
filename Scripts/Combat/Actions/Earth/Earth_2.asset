@@ -30,4 +30,10 @@ MonoBehaviour:
   requiresWeapon: 0
   weaponTypeRequired: 0
   spellType: 2
+  affectedByAttribute: 2
   cost: 2
+  buffsForTurns: 0
+  buffsAttributes: 0
+  attributes: 
+  buffsAbilities: 0
+  abilities: 

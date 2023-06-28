@@ -82,7 +82,7 @@ public class CharacterData
         this.IsInCombat = false;
         this.characterId = 0;
         this.m_isInCombat = false;
-        this.skillsIds = new List<int>() { 12, 13, 0, 5 }; // { 12, 13, 6, 5 };
+        this.skillsIds = new List<int>() { 12, 13, 0, 2, 4, 7, 10, 15, 19 }; // { 12, 13, 6, 5 };
         this.hasWeapon = true; // TODO: change here to false
         this.weaponId = 1; // TODO: change here to 0
         //this.rightHand = Vector3.zero;

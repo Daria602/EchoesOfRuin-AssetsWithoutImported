@@ -23,12 +23,18 @@ MonoBehaviour:
   prepareAnimationBoolName: 
   hasAnimTrigger: 1
   castTrigger: CastMagicAoE
-  cooldown: 0
+  cooldown: 4
   maxCooldown: 4
-  baseDamageMin: 0
-  baseDamageMax: 0
-  maxDistance: 10
+  baseDamageMin: 4
+  baseDamageMax: 8
+  maxDistance: 9
   requiresWeapon: 0
   weaponTypeRequired: 0
   spellType: 2
+  affectedByAttribute: 2
   cost: 3
+  buffsForTurns: 0
+  buffsAttributes: 0
+  attributes: 
+  buffsAbilities: 0
+  abilities: 

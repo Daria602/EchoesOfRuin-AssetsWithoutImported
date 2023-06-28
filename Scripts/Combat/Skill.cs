@@ -16,7 +16,6 @@ public class Skill : ScriptableObject
     public GameObject visualEffectPrefab = null;
     private GameObject visualEffect = null;
     [Header("Animations")]
-    public string prepareAnimationBoolName = "";
     public bool hasAnimTrigger = true;
     public string castTrigger;
     [Header("Max Cooldown, Damage and Max Distance")]
@@ -36,9 +35,7 @@ public class Skill : ScriptableObject
     public int cost;
     [Header("Buff related")]
     public int buffsForTurns;
-    public bool buffsAttributes;
     public Constants.Attributes[] attributes;
-    public bool buffsAbilities;
     public Constants.Abilities[] abilities;
 
     

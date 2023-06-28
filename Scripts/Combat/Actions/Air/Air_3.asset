@@ -26,7 +26,7 @@ MonoBehaviour:
   maxCooldown: 4
   baseDamageMin: 2
   baseDamageMax: 4
-  maxDistance: 3
+  maxDistance: 2
   requiresWeapon: 0
   weaponTypeRequired: 0
   spellType: 2

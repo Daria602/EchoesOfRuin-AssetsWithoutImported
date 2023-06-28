@@ -408,7 +408,6 @@ public class CombatManager : MonoBehaviour
         {
             turnIndex--;
         }
-        Debug.Log(characterInitiativeList.Count);
         characterInitiativeList.RemoveAt(deadParticipantPosition);
         deadParticipant.GetComponent<Animator>().SetTrigger("Death");
     }
@@ -430,7 +429,7 @@ public class CombatManager : MonoBehaviour
         // Show combat UI
         EnableUI();
         ShowPortraits();
-        SkillPanelController.GetInstance().MakeSkillsClickable();
+        // SkillPanelController.GetInstance().MakeSkillsClickable();
     }
     public void AddParticipants(List<int> characterIds)
     {

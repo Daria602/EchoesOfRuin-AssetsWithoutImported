@@ -20,13 +20,19 @@ MonoBehaviour:
   visualEffectPrefab: {fileID: 0}
   prepareAnimationBoolName: 
   hasAnimTrigger: 1
-  castTrigger: 
+  castTrigger: CastMagicAoE
   cooldown: 0
-  maxCooldown: 4
-  baseDamageMin: 0
-  baseDamageMax: 0
-  maxDistance: 10
+  maxCooldown: 2
+  baseDamageMin: 3
+  baseDamageMax: 7
+  maxDistance: 2
   requiresWeapon: 0
   weaponTypeRequired: 0
   spellType: 2
+  affectedByAttribute: 2
   cost: 2
+  buffsForTurns: 0
+  buffsAttributes: 0
+  attributes: 
+  buffsAbilities: 0
+  abilities: 

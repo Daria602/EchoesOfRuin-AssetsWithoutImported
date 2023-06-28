@@ -23,6 +23,7 @@ public class SkillPanelController : MonoBehaviour
     public TextMeshProUGUI skillName;
     private int skillToLearnId = -1;
     public Item skillToLearnInventory = null;
+    public GameObject player;
 
     public static SkillPanelController instance;
     private void Awake()
@@ -135,7 +136,16 @@ public class SkillPanelController : MonoBehaviour
 
     public void SetButtonActive(int buttonIndex)
     {
-        slots[buttonIndex].interactable = true;
+        if (skills[buttonIndex].requiresWeapon &&
+            player.GetComponent<CombatController>().GetWeapon().weaponType == skills[buttonIndex].weaponTypeRequired)
+        {
+            slots[buttonIndex].interactable = true;
+        }
+        else if (!skills[buttonIndex].requiresWeapon) 
+        {
+            slots[buttonIndex].interactable = true;
+        }
+        
         slots[buttonIndex].GetComponentInChildren<TextMeshProUGUI>().text = "";
 
     }
@@ -185,13 +195,37 @@ public class SkillPanelController : MonoBehaviour
         }
     }
 
-    public void MakeSkillsClickable()
-    {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            SetButtonActive(i);
-        }
-    }
+    //public void MakeSkillsClickable()
+    //{
+    //    PlayerCombat playerCombat = FindObjectOfType<PlayerCombat>();
+    //    Weapon weapon = playerCombat.GetWeapon();
+
+    //    for (int i = 0; i < skills.Count; i++)
+    //    {
+    //        if (i < slots.Length)
+    //        {
+    //            if (skills[i].requiresWeapon)
+    //            {
+    //                Debug.Log("Skill with name: " + skills[i].skillName + "; Requires weapon" + skills[i].requiresWeapon +
+    //                    "; Weapon type required: " + skills[i].weaponTypeRequired +
+    //                    "; Weapon is actually of type: " + weapon.weaponType);
+    //                if (weapon.weaponType == skills[i].weaponTypeRequired)
+    //                {
+    //                    Debug.Log("Weapon type matches");
+    //                    SetButtonActive(i);
+    //                }
+    //                else SetButtonInactive(i, 0);
+
+    //            }
+    //            else
+    //            {
+    //                Debug.Log("Setting to inactive: " + skills[i].skillName);
+    //                SetButtonInactive(i, 0);
+    //            }
+    //        }
+
+    //    }
+    //}
 
     public void PromptLearningSkill(int id, Item item)
     {
