@@ -410,9 +410,10 @@ public class CombatManager : MonoBehaviour
         }
         Debug.Log(characterInitiativeList.Count);
         characterInitiativeList.RemoveAt(deadParticipantPosition);
-        Constants.GetInstance().characters[deadParticipantId].SetActive(false);
-        Debug.Log(characterInitiativeList.Count);
+        deadParticipant.GetComponent<Animator>().SetTrigger("Death");
     }
+
+    
 
     public void StartCombat(List<int> characterIds)
     {

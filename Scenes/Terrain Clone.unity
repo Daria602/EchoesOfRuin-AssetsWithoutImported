@@ -26848,6 +26848,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpellBook
       objectReference: {fileID: 0}
+    - target: {fileID: 4606347265379192090, guid: c72309edd52fedd439f885e6208f5c7d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c72309edd52fedd439f885e6208f5c7d, type: 3}
 --- !u!4 &713390612 stripped
@@ -46736,7 +46740,7 @@ MonoBehaviour:
     charisma: 0
   availableAttributePoints: 5
   characterLevel: 1
-  criticalStrike: 0
+  critStrike: 0.3
   grantedXP: 1000
   availableAbilityPoints: 3
 --- !u!114 &1201501536
@@ -73512,6 +73516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterId: 2
+  itemDrop: {fileID: 1720777333}
 --- !u!114 &1909073082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73612,7 +73617,7 @@ MonoBehaviour:
     charisma: 0
   availableAttributePoints: 5
   characterLevel: 1
-  criticalStrike: 0
+  critStrike: 0.3
   grantedXP: 1000
   availableAbilityPoints: 3
 --- !u!114 &1909073087
@@ -79374,6 +79379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterId: 1
+  itemDrop: {fileID: 0}
 --- !u!114 &2082978155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81843,7 +81849,7 @@ MonoBehaviour:
     charisma: 0
   availableAttributePoints: 5
   characterLevel: 1
-  criticalStrike: 0
+  critStrike: 0.3
   grantedXP: 1000
   availableAbilityPoints: 3
 --- !u!81 &3863371482484370344
@@ -87646,7 +87652,7 @@ MonoBehaviour:
     charisma: 0
   availableAttributePoints: 5
   characterLevel: 1
-  criticalStrike: 0
+  critStrike: 0.3
   grantedXP: 1000
   availableAbilityPoints: 3
 --- !u!114 &5085105931690367158
@@ -90708,7 +90714,7 @@ MonoBehaviour:
     charisma: 0
   availableAttributePoints: 5
   characterLevel: 1
-  criticalStrike: 0
+  critStrike: 0.3
   grantedXP: 1000
   availableAbilityPoints: 3
 --- !u!1 &5085105932009086741
@@ -99135,6 +99141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterId: 0
+  itemDrop: {fileID: 0}
   gold: 1000
   currentThreshold: 1000
 --- !u!95 &5085105933012305144
