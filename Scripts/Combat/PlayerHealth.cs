@@ -14,6 +14,9 @@ public class PlayerHealth : Health
         else
         {
             currentHealth -= damage;
+
+            UIManager.GetInstance().UpdateHealthSlider(currentHealth, 0, CurrentMaxHealth);
+            UIManager.GetInstance().UpdateHealthText(currentHealth.ToString());
             return false;
         }
         
