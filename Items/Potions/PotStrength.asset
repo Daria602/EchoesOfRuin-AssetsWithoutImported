@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a63f956c0515646b2e16b12a9a92c1, type: 3}
   m_Name: PotStrength
   m_EditorClassIdentifier: 
-  name: New Item
-  itemIcon: {fileID: 0}
+  name: Potion of Strength
+  itemIcon: {fileID: 21300000, guid: e52ea25af699fd445b7046374f81a5b9, type: 3}
   isDefaultItem: 0
   price: 10
   healsFor: -1
-  buffsForTurns: 0
-  attributesBuffed: 
+  buffsForTurns: 2
+  attributesBuffed: 0000000000000000
   abilitiesBuffed: 
