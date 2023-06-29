@@ -10,7 +10,7 @@ public class VisualItem : MonoBehaviour
     {
         if (!CheckIfExists())
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 

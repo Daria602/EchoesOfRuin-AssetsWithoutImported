@@ -479,6 +479,34 @@ public class CombatManager : MonoBehaviour
         StatsUI.GetInstance().SetAbilityValues(); 
     }
 
+    public void ApplyPotion(Potion potion)
+    {
+        if (potion.healsFor <= 0)
+        {
+            // apply buff to attributes
+            foreach (var attribute in potion.attributesBuffed)
+            {
+                currentCharacter.GetComponent<Stats>().attributes.TempModifyAttribute(attribute, true);
+            }
+            foreach (var ability in potion.abilitiesBuffed)
+            {
+                currentCharacter.GetComponent<Stats>().abilities.TempModifyAbility(ability, true);
+            }
+            Constants.Attributes[] attributes = potion.attributesBuffed;
+            Constants.Abilities[] abilities = potion.abilitiesBuffed;
+            int characterId = currentCharacter.GetComponent<CharacterController>().characterId;
+            int turnsCountdown = potion.buffsForTurns;
+            CharacterBuff cb = new CharacterBuff(characterId, turnsCountdown, attributes, abilities);
+            characterBuffs.Add(cb);
+            StatsUI.GetInstance().SetAbilityValues();
+        }
+        else
+        {
+            // heal
+            Debug.Log("tried to heal");
+        }
+    }
+
 
 
 
