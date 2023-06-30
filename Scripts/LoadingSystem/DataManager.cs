@@ -88,10 +88,15 @@ public class DataManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     public void Continue()
     {
         SaveState();
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     private List<ILoadingData> GetAllLoadingDataScripts()

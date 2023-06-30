@@ -51,6 +51,10 @@ public class CharacterData
     // Items present in the world visually
     public int[] itemsStillPresent;
 
+    // Character gold
+
+    public int gold;
+
     // Creating initial values
     public CharacterData()
     {
@@ -101,6 +105,9 @@ public class CharacterData
 
         // Items still present
         this.itemsStillPresent = null;
+
+        // Gold
+        this.gold = 10;
     }
 
 }

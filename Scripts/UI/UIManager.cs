@@ -135,9 +135,14 @@ public class UIManager : MonoBehaviour
         healthText.text = newText;
     }
 
-    public void ShowXPRecieved(int xpRecieved)
+    public void ShowXPRecieved(int xpRecieved, bool leveledUp)
     {
-        StartCoroutine(ShowXPGranted(xpRecieved + " XP", 2f));
+        string finalString = xpRecieved + " XP";
+        if (leveledUp)
+        {
+            finalString += "\n LEVEL UP";
+        }
+        StartCoroutine(ShowXPGranted(finalString, 2f));
     }
 
     IEnumerator ShowXPGranted(string message, float delay)

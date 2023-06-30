@@ -74,6 +74,8 @@ public class DialogueManager : MonoBehaviour
         player.transform.LookAt((player.transform.position + currentNPC.transform.position) / 2);
 
         currentStory = new Story(inkJSON.text);
+        currentStory.variablesState["charisma"] = player.GetComponent<Stats>().abilities.charisma;
+        Debug.Log("Charisma value is " + currentStory.variablesState["charisma"]);
         dialogueIsActive = true;
         dialoguePanel.SetActive(true);
         ContinueStory();

@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class Settings : MonoBehaviour
 {
-
-    [SerializeField]
-    private TMP_Dropdown qualityDropdown;
     Resolution[] screenRes;
     [SerializeField]
     private TMP_Dropdown resDropdown;
@@ -37,11 +34,6 @@ public class Settings : MonoBehaviour
         resDropdown.AddOptions(runtimeResOptions);
         resDropdown.value = currentResIndex;
         resDropdown.RefreshShownValue();
-    }
-
-    public void QualityChange(int qualityIndex)
-    {
-        QualitySettings.SetQualityLevel(qualityIndex, false);
     }
 
     public void ScreenSizeChange(bool isGameFullScreen)

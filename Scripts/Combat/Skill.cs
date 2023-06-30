@@ -96,6 +96,7 @@ public class Skill : ScriptableObject
         * Affected by +
         * Description +
         */
+        string skillCost = this.cost.ToString();
         string tooltipString;
         string name = skillName;
         string description;
@@ -132,7 +133,7 @@ public class Skill : ScriptableObject
         string affectedBy = affectedByAttribute.ToString();
         string range = maxDistance.ToString();
         tooltipString =
-            "~" + name + "`\n" +
+            "~" + name + " $" + skillCost + "AP\n" +
             "$Damage: " + minMaxDamage[0] + " - " + minMaxDamage[1] + "`\n" +
             "*Range: " + range + "u`\n" +
             "@This skill is affected by " + affectedBy + ".`\n" +

@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 10963227}
   - component: {fileID: 10963229}
   - component: {fileID: 10963228}
+  - component: {fileID: 10963230}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -257,6 +258,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 10963226}
   m_CullTransparentMesh: 1
+--- !u!114 &10963230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10963226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99634edca86565b4a96a0b7b261787f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleTooltipStyle: {fileID: 11400000, guid: 1f0cc7a28e7642f4697d87459836c5a9, type: 2}
+  infoLeft: Every point invested increases the chance of swaying dialogues in your
+    favor.
+  infoRight: 
 --- !u!4 &16486184 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 331324964831932835, guid: 94b04a6b3d3339b4c8e66ae25d74ebc8, type: 3}
@@ -598,6 +615,7 @@ GameObject:
   - component: {fileID: 44338424}
   - component: {fileID: 44338426}
   - component: {fileID: 44338425}
+  - component: {fileID: 44338427}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -721,6 +739,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 44338423}
   m_CullTransparentMesh: 1
+--- !u!114 &44338427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44338423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99634edca86565b4a96a0b7b261787f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleTooltipStyle: {fileID: 11400000, guid: 1f0cc7a28e7642f4697d87459836c5a9, type: 2}
+  infoLeft: Increases the chance that enemies will drop more items.
+  infoRight: 
 --- !u!1001 &50353285
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -934,6 +967,7 @@ GameObject:
   - component: {fileID: 57520812}
   - component: {fileID: 57520814}
   - component: {fileID: 57520813}
+  - component: {fileID: 57520815}
   m_Layer: 5
   m_Name: Constitution_Text
   m_TagString: Untagged
@@ -1057,6 +1091,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 57520811}
   m_CullTransparentMesh: 1
+--- !u!114 &57520815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57520811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99634edca86565b4a96a0b7b261787f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleTooltipStyle: {fileID: 11400000, guid: 1f0cc7a28e7642f4697d87459836c5a9, type: 2}
+  infoLeft: Every point of ~constitution` increases your maximum health by 10
+  infoRight: 
 --- !u!1001 &59869997
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2922,6 +2971,7 @@ GameObject:
   - component: {fileID: 191811602}
   - component: {fileID: 191811604}
   - component: {fileID: 191811603}
+  - component: {fileID: 191811605}
   m_Layer: 5
   m_Name: Intelligence_Text
   m_TagString: Untagged
@@ -3045,6 +3095,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 191811601}
   m_CullTransparentMesh: 1
+--- !u!114 &191811605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191811601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99634edca86565b4a96a0b7b261787f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleTooltipStyle: {fileID: 11400000, guid: 1f0cc7a28e7642f4697d87459836c5a9, type: 2}
+  infoLeft: Every point of ~intelligence` increases the damage you deal with magic
+    spells (+50% for each point)
+  infoRight: 
 --- !u!1 &220663284
 GameObject:
   m_ObjectHideFlags: 0
@@ -3928,10 +3994,10 @@ RectTransform:
   m_Father: {fileID: 401006053}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.003006, y: 353.6}
-  m_SizeDelta: {x: 701.84, y: 111.6}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 356, y: -87}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &331082626
 GameObject:
@@ -4099,14 +4165,14 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -4870,6 +4936,7 @@ GameObject:
   - component: {fileID: 401006053}
   - component: {fileID: 401006055}
   - component: {fileID: 401006054}
+  - component: {fileID: 401006056}
   m_Layer: 5
   m_Name: Attributes
   m_TagString: Untagged
@@ -4940,6 +5007,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401006052}
   m_CullTransparentMesh: 1
+--- !u!114 &401006056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401006052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 306
+    m_Right: 0
+    m_Top: 37
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 1
+  m_CellSize: {x: 100, y: 100}
+  m_Spacing: {x: 0, y: -24.41}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!4 &411690749 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 331324964831932835, guid: 94b04a6b3d3339b4c8e66ae25d74ebc8, type: 3}
@@ -7644,6 +7735,7 @@ GameObject:
   - component: {fileID: 840225006}
   - component: {fileID: 840225008}
   - component: {fileID: 840225007}
+  - component: {fileID: 840225009}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -7767,6 +7859,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 840225005}
   m_CullTransparentMesh: 1
+--- !u!114 &840225009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840225005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99634edca86565b4a96a0b7b261787f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleTooltipStyle: {fileID: 11400000, guid: 1f0cc7a28e7642f4697d87459836c5a9, type: 2}
+  infoLeft: Expands the ~damage range` of your spells.
+  infoRight: 
 --- !u!1 &840656493
 GameObject:
   m_ObjectHideFlags: 0
@@ -9079,10 +9186,10 @@ RectTransform:
   m_Father: {fileID: 401006053}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0015105009, y: 104.41}
-  m_SizeDelta: {x: 701.84, y: 111.5937}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 356, y: -238.18}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &972087950
 GameObject:
@@ -11810,10 +11917,10 @@ RectTransform:
   m_Father: {fileID: 401006053}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0015105009, y: -170.7852}
-  m_SizeDelta: {x: 701.84, y: 111.5937}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 356, y: -389.36}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1244532395
 GameObject:
@@ -12572,6 +12679,7 @@ GameObject:
   - component: {fileID: 1319396597}
   - component: {fileID: 1319396599}
   - component: {fileID: 1319396598}
+  - component: {fileID: 1319396600}
   m_Layer: 5
   m_Name: Agility_Text
   m_TagString: Untagged
@@ -12695,6 +12803,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1319396596}
   m_CullTransparentMesh: 1
+--- !u!114 &1319396600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319396596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99634edca86565b4a96a0b7b261787f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleTooltipStyle: {fileID: 11400000, guid: 1f0cc7a28e7642f4697d87459836c5a9, type: 2}
+  infoLeft: Every point of ~agility` increases the damage you deal with agility-based
+    spells (+50% for each point)
+  infoRight: 
 --- !u!1 &1320262549
 GameObject:
   m_ObjectHideFlags: 0
@@ -13256,6 +13380,7 @@ GameObject:
   - component: {fileID: 1361000816}
   - component: {fileID: 1361000818}
   - component: {fileID: 1361000817}
+  - component: {fileID: 1361000819}
   m_Layer: 5
   m_Name: Wits_Text
   m_TagString: Untagged
@@ -13379,6 +13504,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1361000815}
   m_CullTransparentMesh: 1
+--- !u!114 &1361000819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361000815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99634edca86565b4a96a0b7b261787f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleTooltipStyle: {fileID: 11400000, guid: 1f0cc7a28e7642f4697d87459836c5a9, type: 2}
+  infoLeft: Increases your ~initiative` score (the higher the initiative the more
+    chances you go first in combat)
+  infoRight: 
 --- !u!1001 &1367828236
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13798,10 +13939,10 @@ RectTransform:
   m_Father: {fileID: 401006053}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0015105009, y: -33.18404}
-  m_SizeDelta: {x: 701.84, y: 111.5937}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 356, y: -313.77}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1430705684 stripped
 Transform:
@@ -14966,7 +15107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1613565150
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15335,6 +15476,7 @@ GameObject:
   - component: {fileID: 1680231183}
   - component: {fileID: 1680231185}
   - component: {fileID: 1680231184}
+  - component: {fileID: 1680231186}
   m_Layer: 5
   m_Name: Strength_Text
   m_TagString: Untagged
@@ -15458,6 +15600,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680231182}
   m_CullTransparentMesh: 1
+--- !u!114 &1680231186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680231182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99634edca86565b4a96a0b7b261787f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleTooltipStyle: {fileID: 11400000, guid: 1f0cc7a28e7642f4697d87459836c5a9, type: 2}
+  infoLeft: Every point of ~strength` increases the damage you deal with strength-based
+    spells (+50% for each point)
+  infoRight: 
 --- !u!1 &1681935752
 GameObject:
   m_ObjectHideFlags: 0
@@ -16793,6 +16951,7 @@ GameObject:
   - component: {fileID: 1793244767}
   - component: {fileID: 1793244769}
   - component: {fileID: 1793244768}
+  - component: {fileID: 1793244770}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -16916,6 +17075,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1793244766}
   m_CullTransparentMesh: 1
+--- !u!114 &1793244770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793244766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99634edca86565b4a96a0b7b261787f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleTooltipStyle: {fileID: 11400000, guid: 1f0cc7a28e7642f4697d87459836c5a9, type: 2}
+  infoLeft: Increases your ~critical strike chance` by 5% for every point invested.
+  infoRight: 
 --- !u!4 &1812466252 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 331324964831932835, guid: 94b04a6b3d3339b4c8e66ae25d74ebc8, type: 3}
@@ -17201,10 +17375,10 @@ RectTransform:
   m_Father: {fileID: 401006053}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0015105009, y: -308.48}
-  m_SizeDelta: {x: 701.84, y: 111.5937}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 356, y: -464.95}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1858261544 stripped
 Transform:
@@ -18216,6 +18390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fileNameForSave: testingSave.json
+  continueOrLoadButton: {fileID: 0}
 --- !u!1001 &1981555760
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18796,10 +18971,10 @@ RectTransform:
   m_Father: {fileID: 401006053}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 242}
-  m_SizeDelta: {x: 701.84, y: 111.5937}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 356, y: -162.59}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2102039857
 GameObject:

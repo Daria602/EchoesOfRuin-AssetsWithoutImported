@@ -40,15 +40,22 @@ public class PlayerController : CharacterController, ILoadingData
 
     public void AddXP(int XPValue)
     {
-        UIManager.GetInstance().ShowXPRecieved(XPValue);
+        
         XP += XPValue;
         
 
         if (PassedCurrentThreshold())
         {
             stats.characterLevel++;
+            stats.availableAttributePoints += 3;
+            stats.availableAbilityPoints += 3;
             CalculateNewThreshold();
             UIManager.GetInstance().UpdateXPSlider(0, XPValue, currentThreshold);
+            UIManager.GetInstance().ShowXPRecieved(XPValue, true);
+        }
+        else
+        {
+            UIManager.GetInstance().ShowXPRecieved(XPValue, false);
         }
         UIManager.GetInstance().UpdateXPSlider(XPValue);
         UIManager.GetInstance().UpdateXPText("Level " + stats.characterLevel.ToString());
@@ -75,10 +82,10 @@ public class PlayerController : CharacterController, ILoadingData
                 animator.SetBool("isRunning", false);
             }
         }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            StartFight();
-        }
+        //if (Input.GetKeyDown(KeyCode.Y))
+        //{
+        //    StartFight();
+        //}
         
     }
     private void MakeClickDecision(Constants.ClickType clickType, Vector3 point, Interactable interactable)
@@ -179,6 +186,7 @@ public class PlayerController : CharacterController, ILoadingData
         this.GetComponent<Stats>().LoadGameData(characterData);
         this.GetComponent<PlayerHealth>().LoadGameData(characterData);
         this.transform.position = characterData.characterPosition;
+        this.gold = characterData.gold;
     }
     public void SaveGameData(ref CharacterData characterData)
     {
@@ -186,6 +194,7 @@ public class PlayerController : CharacterController, ILoadingData
         this.GetComponent<Stats>().SaveGameData(ref characterData);
         this.GetComponent<PlayerHealth>().SaveGameData(ref characterData);
         characterData.characterPosition = this.transform.position;
+        characterData.gold = this.gold; 
     }
 
 
