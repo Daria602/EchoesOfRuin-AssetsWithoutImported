@@ -14,6 +14,7 @@ public class Constants : MonoBehaviour, ILoadingData
     public const float ATTRIBUTE_MULTIPLIER = 0.5f;
     public const float SHADOW_MULTIPLIER = 0.05f;
     public const int MAX_ACTION_POINTS = 5;
+    public const int HEALTH_PER_CONSTITUTION = 10;
 
     public int[] characterIdKeys;
     public GameObject[] characterObjectValues;
@@ -210,5 +211,15 @@ public class Constants : MonoBehaviour, ILoadingData
     {
         characterData.itemsStillPresent = itemsStillPresent;
         Debug.Log(characterData.itemsStillPresent.Length);
+    }
+
+    Vector3[] RogerMovement()
+    {
+        return new Vector3[] {
+        new Vector3(164.3f, 1.2f, 338.9f),
+        new Vector3(170.2f, 1.6f, 337.5f),
+        new Vector3(167.3f, 1.5f, 342.4f),
+        new Vector3(163.7f, 1.5f, 342.4f)
+        };
     }
 }

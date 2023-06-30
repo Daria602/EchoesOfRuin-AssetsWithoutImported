@@ -7,7 +7,7 @@ public class CharacterCreation : MonoBehaviour
 {
     // TODO: make templates for hair and etc here
 
-    private SetCharacter setCharacter;
+    // private SetCharacter setCharacter;
 
     [System.Serializable]
     public class BodyPart
@@ -33,15 +33,15 @@ public class CharacterCreation : MonoBehaviour
     private int currentHeadIndex = 0;
 
     public BodyPart[] torsoParts;
-    private int currentTorsoIndex = 0;
+    // private int currentTorsoIndex = 0;
 
     public BodyPart[] legsParts;
-    private int currentLegsIndex = 0;
+    // private int currentLegsIndex = 0;
 
 
     private void Start()
     {
-        setCharacter = GetComponent<SetCharacter>();
+        //setCharacter = GetComponent<SetCharacter>();
     }
 
     private void Update()
@@ -74,7 +74,6 @@ public class CharacterCreation : MonoBehaviour
         {
             if (headParts[i].affectedBySkinColor)
             {
-                Debug.Log(headParts[i].item.name);
                 try
                 {
                     headParts[i].item.GetComponent<SkinnedMeshRenderer>().material = headParts[i].materialsApplied[darkSkinColor ? 1 : 0].material;
@@ -97,7 +96,6 @@ public class CharacterCreation : MonoBehaviour
                     if (materialLength > 1)
                     {
                         // do for both
-                        // torsoParts[i].item.GetComponent<SkinnedMeshRenderer>().materials[materialToModify] = torsoParts[i].materialsApplied[darkSkinColor ? 1 : 0].material;
                         Material[] currentMaterials = torsoParts[i].item.GetComponent<SkinnedMeshRenderer>().materials;
                         currentMaterials[1] = torsoParts[i].materialsApplied[darkSkinColor ? 1 : 0].material;
                         torsoParts[i].item.GetComponent<SkinnedMeshRenderer>().materials = currentMaterials;
@@ -253,12 +251,6 @@ public class CharacterCreation : MonoBehaviour
                 //ActivateNextItem(ref legs, ref currentLegsIndex);
                 break;
         }
-        //Debug.Log("In Next");
-        //Debug.Log("Current Head");
-        //Debug.Log(currentHeadIndex);
-        //Debug.Log("Current Hair");
-        //Debug.Log(currentHairIndex);
-        //Debug.Log("Current Color");
     }
     public void Previous(int groupIndex)
     {
@@ -280,12 +272,6 @@ public class CharacterCreation : MonoBehaviour
                 //ActivatePreviousItem(ref legs, ref currentLegsIndex);
                 break;
         }
-        //Debug.Log("In Previous");
-        //Debug.Log("Current Head");
-        //Debug.Log(currentHeadIndex);
-        //Debug.Log("Current Hair");
-        //Debug.Log(currentHairIndex);
-        //Debug.Log("Current Color");
     }
 
     public string[] GetAllCurrentTypeNames()

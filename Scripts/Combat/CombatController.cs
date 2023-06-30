@@ -14,6 +14,7 @@ public class CombatController : MonoBehaviour
     public bool hasWeapon = true;
     public int weaponId;
     public Transform rightHand;
+    public Transform leftHand;
 
     public bool isPerformingAction = false;
     public bool finishedPerforming = true;
@@ -76,12 +77,27 @@ public class CombatController : MonoBehaviour
     {
         if (hasWeapon)
         {
-            weaponObject = Instantiate(Constants.GetInstance().weaponMap[weaponId].weaponPrefab, rightHand);
-            weapon = Instantiate(Constants.GetInstance().weaponMap[weaponId], rightHand);
+            if (Constants.GetInstance().weaponMap[weaponId].weaponType == Constants.WeaponTypes.Bow)
+            {
+                weaponObject = Instantiate(Constants.GetInstance().weaponMap[weaponId].weaponPrefab, leftHand);
+                weapon = Instantiate(Constants.GetInstance().weaponMap[weaponId], leftHand);
+            }
+            else
+            {
+                weaponObject = Instantiate(Constants.GetInstance().weaponMap[weaponId].weaponPrefab, rightHand);
+                weapon = Instantiate(Constants.GetInstance().weaponMap[weaponId], rightHand);
+            }
+            
         }
     }
 
-    
+    protected void DestroyWeapon()
+    {
+        Destroy(weaponObject);
+        weapon = null;
+    }
+
+
 
 
     protected void Move()
@@ -154,8 +170,8 @@ public class CombatController : MonoBehaviour
         }
 
         float additionToTheDamage = attributeMultiplier * Constants.ATTRIBUTE_MULTIPLIER;
-        minBaseDamage += (int)(minBaseDamage * additionToTheDamage);
-        maxBaseDamage += (int)(maxBaseDamage * additionToTheDamage);
+        minBaseDamage += Mathf.RoundToInt(minBaseDamage * additionToTheDamage);
+        maxBaseDamage += Mathf.RoundToInt(maxBaseDamage * additionToTheDamage);
 
         int finalDamage = Random.Range(minBaseDamage, maxBaseDamage + 1);
 
@@ -166,7 +182,7 @@ public class CombatController : MonoBehaviour
         return finalDamage;
     }
 
-    private int GetAttributeValue(Constants.Attributes attribute)
+    public int GetAttributeValue(Constants.Attributes attribute)
     {
         Stats stats = GetComponent<Stats>();
         switch (attribute)

@@ -70,7 +70,7 @@ public class PlayerCombat : CombatController
         if (InputManager.GetInstance().LeftMouseClicked())
         {
             Constants.ClickType clickType = InputManager.GetInstance().GetClickType(out pointInScene, out interactable);
-            if (clickType == Constants.ClickType.Interact)
+            if (clickType == Constants.ClickType.Interact && interactable.GetComponent<NPCController>() != null)
             {
                 if (IsInDistance())
                 {
@@ -224,7 +224,7 @@ public class PlayerCombat : CombatController
                         Debug.Log("Basic with Axe");
                         break;
                     case Constants.WeaponTypes.Bow:
-                        transform.Rotate(0, 90, 0);
+                        //transform.Rotate(0, 90, 0);
                         GetComponent<Animator>().SetTrigger("BasicBow");
                         Debug.Log("Basic with Bow");
                         break;
@@ -251,7 +251,7 @@ public class PlayerCombat : CombatController
         {
             if (GetWeapon().weaponType == Constants.WeaponTypes.Bow)
             {
-                transform.Rotate(0, -90, 0);
+                //transform.Rotate(0, -90, 0);
             }
         }
         
@@ -306,6 +306,46 @@ public class PlayerCombat : CombatController
     public void EndTurn()
     {
         endedTurn = true;
+    }
+
+    public void PlayerEquipsWeapon(int weaponId)
+    {
+        if (GetWeapon() == null)
+        {
+            hasWeapon = true;
+            this.weaponId = weaponId;
+            EquipWeapon();
+        }
+        else
+        {
+            DestroyWeapon();
+            this.weaponId = weaponId;
+            EquipWeapon();
+        }
+        //if (hasWeapon)
+        //{
+        //    //GetWeapon().equipped = false;
+        //    DestroyWeapon();
+        //    this.weaponId = weaponId;
+        //    EquipWeapon();
+        //    //GetWeapon().equipped = true;
+        //}
+        //else
+        //{
+        //    hasWeapon = true;
+        //    this.weaponId = weaponId;
+        //    EquipWeapon();
+        //}
+        
+    }
+    public void PlayerUnequipsWeapon()
+    {
+        if (hasWeapon)
+        {
+            DestroyWeapon();
+            this.weaponId = -1;
+            hasWeapon = false;
+        }
     }
 
     public void LoadGameData(CharacterData characterData)

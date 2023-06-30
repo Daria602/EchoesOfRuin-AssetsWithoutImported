@@ -66,6 +66,12 @@ public class UIManager : MonoBehaviour
             inventoryAndStatsUI.SetActive(!inventoryAndStatsUI.activeSelf);
         }
     }
+    public void CloseInventoryAndStats()
+    {
+        
+        inventoryAndStatsUI.SetActive(false);
+        
+    }
 
 
     public void QuitGame()

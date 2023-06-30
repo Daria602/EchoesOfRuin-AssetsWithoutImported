@@ -6,10 +6,12 @@ public class PlayerController : CharacterController, ILoadingData
 
     private PlayerMovement movement;
     private PlayerCombat combat;
-    private Interactable currentFocus;
+    public Interactable currentFocus;
     private int XP = 0;
     public int gold = 0;
     public int currentThreshold = 1000;
+    public Transform leftHand;
+    public Transform rightHand;
 
     private void Start()
     {
@@ -64,6 +66,7 @@ public class PlayerController : CharacterController, ILoadingData
                 Interactable interactable;
                 Vector3 point;
                 Constants.ClickType clickType = InputManager.GetInstance().GetClickType(out point, out interactable);
+                Debug.Log(point);
                 MakeClickDecision(clickType, point, interactable);
                 
             }

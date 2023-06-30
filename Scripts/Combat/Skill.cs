@@ -87,8 +87,126 @@ public class Skill : ScriptableObject
         }
     }
 
-    public void Something()
+    public string GetTooltip()
     {
-
+        /*
+        * Name +
+        * Base damage +
+        * Range +
+        * Affected by +
+        * Description +
+        */
+        string tooltipString;
+        string name = skillName;
+        string description;
+        if (skillName == "Basic Attack")
+        {
+            description = "Attack with your ";
+            Weapon weapon = FindObjectOfType<PlayerCombat>().GetWeapon();
+            if (weapon == null)
+            {
+                description += "hands";
+            }
+            else
+            {
+                switch (weapon.weaponType)
+                {
+                    case Constants.WeaponTypes.Axe:
+                        description += "axe";
+                        break;
+                    case Constants.WeaponTypes.Bow:
+                        description += "bow";
+                        break;
+                    case Constants.WeaponTypes.Wand:
+                        description += "wand";
+                        break;
+                }
+            }
+        }
+        else
+        {
+            description = this.description;
+        }
+        
+        int[] minMaxDamage = GetDamageCalculated();
+        string affectedBy = affectedByAttribute.ToString();
+        string range = maxDistance.ToString();
+        tooltipString =
+            "~" + name + "`\n" +
+            "$Damage: " + minMaxDamage[0] + " - " + minMaxDamage[1] + "`\n" +
+            "*Range: " + range + "u`\n" +
+            "@This skill is affected by " + affectedBy + ".`\n" +
+            description;
+        return tooltipString;
     }
+
+    private int[] GetDamageCalculated()
+    {
+        int[] minMaxDamage = { 0, 0 };
+        GameObject player = FindObjectOfType<PlayerController>().gameObject;
+        Weapon weapon = player.GetComponent<PlayerCombat>().GetWeapon();
+        if (requiresWeapon && weapon != null)
+        {
+           if (weapon.weaponType == weaponTypeRequired)
+           {
+                minMaxDamage[0] = weapon.minDamage;
+                minMaxDamage[1] = weapon.maxDamage;
+           }
+           else
+           {
+                minMaxDamage[0] = -1;
+                minMaxDamage[1] = -1;
+                return minMaxDamage;
+           }
+        }
+        else
+        {
+            minMaxDamage[0] = baseDamageMin;
+            minMaxDamage[1] = baseDamageMax;
+        }
+        // Apply chaos points
+        int chaosPoints = player.GetComponent<Stats>().abilities.chaos;
+        minMaxDamage[0] = (minMaxDamage[0] - chaosPoints < 0) ? 0 : minMaxDamage[0] - chaosPoints;
+        minMaxDamage[1] = minMaxDamage[1] + chaosPoints;
+
+        // Apply attributes
+        int attributeMultiplier;
+        if (skillName == "Basic Attack")
+        {
+            if (weapon == null)
+            {
+                attributeMultiplier = 0;
+            }
+            else
+            {
+                if (weapon.weaponType == Constants.WeaponTypes.Axe)
+                {
+                    attributeMultiplier = player.GetComponent<PlayerCombat>().GetAttributeValue(Constants.Attributes.Strength);
+                }
+                else if (weapon.weaponType == Constants.WeaponTypes.Bow)
+                {
+                    attributeMultiplier = player.GetComponent<PlayerCombat>().GetAttributeValue(Constants.Attributes.Agility);
+                }
+                else if (weapon.weaponType == Constants.WeaponTypes.Wand)
+                {
+                    attributeMultiplier = player.GetComponent<PlayerCombat>().GetAttributeValue(Constants.Attributes.Intelligence);
+                }
+                else
+                {
+                    attributeMultiplier = 0;
+                }
+            }
+            
+        }
+        else
+        {
+            attributeMultiplier = player.GetComponent<PlayerCombat>().GetAttributeValue(affectedByAttribute);
+        }
+        float additionToTheDamage = attributeMultiplier * Constants.ATTRIBUTE_MULTIPLIER;
+        minMaxDamage[0] += Mathf.RoundToInt(minMaxDamage[0] * additionToTheDamage);
+        minMaxDamage[1] += Mathf.RoundToInt(minMaxDamage[1] * additionToTheDamage);
+
+        return minMaxDamage;
+    }
+
 }

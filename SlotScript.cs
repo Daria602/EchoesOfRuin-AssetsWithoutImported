@@ -8,6 +8,7 @@ public class SlotScript : MonoBehaviour
     public Button removeItemButton;
     SimpleTooltip tooltip;
     string tooltipString = "";
+    public GameObject equippedTag;
 
 
     private void Start()
@@ -21,25 +22,49 @@ public class SlotScript : MonoBehaviour
         icon.sprite = item.itemIcon;
         icon.enabled = true;
         removeItemButton.interactable = true;
+        Refresh();
+        //GetTooltipForItem();
         //tooltip.enabled = true;
+
+    }
+
+    private void GetTooltipForItem()
+    {
         Book book = item as Book;
+        Potion potion = item as Potion;
+        Weapon weapon = item as Weapon;
         if (book != null)
         {
             //Debug.Log(book.skill.skillName);
             tooltipString = GetBookDescription(book);
         }
+        else if (potion != null)
+        {
+            tooltipString = GetPotionDescription(potion);
+        }
+        else if (weapon != null)
+        {
+            tooltipString = "Is a weapon";
+        }
         else
         {
-            tooltipString = item.name;
+            tooltipString = "";
+
         }
     }
 
     private string GetBookDescription(Book book)
     {
-        string finalString = "";
-        finalString += "~" + book.skill.skillName + "  `*" + book.skill.cost + " AP\n`";
-        finalString += book.skill.description + "\n";
-        finalString += "$Damage: " + book.skill.baseDamageMin + " - " + book.skill.baseDamageMax + "`";
+        string finalString = "Book for " + book.skill.GetTooltip();
+        //finalString += "~" + book.skill.skillName + "  `*" + book.skill.cost + " AP\n`";
+        //finalString += book.skill.description + "\n";
+        //finalString += "$Damage: " + book.skill.baseDamageMin + " - " + book.skill.baseDamageMax + "`";
+        return finalString;
+    }
+
+    private string GetPotionDescription(Potion potion)
+    {
+        string finalString = potion.GetTooltip();
         return finalString;
     }
 
@@ -49,6 +74,15 @@ public class SlotScript : MonoBehaviour
         tooltip = GetComponent<SimpleTooltip>();
         tooltip.infoLeft = tooltipString;
     }
+    private void Refresh()
+    {
+        if (enabled)
+        {
+            tooltip = GetComponent<SimpleTooltip>();
+            GetTooltipForItem();
+            tooltip.infoLeft = tooltipString;
+        }
+    }
 
     public void RemoveItem()
     {
@@ -56,6 +90,8 @@ public class SlotScript : MonoBehaviour
         icon.sprite = null;
         icon.enabled = false;
         removeItemButton.interactable = false;
+        //UIManager.GetInstance().CloseInventoryAndStats();
+        Refresh();
     }
 
     public void OnClickRemoveItemButton()
@@ -69,6 +105,20 @@ public class SlotScript : MonoBehaviour
         if (item != null)
         {
             item.Use();
+            if (item as Weapon != null)
+            {
+                Weapon weapon = item as Weapon;
+                weapon.isEquipped = !weapon.isEquipped;
+                if (weapon.isEquipped)
+                {
+                    equippedTag.SetActive(false);
+                }
+                else
+                {
+                    equippedTag.SetActive(false);
+                }
+                
+            }
         }
     }
 }
