@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NPCMovement : BaseMovement
 {
-    public Vector3[] positionsToMove = null;
+    private Vector3[] positionsToMove = null;
     private int posToMoveIndex = -1;
     float normalSpeed = 0.7f;
     float combatSpeed = 3.5f;
@@ -28,7 +28,7 @@ public class NPCMovement : BaseMovement
 
         // TODO: remove this
         combat.IsInCombat = false;
-        //
+        positionsToMove = Constants.GetNPCMovement(GetComponent<CharacterController>().characterId);
     }
 
     public void SetCombatSpeed()
