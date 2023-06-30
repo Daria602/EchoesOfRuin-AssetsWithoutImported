@@ -90,12 +90,8 @@ public class SkillPanelController : MonoBehaviour
                 foreach (Button slot in slots)
                 {
                     if (index < skills.Count)
-                    {
-                        string finalString = "";
-                        //finalString = "~Dark Style `I'll only be in your game if it's $dark `and $scary`. The other tooltips are total losers.";
-                        finalString += "~" + skills[index].skillName + "  `*" + skills[index].cost + " AP\n`";
-                        finalString += skills[index].description + "\n";
-                        finalString += "$Damage: "+ skills[index].baseDamageMin +" - " + skills[index].baseDamageMax + "`";
+                    { 
+                        string finalString = skills[index].GetTooltip();
                         tooltips[index].infoLeft = finalString;
                     }
                     index++;
@@ -136,10 +132,15 @@ public class SkillPanelController : MonoBehaviour
 
     public void SetButtonActive(int buttonIndex)
     {
-        if (skills[buttonIndex].requiresWeapon &&
-            player.GetComponent<CombatController>().GetWeapon().weaponType == skills[buttonIndex].weaponTypeRequired)
+        if (skills[buttonIndex].requiresWeapon)
         {
-            slots[buttonIndex].interactable = true;
+            if (player.GetComponent<CombatController>().hasWeapon)
+            {
+                if (player.GetComponent<CombatController>().GetWeapon().weaponType == skills[buttonIndex].weaponTypeRequired)
+                {
+                    slots[buttonIndex].interactable = true;
+                }
+            }
         }
         else if (!skills[buttonIndex].requiresWeapon) 
         {
@@ -260,6 +261,13 @@ public class SkillPanelController : MonoBehaviour
         //skillName.color = textColor;
         //skillToLearnId = id;
         //skillToLearnInventory = item;
+    }
+
+    public void UpdateSkillbar()
+    {
+        skills = pc.skills;
+        AssignSkillsToButtons();
+        AssignTooltips();
     }
 
     public void CancelLearning()

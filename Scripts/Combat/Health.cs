@@ -5,38 +5,64 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     public int currentHealth;
-    public int healthModifier;
-    public int maxHealth;
-    public int m_currentMaxHealth;
+    //public int healthModifier;
+    private int baseMaxHealth = 10;
     public delegate void UpdateHealth();
     public UpdateHealth OnHealthUpdateCallback;
     public delegate void OnDeath();
     public OnDeath OnDeathCallback;
     private void Awake()
     {
-        healthModifier = 0;
-        m_currentMaxHealth = maxHealth;
-        currentHealth = m_currentMaxHealth;
+        //healthModifier = 0;
+        //m_currentMaxHealth = maxHealth;
+        //currentHealth = m_currentMaxHealth;
     }
-
-    public int CurrentMaxHealth {  get => m_currentMaxHealth; set { ModifyCurrentMaxHealth(value); } }
-
-    private void ModifyCurrentMaxHealth(int value)
+    private void Start()
     {
-        healthModifier = value;
-        m_currentMaxHealth += m_currentMaxHealth * value;
-
-    }
-
-    public void Heal(int amount)
-    {
-        if (currentHealth + amount > m_currentMaxHealth)
+        if (currentHealth < 0)
         {
-            currentHealth = m_currentMaxHealth;
+            currentHealth = CurrentMaxHealth;
+        }
+    }
+
+    public int CurrentMaxHealth {  get => GetMaxHealth(); }
+
+    private int GetMaxHealth()
+    {
+        int constitutionValue = GetComponent<Stats>().attributes.constitution;
+        int constitutionAddition = Constants.HEALTH_PER_CONSTITUTION * constitutionValue;
+        return baseMaxHealth + constitutionAddition;
+    }
+    //private void ModifyCurrentMaxHealth(int value)
+    //{
+    //    healthModifier = value;
+    //    m_currentMaxHealth += m_currentMaxHealth * value;
+
+    //}
+
+    //public void Heal(int amount)
+    //{
+    //    if (currentHealth + amount > m_currentMaxHealth)
+    //    {
+    //        currentHealth = m_currentMaxHealth;
+    //    }
+    //    else
+    //    {
+    //        currentHealth += amount;
+    //    }
+    //}
+
+    public void PotionHeal(int amount)
+    {
+        float percent = amount * 0.01f;
+        float healingAmount = CurrentMaxHealth * percent;
+        if (currentHealth + Mathf.RoundToInt(healingAmount) > CurrentMaxHealth)
+        {
+            currentHealth = CurrentMaxHealth;
         }
         else
         {
-            currentHealth += amount;
+            currentHealth += Mathf.RoundToInt(healingAmount);
         }
     }
 

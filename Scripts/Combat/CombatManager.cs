@@ -252,6 +252,10 @@ public class CombatManager : MonoBehaviour
             if (characterBuffs[index].DecreaseCountdown())
             {
                 StatsUI.GetInstance().SetAbilityValues();
+                if (characterBuffs[index].characterId == Constants.PLAYER_ID)
+                {
+                    player.GetComponent<PlayerHealth>().UpdateHealthUI();
+                }
                 characterBuffs.RemoveAt(index);
             }
             else
@@ -259,6 +263,7 @@ public class CombatManager : MonoBehaviour
                 index++;
             }
         }
+        SkillPanelController.GetInstance().UpdateSkillbar();
     }
 
     private void SetNewCharacter()
@@ -476,7 +481,9 @@ public class CombatManager : MonoBehaviour
         Constants.Abilities[] abilities = skill.abilities;
         CharacterBuff cb = new CharacterBuff(characterId, turnsCountdown, attributes, abilities);
         characterBuffs.Add(cb);
-        StatsUI.GetInstance().SetAbilityValues(); 
+        StatsUI.GetInstance().SetAbilityValues();
+        player.GetComponent<PlayerHealth>().UpdateHealthUI();
+        SkillPanelController.GetInstance().UpdateSkillbar();
     }
 
     public void ApplyPotion(Potion potion)
@@ -505,6 +512,10 @@ public class CombatManager : MonoBehaviour
             // heal
             Debug.Log("tried to heal");
         }
+
+        player.GetComponent<PlayerHealth>().UpdateHealthUI();
+        SkillPanelController.GetInstance().UpdateSkillbar();
+
     }
 
 

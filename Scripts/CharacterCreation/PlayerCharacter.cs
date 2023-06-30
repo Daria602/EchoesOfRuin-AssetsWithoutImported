@@ -9,6 +9,10 @@ public class PlayerCharacter : MonoBehaviour, ILoadingData
     public bool male = true;
     public GameObject femaleCharacter;
     public GameObject maleCharacter;
+    public Transform maleLeftHand;
+    public Transform maleRightHand;
+    public GameObject femaleLeftHand;
+    public Transform femaleRightHand;
     public TMP_Text textShowingGender;
     public TMP_Text headType;
     public TMP_Text hairType;
@@ -53,6 +57,7 @@ public class PlayerCharacter : MonoBehaviour, ILoadingData
     private void Start()
     {
         UpdateAppearanceUI();
+        SetAbilityValues();
     }
 
 
@@ -154,39 +159,48 @@ public class PlayerCharacter : MonoBehaviour, ILoadingData
     // Attributes
     public void IncreaseStat(int statType)
     {
-        if (male)
+        if (GetComponent<Stats>().IncreaseAttributeStat(statType))
         {
-            if (maleCharacter.GetComponent<Stats>().IncreaseAttributeStat(statType))
-            {
-                UpdateAttributesUI(statType, true);
-            }
+            UpdateAttributesUI(statType, true);
         }
-        else
-        {
-            if (femaleCharacter.GetComponent<Stats>().IncreaseAttributeStat(statType))
-            {
-                UpdateAttributesUI(statType, true);
-            }
-        }
+        //if (male)
+        //{
+        //    if (maleCharacter.GetComponent<Stats>().IncreaseAttributeStat(statType))
+        //    {
+        //        UpdateAttributesUI(statType, true);
+        //    }
+        //}
+        //else
+        //{
+        //    if (femaleCharacter.GetComponent<Stats>().IncreaseAttributeStat(statType))
+        //    {
+        //        UpdateAttributesUI(statType, true);
+        //    }
+        //}
     }
 
     public void DecreaseStat(int statType)
     {
-        if (male)
+        if (GetComponent<Stats>().DecreaseAttributeStat(statType))
         {
-            if (maleCharacter.GetComponent<Stats>().DecreaseAttributeStat(statType))
-            {
-                UpdateAttributesUI(statType, false);
-            }
+            UpdateAttributesUI(statType, false);
         }
-        else
-        {
-            if (femaleCharacter.GetComponent<Stats>().DecreaseAttributeStat(statType))
-            {
-                UpdateAttributesUI(statType, false);
-            }
-            
-        }
+        //GetComponent<Stats>().DecreaseAttributeStat(statType);
+        //if (male)
+        //{
+        //    if (maleCharacter.GetComponent<Stats>().DecreaseAttributeStat(statType))
+        //    {
+        //        UpdateAttributesUI(statType, false);
+        //    }
+        //}
+        //else
+        //{
+        //    if (femaleCharacter.GetComponent<Stats>().DecreaseAttributeStat(statType))
+        //    {
+        //        UpdateAttributesUI(statType, false);
+        //    }
+
+        //}
     }
 
     private void UpdateAttributesUI(int statType, bool increase)
@@ -222,39 +236,49 @@ public class PlayerCharacter : MonoBehaviour, ILoadingData
 
     public void IncreaseAbility(int statType)
     {
-        if (male)
+        
+        if (GetComponent<Stats>().IncreaseAbilityStat(statType))
         {
-            if (maleCharacter.GetComponent<Stats>().IncreaseAbilityStat(statType))
-            {
-                UpdateAbilitiesUI(statType, true);
-            }
+            UpdateAbilitiesUI(statType, true);
         }
-        else
-        {
-            if (femaleCharacter.GetComponent<Stats>().IncreaseAbilityStat(statType))
-            {
-                UpdateAbilitiesUI(statType, true);
-            }
-        }
+        
+        //if (male)
+        //{
+        //    if (maleCharacter.GetComponent<Stats>().IncreaseAbilityStat(statType))
+        //    {
+        //        UpdateAbilitiesUI(statType, true);
+        //    }
+        //}
+        //else
+        //{
+        //    if (femaleCharacter.GetComponent<Stats>().IncreaseAbilityStat(statType))
+        //    {
+        //        UpdateAbilitiesUI(statType, true);
+        //    }
+        //}
     }
 
     public void DecreaseAbility(int statType)
     {
-        if (male)
+        if (GetComponent<Stats>().DecreaseAbilityStat(statType))
         {
-            if (maleCharacter.GetComponent<Stats>().DecreaseAbilityStat(statType))
-            {
-                UpdateAbilitiesUI(statType, false);
-            }
+            UpdateAbilitiesUI(statType, false);
         }
-        else
-        {
-            if (femaleCharacter.GetComponent<Stats>().DecreaseAbilityStat(statType))
-            {
-                UpdateAbilitiesUI(statType, false);
-            }
+        //if (male)
+        //{
+        //    if (maleCharacter.GetComponent<Stats>().DecreaseAbilityStat(statType))
+        //    {
+        //        UpdateAbilitiesUI(statType, false);
+        //    }
+        //}
+        //else
+        //{
+        //    if (femaleCharacter.GetComponent<Stats>().DecreaseAbilityStat(statType))
+        //    {
+        //        UpdateAbilitiesUI(statType, false);
+        //    }
 
-        }
+        //}
     }
 
     private void UpdateAbilitiesUI(int statType, bool increase)
@@ -286,56 +310,62 @@ public class PlayerCharacter : MonoBehaviour, ILoadingData
 
     public void SetCorrectValues()
     {
-        if (male)
-        {
-            SetAbilityValues(ref maleCharacter);
-        }
-        else
-        {
-            SetAbilityValues(ref femaleCharacter);
-        }
+        SetAbilityValues();
+        //if (male)
+        //{
+        //    SetAbilityValues(ref maleCharacter);
+        //}
+        //else
+        //{
+        //    SetAbilityValues(ref femaleCharacter);
+        //}
     }
 
-    public void SetAbilityValues(ref GameObject player)
+    public void SetAbilityValues()
     {
-        strength.text = player.GetComponent<Stats>().attributes.strength.ToString();
-        agility.text = player.GetComponent<Stats>().attributes.agility.ToString();
-        intelligence.text = player.GetComponent<Stats>().attributes.intelligence.ToString();
-        constitution.text = player.GetComponent<Stats>().attributes.constitution.ToString();
-        wits.text = player.GetComponent<Stats>().attributes.wits.ToString();
+        strength.text = GetComponent<Stats>().attributes.strength.ToString();
+        agility.text = GetComponent<Stats>().attributes.agility.ToString();
+        intelligence.text = GetComponent<Stats>().attributes.intelligence.ToString();
+        constitution.text = GetComponent<Stats>().attributes.constitution.ToString();
+        wits.text = GetComponent<Stats>().attributes.wits.ToString();
 
-        shadow.text = player.GetComponent<Stats>().abilities.shadow.ToString();
-        chaos.text = player.GetComponent<Stats>().abilities.chaos.ToString();
-        luck.text = player.GetComponent<Stats>().abilities.luck.ToString();
-        charisma.text = player.GetComponent<Stats>().abilities.charisma.ToString();
+        shadow.text = GetComponent<Stats>().abilities.shadow.ToString();
+        chaos.text = GetComponent<Stats>().abilities.chaos.ToString();
+        luck.text = GetComponent<Stats>().abilities.luck.ToString();
+        charisma.text = GetComponent<Stats>().abilities.charisma.ToString();
 
-        availablePointsAbility.text = player.GetComponent<Stats>().availableAbilityPoints.ToString();
-        availablePointsAttribute.text = player.GetComponent<Stats>().availableAttributePoints.ToString();
+        availablePointsAbility.text = GetComponent<Stats>().availableAbilityPoints.ToString();
+        availablePointsAttribute.text = GetComponent<Stats>().availableAttributePoints.ToString();
     }
 
     public void LoadGameData(CharacterData characterData)
     {
-        if (isInChreationScene)
+        //CharacterData cd = new CharacterData();
+        //this.male = true;
+        GetComponent<Stats>().LoadGameData(characterData);
+        //if (isInChreationScene)
+        //{
+            
+            
+        //    //maleCharacter.GetComponent<CharacterCreation>().LoadGameData(cd);
+        //    //maleCharacter.GetComponent<Stats>().LoadGameData(cd);
+        //    //femaleCharacter.GetComponent<CharacterCreation>().LoadGameData(cd);
+        //    //femaleCharacter.;
+        //}
+        //else
+        //{
+        this.male = characterData.isMale;
+        if (male)
         {
-            this.male = true;
-            CharacterData cd = new CharacterData();
-            maleCharacter.GetComponent<CharacterCreation>().LoadGameData(cd);
-            maleCharacter.GetComponent<Stats>().LoadGameData(cd);
-            femaleCharacter.GetComponent<CharacterCreation>().LoadGameData(cd);
-            femaleCharacter.GetComponent<Stats>().LoadGameData(cd);
+            maleCharacter.SetActive(true);
+            maleCharacter.GetComponent<CharacterCreation>().LoadGameData(characterData);
         }
         else
         {
-            this.male = characterData.isMale;
-            if (male)
-            {
-                maleCharacter.GetComponent<CharacterCreation>().LoadGameData(characterData);
-            }
-            else
-            {
-                femaleCharacter.GetComponent<CharacterCreation>().LoadGameData(characterData);
-            }
+            femaleCharacter.SetActive(true);
+            femaleCharacter.GetComponent<CharacterCreation>().LoadGameData(characterData);
         }
+        //}
         
     }
 
@@ -345,13 +375,15 @@ public class PlayerCharacter : MonoBehaviour, ILoadingData
         if (male)
         {
             maleCharacter.GetComponent<CharacterCreation>().SaveGameData(ref characterData);
-            maleCharacter.GetComponent<Stats>().SaveGameData(ref characterData);
+            //maleCharacter.GetComponent<Stats>().SaveGameData(ref characterData);
         }
         else
         {
             femaleCharacter.GetComponent<CharacterCreation>().SaveGameData(ref characterData);
-            femaleCharacter.GetComponent<Stats>().SaveGameData(ref characterData);
+            //femaleCharacter.GetComponent<Stats>().SaveGameData(ref characterData);
         }
-        
+        GetComponent<Stats>().SaveGameData(ref characterData);
+
+
     }
 }

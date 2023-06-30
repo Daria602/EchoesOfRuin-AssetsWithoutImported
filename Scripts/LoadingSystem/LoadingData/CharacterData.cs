@@ -44,9 +44,9 @@ public class CharacterData
     // Character health
 
     public int currentHealth;
-    public int healthModifier;
-    public int maxHealth;
-    public int m_currentMaxHealth;
+    //public int healthModifier;
+    //public int maxHealth;
+    //public int m_currentMaxHealth;
 
     // Items present in the world visually
     public int[] itemsStillPresent;
@@ -65,7 +65,7 @@ public class CharacterData
         this.strength = 0; 
         this.agility = 0;
         this.intelligence = 0;
-        this.constitution = 0;
+        this.constitution = 10;
         this.wits = 0;
 
         // Abilities
@@ -83,18 +83,18 @@ public class CharacterData
         this.characterId = 0;
         this.m_isInCombat = false;
         this.skillsIds = new List<int>() { 12, 13, 0, 2, 4, 7, 10, 15, 19 }; // { 12, 13, 6, 5 };
-        this.hasWeapon = true; // TODO: change here to false
-        this.weaponId = 1; // TODO: change here to 0
+        this.hasWeapon = false; 
+        this.weaponId = -1; // TODO: change here to 0
         //this.rightHand = Vector3.zero;
         this.isPerformingAction = false;
         this.finishedPerforming = true;
         this.actionIndex = 0;
         this.charactersTurn = false;
 
-        this.currentHealth = 10;
-        this.healthModifier = 0;
-        this.maxHealth = 10;
-        this.m_currentMaxHealth = 10;
+        this.currentHealth = -1;
+        //this.healthModifier = 0;
+        //this.maxHealth = 10;
+       // this.m_currentMaxHealth = 10;
 
         //Character level & xp
         this.characterLevel = 1;

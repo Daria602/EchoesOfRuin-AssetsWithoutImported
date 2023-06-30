@@ -28,6 +28,7 @@ public class NPCMovement : BaseMovement
 
         // TODO: remove this
         combat.IsInCombat = false;
+        //
     }
 
     public void SetCombatSpeed()
@@ -88,7 +89,7 @@ public class NPCMovement : BaseMovement
                 {
                     SetPath();
                     state = NPCState.Walking;
-                    gameObject.GetComponent<Animator>().SetBool("isRunning", true);
+                    gameObject.GetComponent<Animator>().SetBool("isWalking", true);
 
                 }
                 break;
@@ -96,7 +97,7 @@ public class NPCMovement : BaseMovement
                 if (HasArrived())
                 {
                     state = NPCState.Staying;
-                    gameObject.GetComponent<Animator>().SetBool("isRunning", false);
+                    gameObject.GetComponent<Animator>().SetBool("isWalking", false);
                 }
                 // walk untill there and check if arrived
                 break;
