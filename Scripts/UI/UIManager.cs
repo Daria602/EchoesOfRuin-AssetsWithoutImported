@@ -70,7 +70,7 @@ public class UIManager : MonoBehaviour
 
     public void QuitGame()
     {
-        Application.Quit();
+        DataManager.GetInstance().QuitGame();
     }
 
     public void ClickSaveGame()

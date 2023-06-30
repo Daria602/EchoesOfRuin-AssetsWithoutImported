@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class DataManager : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class DataManager : MonoBehaviour
     private string fileNameForSave;
 
     private LoadingFileHandler loadingFileHandler;
+    public Button continueOrLoadButton;
+    
 
 
 
@@ -41,12 +45,13 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
-        
+       
     }
 
     public void CreateNewSave()
     {
         this.characterData = new CharacterData();
+        SceneManager.LoadScene(1);
     }
 
     public void LoadSave()
@@ -56,14 +61,15 @@ public class DataManager : MonoBehaviour
 
         if (characterData == null)
         {
-            Debug.Log("No save file found. Taking data from defaults");
-            CreateNewSave();
+            continueOrLoadButton.GetComponent<Button>().interactable = false;
         }
-
-        // give the data to all other scripts
-        for (int i = 0; i < loadingDataScripts.Count; i++)
+        else
         {
-            loadingDataScripts[i].LoadGameData(characterData);
+            // give the data to all other scripts
+            for (int i = 0; i < loadingDataScripts.Count; i++)
+            {
+                loadingDataScripts[i].LoadGameData(characterData);
+            }
         }
     }
 
@@ -75,6 +81,11 @@ public class DataManager : MonoBehaviour
         }
 
         loadingFileHandler.SaveData(characterData);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     public void Continue()
@@ -89,4 +100,6 @@ public class DataManager : MonoBehaviour
 
         return new List<ILoadingData>(list);
     }
+
+
 }
