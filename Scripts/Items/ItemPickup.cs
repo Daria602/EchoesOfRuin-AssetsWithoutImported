@@ -23,8 +23,9 @@ public class ItemPickup : Interactable
 
         if (isItemPicked) {
 
+            GetComponent<VisualItem>().RemoveItemFromWorld();
             //GetComponent<VisualItem>().RemoveItemFromConst();
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }      
     }
 

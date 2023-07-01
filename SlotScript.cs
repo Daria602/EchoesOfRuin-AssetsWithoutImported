@@ -44,7 +44,7 @@ public class SlotScript : MonoBehaviour
         }
         else if (weapon != null)
         {
-            tooltipString = "Is a weapon";
+            tooltipString = GetWeaponDescription(weapon);
         }
         else
         {
@@ -61,7 +61,14 @@ public class SlotScript : MonoBehaviour
         //finalString += "$Damage: " + book.skill.baseDamageMin + " - " + book.skill.baseDamageMax + "`";
         return finalString;
     }
-
+    private string GetWeaponDescription(Weapon weapon)
+    {
+        string finalString = weapon.GetTooltip();
+        //finalString += "~" + book.skill.skillName + "  `*" + book.skill.cost + " AP\n`";
+        //finalString += book.skill.description + "\n";
+        //finalString += "$Damage: " + book.skill.baseDamageMin + " - " + book.skill.baseDamageMax + "`";
+        return finalString;
+    }
     private string GetPotionDescription(Potion potion)
     {
         string finalString = potion.GetTooltip();

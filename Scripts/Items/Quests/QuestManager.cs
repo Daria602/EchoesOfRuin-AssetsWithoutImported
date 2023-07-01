@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestManager : MonoBehaviour
+public class QuestManager : MonoBehaviour, ILoadingData
 {
     private static QuestManager instance;
     public GameObject player;
@@ -84,7 +84,7 @@ public class QuestManager : MonoBehaviour
             switch (quest.questType)
             {
                 case Constants.QuestType.Kill:
-                    CheckIfKilled();
+                    isCompleted = CheckIfKilled(quest);
                     break;
                 case Constants.QuestType.Talk:
                     isCompleted = CheckIfTalked(quest);
@@ -127,9 +127,17 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    public void CheckIfKilled()
+    public bool CheckIfKilled(Quest quest)
     {
-
+        var enemyIds = quest.enemyIds;
+        foreach (var enemyId in enemyIds)
+        {
+            if (Constants.GetInstance().characters[enemyId].activeSelf)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public bool CheckIfTalked(Quest quest)
@@ -148,5 +156,19 @@ public class QuestManager : MonoBehaviour
     public void CheckIfExplored()
     {
 
+    }
+
+    public void LoadGameData(CharacterData characterData)
+    {
+        this.questIds = characterData.questIds;
+        foreach (int questId in this.questIds)
+        {
+            AddQuest(questId);
+        }
+    }
+
+    public void SaveGameData(ref CharacterData characterData)
+    {
+        characterData.questIds = this.questIds;
     }
 }

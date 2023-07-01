@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 9033099103248320322}
   - component: {fileID: 9033099103248320321}
   - component: {fileID: 2935205478038677024}
+  - component: {fileID: 8079183967527103963}
   m_Layer: 0
   m_Name: Potion_Intelligence
   m_TagString: Untagged
@@ -157,3 +158,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!114 &8079183967527103963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3320832136487958095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31ae5a471239a1c4eb9aa5854f7b22bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 0
+  isDroppedBySomebody: 0

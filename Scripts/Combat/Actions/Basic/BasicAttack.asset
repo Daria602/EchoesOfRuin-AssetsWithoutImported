@@ -18,7 +18,6 @@ MonoBehaviour:
   description: Attack with your current weapon
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
-  prepareAnimationBoolName: 
   hasAnimTrigger: 0
   castTrigger: 
   cooldown: 0
@@ -29,4 +28,8 @@ MonoBehaviour:
   requiresWeapon: 0
   weaponTypeRequired: 0
   spellType: 2
-  cost: 0
+  affectedByAttribute: 0
+  cost: 2
+  buffsForTurns: 0
+  attributes: 
+  abilities: 

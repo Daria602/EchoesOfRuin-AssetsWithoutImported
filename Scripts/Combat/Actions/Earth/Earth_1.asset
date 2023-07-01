@@ -17,8 +17,8 @@ MonoBehaviour:
   skillIcon: {fileID: 21300000, guid: 567b3c6a8375ba14dae6cd51e7d46903, type: 3}
   description: Increases Strength (+1) and Constitution (+1), empowering powerful
     strikes and fortifying maximum health.
-  hasVisuals: 0
-  visualEffectPrefab: {fileID: 0}
+  hasVisuals: 1
+  visualEffectPrefab: {fileID: 9017484664307500583, guid: 1245b8d2997d5b34fb1637be70a7eb05, type: 3}
   hasAnimTrigger: 0
   castTrigger: 
   cooldown: 0
@@ -32,7 +32,5 @@ MonoBehaviour:
   affectedByAttribute: 3
   cost: 1
   buffsForTurns: 2
-  buffsAttributes: 1
   attributes: 0000000003000000
-  buffsAbilities: 0
   abilities: 

@@ -206,11 +206,13 @@ public class Constants : MonoBehaviour, ILoadingData
         {
             itemsStillPresent = characterData.itemsStillPresent;
         }
+        this.charactersDead = characterData.charactersDead;
     }
 
     public void SaveGameData(ref CharacterData characterData)
     {
         characterData.itemsStillPresent = itemsStillPresent;
+        characterData.charactersDead = this.charactersDead;
         Debug.Log(characterData.itemsStillPresent.Length);
     }
 

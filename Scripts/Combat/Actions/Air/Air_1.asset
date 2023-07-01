@@ -17,8 +17,8 @@ MonoBehaviour:
   skillIcon: {fileID: 21300000, guid: 5fb8b2f1624446b4d832db7385b43f40, type: 3}
   description: Enhances Agility (+1) and Intelligence (+1), granting lightning-fast
     attacks and increased magic damage.
-  hasVisuals: 0
-  visualEffectPrefab: {fileID: 0}
+  hasVisuals: 1
+  visualEffectPrefab: {fileID: 9017484664307500583, guid: 1245b8d2997d5b34fb1637be70a7eb05, type: 3}
   hasAnimTrigger: 0
   castTrigger: 
   cooldown: 0
@@ -32,7 +32,5 @@ MonoBehaviour:
   affectedByAttribute: 2
   cost: 1
   buffsForTurns: 2
-  buffsAttributes: 1
   attributes: 0100000002000000
-  buffsAbilities: 0
   abilities: 

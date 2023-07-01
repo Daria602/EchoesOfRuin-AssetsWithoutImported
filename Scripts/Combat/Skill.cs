@@ -136,7 +136,7 @@ public class Skill : ScriptableObject
             "~" + name + " $" + skillCost + "AP\n" +
             "$Damage: " + minMaxDamage[0] + " - " + minMaxDamage[1] + "`\n" +
             "*Range: " + range + "u`\n" +
-            "@This skill is affected by " + affectedBy + ".`\n" +
+           ( name != "Move" ? "@This skill is affected by " + affectedBy + ".`\n" : "") +
             description;
         return tooltipString;
     }

@@ -25,6 +25,7 @@ public class Interactable : MonoBehaviour
 
     private void Update()
     {
+        
         if (m_isFocus && !hasInteracted)
         {
             

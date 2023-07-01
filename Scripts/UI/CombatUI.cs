@@ -42,6 +42,7 @@ public class CombatUI : MonoBehaviour
     {
         enemyCombatUI.SetActive(false);
         playerCombatUI.SetActive(true);
+        //actionPointsUI.SetActive(true);
     }
     public void EnableEnemyUI(int characterId)
     {

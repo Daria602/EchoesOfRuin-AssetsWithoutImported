@@ -17,8 +17,8 @@ MonoBehaviour:
   skillIcon: {fileID: 21300000, guid: 7d45136e385ccb2468b579474e9b7667, type: 3}
   description: Infuse your water-based attack with freezing cold, dealing increased
     damage and potentially freezing the target
-  hasVisuals: 0
-  visualEffectPrefab: {fileID: 0}
+  hasVisuals: 1
+  visualEffectPrefab: {fileID: 3744133877081091469, guid: a2a060732547fe64581bb0cb3c2bdf1d, type: 3}
   hasAnimTrigger: 1
   castTrigger: CastMagicAoE
   cooldown: 0
@@ -32,7 +32,5 @@ MonoBehaviour:
   affectedByAttribute: 2
   cost: 2
   buffsForTurns: 0
-  buffsAttributes: 0
   attributes: 
-  buffsAbilities: 0
   abilities: 

@@ -22,6 +22,53 @@ public class PlayerHealth : Health
         
     }
 
+    public void UpdateCurrentHealth(bool increased)
+    {
+        if (increased)
+        {
+            int currentMaxHealth = CurrentMaxHealth;
+            int previousMaxHealth = currentMaxHealth - Constants.HEALTH_PER_CONSTITUTION;
+            float currentHealthPercent = (float)currentHealth / (float)previousMaxHealth;
+            int newCurrentHealth = Mathf.RoundToInt(currentMaxHealth * currentHealthPercent);
+            if (newCurrentHealth > currentMaxHealth)
+            {
+                currentHealth = currentMaxHealth;
+            }
+            else
+            {
+                currentHealth = newCurrentHealth;
+            }
+            Debug.Log("Increased max health; Current max health: " + currentMaxHealth +
+                "; Previous max health: " + previousMaxHealth +
+                "; currentHealthPercent: " + currentHealthPercent.ToString() +
+                "; new current health: " + newCurrentHealth +
+                "; current health is bigger than max health: " + (newCurrentHealth > currentMaxHealth).ToString());
+
+        }
+        else
+        {
+            int currentMaxHealth = CurrentMaxHealth;
+            int previousMaxHealth = currentMaxHealth + Constants.HEALTH_PER_CONSTITUTION;
+            float currentHealthPercent = (float)currentHealth / (float)previousMaxHealth;
+            int newCurrentHealth = Mathf.RoundToInt(currentMaxHealth * currentHealthPercent);
+            if (newCurrentHealth > currentMaxHealth)
+            {
+                currentHealth = currentMaxHealth;
+            }
+            else
+            {
+                currentHealth = newCurrentHealth;
+            }
+            Debug.Log("Decreased max health; Current max health: " + currentMaxHealth +
+                "; Previous max health: " + previousMaxHealth +
+                "; currentHealthPercent: " + currentHealthPercent.ToString() +
+                "; new current health: " + newCurrentHealth +
+                "; current health is bigger than max health: " + (newCurrentHealth > currentMaxHealth).ToString());
+
+        }
+        //GetMaxHealth();
+    }
+
     public void UpdateHealthUI()
     {
         if (currentHealth > CurrentMaxHealth)

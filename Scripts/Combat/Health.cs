@@ -27,10 +27,11 @@ public class Health : MonoBehaviour
 
     public int CurrentMaxHealth {  get => GetMaxHealth(); }
 
-    private int GetMaxHealth()
+    protected int GetMaxHealth()
     {
         int constitutionValue = GetComponent<Stats>().attributes.constitution;
         int constitutionAddition = Constants.HEALTH_PER_CONSTITUTION * constitutionValue;
+        //Debug.Log("Got to update health and it is: " + (baseMaxHealth + constitutionAddition));
         return baseMaxHealth + constitutionAddition;
     }
     //private void ModifyCurrentMaxHealth(int value)

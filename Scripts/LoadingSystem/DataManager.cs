@@ -81,6 +81,11 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    public void LoadLastSave()
+    {
+        SceneManager.LoadScene(2);
+    }
+
     public void SaveState()
     {
         foreach (ILoadingData dataObject in loadingDataScripts)

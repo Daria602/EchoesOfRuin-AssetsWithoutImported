@@ -17,8 +17,8 @@ MonoBehaviour:
   skillIcon: {fileID: 21300000, guid: 22a867f2854984341a2866b952a6fa1d, type: 3}
   description: Boosts Intelligence (+1) and Chaos (+1), amplifying fire spells and
     inflicting variable damage.
-  hasVisuals: 0
-  visualEffectPrefab: {fileID: 0}
+  hasVisuals: 1
+  visualEffectPrefab: {fileID: 9017484664307500583, guid: 1245b8d2997d5b34fb1637be70a7eb05, type: 3}
   hasAnimTrigger: 0
   castTrigger: 
   cooldown: 0
@@ -32,7 +32,5 @@ MonoBehaviour:
   affectedByAttribute: 2
   cost: 1
   buffsForTurns: 2
-  buffsAttributes: 1
   attributes: 02000000
-  buffsAbilities: 1
   abilities: 01000000

@@ -187,6 +187,26 @@ public class CombatManager : MonoBehaviour
                 EndCombat();
             }
         }
+        else
+        {
+            CheckForInteraction();
+        }
+    }
+
+    private void CheckForInteraction()
+    {
+        
+        Ray ray = CameraManager.GetInstance().GetSceneCamera().ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            NPCController npc = hit.collider.GetComponent<NPCController>();
+            if (npc != null)
+            {
+                npc.SayTalk();
+            }
+        }
+        
     }
 
     private void EndCombat()

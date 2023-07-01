@@ -5,7 +5,7 @@ using UnityEngine;
 public class Stats : MonoBehaviour
 {
     // For combat
-    public int initiative = 1;
+    private int initiative = 1;
 
     [System.Serializable]
     public class Attributes
@@ -60,6 +60,8 @@ public class Stats : MonoBehaviour
                     if (this.constitution + amount >= 0)
                     {
                         this.constitution += amount;
+                        FindObjectOfType<PlayerHealth>().UpdateCurrentHealth(increase);
+                        FindObjectOfType<PlayerHealth>().UpdateHealthUI();
                     }
                     break;
                 case Constants.Attributes.Wits:
@@ -128,6 +130,7 @@ public class Stats : MonoBehaviour
                     {
                         this.constitution += amount;
                         tempConstitution = this.constitution;
+                        
                         wasModified = true;
                     }
                     break;
@@ -291,6 +294,11 @@ public class Stats : MonoBehaviour
             if (attributes.PermModifyAttribute((Constants.Attributes)statType, true))
             {
                 availableAttributePoints--;
+                if (statType == (int)Constants.Attributes.Constitution)
+                {
+                    FindObjectOfType<PlayerHealth>().UpdateCurrentHealth(true);
+                    FindObjectOfType<PlayerHealth>().UpdateHealthUI();
+                }
                 return true;
             }
           
@@ -303,6 +311,12 @@ public class Stats : MonoBehaviour
         if (attributes.PermModifyAttribute((Constants.Attributes)statType, false))
         {
             availableAttributePoints++;
+            if (statType == (int)Constants.Attributes.Constitution)
+            {
+                FindObjectOfType<PlayerHealth>().UpdateCurrentHealth(false);
+                FindObjectOfType<PlayerHealth>().UpdateHealthUI();
+            }
+            
             return true;
         }
         return false;
@@ -375,6 +389,7 @@ public class Stats : MonoBehaviour
             characterData.luck,
             characterData.charisma
         );
+        this.characterLevel = characterData.characterLevel;
     }
     public void SaveGameData(ref CharacterData characterData)
     {

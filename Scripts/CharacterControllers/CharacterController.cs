@@ -10,6 +10,20 @@ public class CharacterController : MonoBehaviour
     public GameObject itemDrop;
     public Transform rightHand;
 
+    private void Start()
+    {
+        if (itemDrop != null)
+        {
+            itemDrop.SetActive(false);
+        }
+        foreach (int characterId in Constants.GetInstance().charactersDead)
+        {
+            if (characterId == this.characterId)
+            {
+                gameObject.SetActive(false);
+            }
+        }
+    }
     public void SetDoneDeath()
     {
         Debug.Log("Should do thingy");
@@ -19,7 +33,7 @@ public class CharacterController : MonoBehaviour
             Debug.Log("Should call dropGold");
             DropGold();
         }
-
+        Constants.GetInstance().charactersDead.Add(characterId);
         gameObject.SetActive(false);
     }
 
@@ -28,9 +42,12 @@ public class CharacterController : MonoBehaviour
         Debug.Log("Inside DropItem call");
         if (itemDrop != null)
         {
-            GameObject go = Instantiate(itemDrop);
-            go.transform.position = transform.position;
-            go.SetActive(true);
+            //GameObject go = Instantiate(itemDrop);
+            //go.GetComponent<VisualItem>
+            itemDrop.transform.position = transform.position;
+            //go.transform.position = transform.position;
+            itemDrop.SetActive(true);
+            itemDrop.GetComponent<VisualItem>().isDroppedBySomebody = false;
         }
         else
         {

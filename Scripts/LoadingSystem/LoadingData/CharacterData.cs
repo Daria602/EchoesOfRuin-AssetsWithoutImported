@@ -58,6 +58,18 @@ public class CharacterData
 
     public int gold;
 
+    // Quests
+    public List<int> questIds;
+
+    // Items that were picked up
+    public List<int> itemsWerePickedUp;
+
+    // XP
+    public int XP;
+
+    // Characters dead
+    public List<int> charactersDead;
+
     // Creating initial values
     public CharacterData()
     {
@@ -114,6 +126,13 @@ public class CharacterData
 
         // Gold
         this.gold = 10;
+
+        // Quests
+        this.questIds = new List<int> { 0 };
+
+        this.itemsWerePickedUp = new List<int>();
+        this.XP = 0;
+        this.charactersDead = new List<int>();
     }
 
 }

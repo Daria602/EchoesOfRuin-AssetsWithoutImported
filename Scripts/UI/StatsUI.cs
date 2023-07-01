@@ -32,6 +32,13 @@ public class StatsUI : MonoBehaviour
     public TMP_Text luck;
     public TMP_Text charisma;
 
+    // Gold
+    public TextMeshProUGUI goldNumber;
+    private void Update()
+    {
+        goldNumber.text = player.GetComponent<PlayerController>().gold.ToString();
+    }
+
 
     // Attributes
     public void IncreaseStat(int statType)

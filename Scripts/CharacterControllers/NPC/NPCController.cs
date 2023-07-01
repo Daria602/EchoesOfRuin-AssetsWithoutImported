@@ -4,5 +4,40 @@ using UnityEngine;
 
 public class NPCController : CharacterController
 {
-    
+    public GameObject talkToNpcPrefab;
+    private GameObject npcSaysInstance;
+    private bool isHoveringOver = false;
+    private void Update()
+    {
+        if (GetComponent<CombatController>().IsInCombat == false && FindObjectOfType<PlayerCombat>().IsInCombat == false
+            && isHoveringOver)
+        {
+            npcSaysInstance.SetActive(true);
+            
+        }
+        else
+        {
+            npcSaysInstance.SetActive(false);
+        }
+    }
+    public void SayTalk()
+    {
+        if (!isHoveringOver)
+        {
+            isHoveringOver = true;
+            StartCoroutine(WaitBeforeDisappearing());
+        }
+    }
+
+    IEnumerator WaitBeforeDisappearing()
+    {
+        yield return new WaitForSeconds(2f);
+        isHoveringOver = false;
+    }
+
+    private void Start()
+    {
+        npcSaysInstance = Instantiate(talkToNpcPrefab, transform);
+        npcSaysInstance.SetActive(false);
+    }
 }

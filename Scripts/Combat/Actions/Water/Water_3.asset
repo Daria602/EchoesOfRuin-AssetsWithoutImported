@@ -20,10 +20,9 @@ MonoBehaviour:
     its path
   hasVisuals: 1
   visualEffectPrefab: {fileID: 3744133877081091469, guid: a2a060732547fe64581bb0cb3c2bdf1d, type: 3}
-  prepareAnimationBoolName: 
   hasAnimTrigger: 1
   castTrigger: CastMagicAoE
-  cooldown: 4
+  cooldown: 0
   maxCooldown: 4
   baseDamageMin: 4
   baseDamageMax: 8
@@ -34,7 +33,5 @@ MonoBehaviour:
   affectedByAttribute: 2
   cost: 3
   buffsForTurns: 0
-  buffsAttributes: 0
   attributes: 
-  buffsAbilities: 0
   abilities: 

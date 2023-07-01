@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemSystem : MonoBehaviour
+public class ItemSystem : MonoBehaviour, ILoadingData
 {
     public int[] itemIdKeys;
     public Item[] itemObjectValues;
     public Dictionary<int, Item> itemMap = new Dictionary<int, Item>();
+
+    public List<int> itemsWerePickedUp = new List<int>();
 
 
     private static ItemSystem instance;
@@ -29,6 +31,15 @@ public class ItemSystem : MonoBehaviour
                 itemMap.Add(itemIdKeys[i], itemObjectValues[i]);
             }
         }
+
+        //var foundItems = FindObjectsOfType<ItemPickup>();
+        //foreach (ItemPickup itemPickup in foundItems)
+        //{
+        //    //if (itemPickup.item.id)
+
+        //    itemPickup.gameObject.SetActive(false);
+        //}
+
     }
     public static ItemSystem GetInstance()
     {
@@ -44,5 +55,15 @@ public class ItemSystem : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void LoadGameData(CharacterData characterData)
+    {
+        this.itemsWerePickedUp = characterData.itemsWerePickedUp;
+    }
+
+    public void SaveGameData(ref CharacterData characterData)
+    {
+        characterData.itemsWerePickedUp = this.itemsWerePickedUp;
     }
 }

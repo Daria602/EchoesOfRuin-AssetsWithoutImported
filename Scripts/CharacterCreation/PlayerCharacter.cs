@@ -90,14 +90,18 @@ public class PlayerCharacter : MonoBehaviour, ILoadingData
 
     public void ToggleSkinColor()
     {
+        bool isDarkSkin;
         if (male)
         {
-            maleCharacter.GetComponent<CharacterCreation>().ToggleSkinColor();
+            isDarkSkin = maleCharacter.GetComponent<CharacterCreation>().ToggleSkinColor();
+            
         }
         else
         {
-            femaleCharacter.GetComponent<CharacterCreation>().ToggleSkinColor();
+            isDarkSkin = femaleCharacter.GetComponent<CharacterCreation>().ToggleSkinColor();
         }
+        skinColor.text = isDarkSkin ? "Dark" : "Laght";
+        
     }
 
     public void ToggleGender()

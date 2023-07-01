@@ -52,6 +52,7 @@ public class PlayerController : CharacterController, ILoadingData
             CalculateNewThreshold();
             UIManager.GetInstance().UpdateXPSlider(XP - getPreviousThreshold(), 0, currentThreshold);
             UIManager.GetInstance().ShowXPRecieved(XPValue, true);
+            StatsUI.GetInstance().SetAbilityValues();
         }
         else
         {
@@ -199,6 +200,7 @@ public class PlayerController : CharacterController, ILoadingData
         this.GetComponent<PlayerHealth>().LoadGameData(characterData);
         this.transform.position = characterData.characterPosition;
         this.gold = characterData.gold;
+        this.XP = characterData.XP;
     }
     public void SaveGameData(ref CharacterData characterData)
     {
@@ -206,7 +208,8 @@ public class PlayerController : CharacterController, ILoadingData
         this.GetComponent<Stats>().SaveGameData(ref characterData);
         this.GetComponent<PlayerHealth>().SaveGameData(ref characterData);
         characterData.characterPosition = this.transform.position;
-        characterData.gold = this.gold; 
+        characterData.gold = this.gold;
+        characterData.XP = this.XP;
     }
 
 

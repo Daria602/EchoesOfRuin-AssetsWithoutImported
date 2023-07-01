@@ -38,4 +38,13 @@ public class Weapon : Item
 
 
     }
+
+    public string GetTooltip()
+    {
+        string weaponName = weaponType.ToString();
+        string minDam = minDamage.ToString();
+        string maxDam = maxDamage.ToString();
+        return "~" + weaponName + "\n" + "$Damage: " + minDam + " - " + maxDam; 
+
+    }
 }

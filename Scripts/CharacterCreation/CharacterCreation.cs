@@ -65,7 +65,7 @@ public class CharacterCreation : MonoBehaviour
     private bool darkSkinColor = false;
 
 
-    public void ToggleSkinColor()
+    public bool ToggleSkinColor()
     {
         darkSkinColor = !darkSkinColor;
 
@@ -169,6 +169,7 @@ public class CharacterCreation : MonoBehaviour
 
             }
         }
+        return darkSkinColor;
 
     }
 

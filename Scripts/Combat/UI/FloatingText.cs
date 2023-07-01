@@ -10,6 +10,7 @@ public class FloatingText : MonoBehaviour
     public Vector3 offset;
     Transform unit;
     TextMeshProUGUI combatText;
+    public bool isCombatText = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +18,10 @@ public class FloatingText : MonoBehaviour
         worldSpaceCanvas = GameObject.Find("WorldSpaceCanvas").transform;
         unit = transform.parent;
         combatText = gameObject.GetComponent<TextMeshProUGUI>();
-        combatText.text = Constants.GetInstance().GetRandomCombatText();
+        if (isCombatText)
+        {
+            combatText.text = Constants.GetInstance().GetRandomCombatText();
+        }
         transform.SetParent(worldSpaceCanvas);
     }
 
