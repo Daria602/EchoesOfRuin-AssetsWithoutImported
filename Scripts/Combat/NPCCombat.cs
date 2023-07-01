@@ -253,6 +253,7 @@ public class NPCCombat : CombatController
     
     public void SetDoneCasting()
     {
+        Debug.Log(gameObject.name + " casting");
         // deal damage to the enemy
         state = NPCAttackState.Done;
         if (selectedSkill.hasVisuals)

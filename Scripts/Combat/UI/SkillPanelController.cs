@@ -230,15 +230,15 @@ public class SkillPanelController : MonoBehaviour
 
     public void PromptLearningSkill(int id, Item item)
     {
-        //learnSkillPanel.SetActive(true);
-        //skillName.text = Constants.GetInstance().skillMap[id].skillName;
-        //Color textColor = Color.magenta;
+        learnSkillPanel.SetActive(true);
+        skillName.text = Constants.GetInstance().skillMap[id].skillName;
+        Color textColor = Color.magenta;
         //switch (Constants.GetInstance().skillMap[id].skillBelongsTo)
         //{
         //    case Constants.SkillBelongsTo.Axe:
         //        textColor = Color.red;
         //        break;
-        //    case Constants.SkillBelongsTo.Bow:
+        //    case Constants.SkillBelongsTo.Bow: 
         //        textColor = Color.green;
         //        break;
         //    case Constants.SkillBelongsTo.Fire:
@@ -258,9 +258,9 @@ public class SkillPanelController : MonoBehaviour
         //        textColor = Color.magenta;
         //        break;
         //}
-        //skillName.color = textColor;
-        //skillToLearnId = id;
-        //skillToLearnInventory = item;
+        skillName.color = textColor;
+        skillToLearnId = id;
+        skillToLearnInventory = item;
     }
 
     public void UpdateSkillbar()

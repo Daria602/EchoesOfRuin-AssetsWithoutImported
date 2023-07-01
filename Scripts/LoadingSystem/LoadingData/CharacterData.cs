@@ -27,6 +27,8 @@ public class CharacterData
     public int charisma;
     // Character position
     public Vector3 characterPosition;
+    public Vector3 cameraPosition;
+    public Vector3 cameraRotation;
     // Character combat state
     public int characterId;
     public bool m_isInCombat;
@@ -40,6 +42,7 @@ public class CharacterData
     public bool charactersTurn;
     public bool IsInCombat;
     public int characterLevel;
+    public List<Item> inventoryItems;
 
     // Character health
 
@@ -69,8 +72,9 @@ public class CharacterData
         this.strength = 0; 
         this.agility = 0;
         this.intelligence = 0;
-        this.constitution = 10;
+        this.constitution = 0;
         this.wits = 0;
+        this.inventoryItems = new List<Item>();
 
         // Abilities
         this.availableAbilityPoints = 5;
@@ -82,13 +86,15 @@ public class CharacterData
         // Character position  Vector3(183.199997,2.16000009,305.399994)
         // this.characterPosition = Vector3.zero;
         this.characterPosition = new Vector3(183.199997f, 2.16000009f, 305.399994f);
+        this.cameraPosition = new Vector3(183.960007f, 7.46000004f, 300.410004f);
+        this.cameraRotation = new Vector3(45, 0, 0);
         // Character combat state
         this.IsInCombat = false;
         this.characterId = 0;
         this.m_isInCombat = false;
-        this.skillsIds = new List<int>() { 12, 13, 0, 2, 4, 7, 10, 15, 19 }; // { 12, 13, 6, 5 };
-        this.hasWeapon = false; 
-        this.weaponId = -1; // TODO: change here to 0
+        this.skillsIds = new List<int>() {12, 13}; // { 12, 13, 6, 5 };
+        this.hasWeapon = true; 
+        this.weaponId = 0; // TODO: change here to 0
         //this.rightHand = Vector3.zero;
         this.isPerformingAction = false;
         this.finishedPerforming = true;

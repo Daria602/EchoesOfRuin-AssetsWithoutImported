@@ -8,10 +8,10 @@ public class VisualItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!CheckIfExists())
-        {
-            gameObject.SetActive(false);
-        }
+        //if (!CheckIfExists())
+        //{
+        //    gameObject.SetActive(false);
+        //}
     }
 
     private bool CheckIfExists()

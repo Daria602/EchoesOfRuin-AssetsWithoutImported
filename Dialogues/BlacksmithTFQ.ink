@@ -12,12 +12,12 @@ Greetings, traveler! What brings you to our humble village?
     ~ choseToTrade = true
     -> END
 * [Size {npcName} up and prepare to attack]
-    {npcName} can see the fury in your eyes. She grabs her sword in anticipation.
-    ** ["Let's see if you can also wield the weapons you craft" Attack her]
+    {npcName} can see the fury in your eyes. {npcName} grabs the sword in anticipation.
+    ** ["Let's see if you can also wield the weapons you craft" Attack {npcName}]
     ~ choseToFight = true
     -> END
     ** [You pretend as if your stare was meant as a joke]
-    {npcName} is flustered. She anxiously giggles and tries to relax.
+    {npcName} is flustered. Then, anxiously giggles and tries to relax.
     -> main
 * [Ask about {npcName}'s role in the village]
 I am the village blacksmith. I forge weapons and armor for our brave warriors. If you're in need of any equipment, I can offer you my services.

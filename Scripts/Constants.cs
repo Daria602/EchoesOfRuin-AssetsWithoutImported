@@ -35,6 +35,7 @@ public class Constants : MonoBehaviour, ILoadingData
     public int[] questIds;
     public Quest[] quests;
     public Dictionary<int, Quest> questMap = new Dictionary<int, Quest>();
+    public GameObject goldPrefab;
 
     //public string[] combatTextVariants =
     //{

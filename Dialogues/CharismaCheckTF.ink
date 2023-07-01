@@ -14,9 +14,9 @@ VAR charisma = 0
     -> END
     ** [I am fine on my own]
     -> END
-* [He is too dangerous to be kept alive. You consider attacking him]
+* [He is too dangerous to be kept alive. You consider attacking {npcName}]
     {npcName} can sense your aggression. He readies his spellbook.
-    ** ["Do it, you should be the only one able to wield magic" Attack him]
+    ** ["Do it, you should be the only one able to wield magic" Attack {npcName}]
     ~ choseToFight = true
     -> END
     ** [You channel your inner calm and stand down]

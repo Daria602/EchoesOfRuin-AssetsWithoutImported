@@ -8,6 +8,8 @@ public class InventorySlot : MonoBehaviour
     Item item;
     public Image icon;
     public Button removeItemButton;
+    SimpleTooltip tooltip;
+    string tooltipString = "";
 
     public void AddItem(Item newItem)
     {
@@ -15,6 +17,7 @@ public class InventorySlot : MonoBehaviour
         icon.sprite = item.itemIcon;
         icon.enabled = true;
         removeItemButton.interactable = true;
+        Refresh();
     }
 
     public void RemoveItem()
@@ -23,6 +26,7 @@ public class InventorySlot : MonoBehaviour
         icon.sprite = null;
         icon.enabled = false;
         removeItemButton.interactable = false;
+        Refresh();
     }
 
     public void OnClickRemoveItemButton()
@@ -42,5 +46,62 @@ public class InventorySlot : MonoBehaviour
     public void BuyItem()
     {
         TradeManager.GetInstance().IsWillingToPurchaseItem(item, this);
+    }
+
+    private void OnEnable()
+    {
+        //Debug.Log("Got to tooltip");
+        tooltip = GetComponent<SimpleTooltip>();
+        tooltip.infoLeft = tooltipString;
+    }
+
+    private void Refresh()
+    {
+        if (enabled)
+        {
+            tooltip = GetComponent<SimpleTooltip>();
+            GetTooltipForItem();
+            tooltip.infoLeft = tooltipString;
+        }
+    }
+
+    private string GetBookDescription(Book book)
+    {
+        string finalString = "Book for " + book.skill.GetTooltip();
+        //finalString += "~" + book.skill.skillName + "  `*" + book.skill.cost + " AP\n`";
+        //finalString += book.skill.description + "\n";
+        //finalString += "$Damage: " + book.skill.baseDamageMin + " - " + book.skill.baseDamageMax + "`";
+        return finalString;
+    }
+
+    private void GetTooltipForItem()
+    {
+        Book book = item as Book;
+        Potion potion = item as Potion;
+        Weapon weapon = item as Weapon;
+        if (book != null)
+        {
+            //Debug.Log(book.skill.skillName);
+            tooltipString = GetBookDescription(book);
+        }
+        else if (potion != null)
+        {
+            tooltipString = GetPotionDescription(potion);
+        }
+        else if (weapon != null)
+        {
+            tooltipString = "Is a weapon";
+        }
+        else
+        {
+            tooltipString = "";
+
+        }
+    }
+
+    private string GetPotionDescription(Potion potion)
+    {
+        string finalString = potion.GetTooltip();
+        return finalString;
     }
 }

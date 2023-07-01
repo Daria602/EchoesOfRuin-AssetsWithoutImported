@@ -13,8 +13,8 @@ public class CombatController : MonoBehaviour
     public List<int> skillsIds;
     public bool hasWeapon = true;
     public int weaponId;
-    public Transform rightHand;
-    public Transform leftHand;
+    private Transform rightHand;
+    //public Transform leftHand;
 
     public bool isPerformingAction = false;
     public bool finishedPerforming = true;
@@ -49,6 +49,7 @@ public class CombatController : MonoBehaviour
     private void Start()
     {
         //Debug.Log("Combat controller thing");
+        rightHand = GetComponent<CharacterController>().rightHand;
         AddSkills();
         EquipWeapon();
     }
@@ -77,16 +78,16 @@ public class CombatController : MonoBehaviour
     {
         if (hasWeapon)
         {
-            if (Constants.GetInstance().weaponMap[weaponId].weaponType == Constants.WeaponTypes.Bow)
-            {
-                weaponObject = Instantiate(Constants.GetInstance().weaponMap[weaponId].weaponPrefab, leftHand);
-                weapon = Instantiate(Constants.GetInstance().weaponMap[weaponId], leftHand);
-            }
-            else
-            {
-                weaponObject = Instantiate(Constants.GetInstance().weaponMap[weaponId].weaponPrefab, rightHand);
-                weapon = Instantiate(Constants.GetInstance().weaponMap[weaponId], rightHand);
-            }
+            //if (Constants.GetInstance().weaponMap[weaponId].weaponType == Constants.WeaponTypes.Bow)
+            //{
+            //    weaponObject = Instantiate(Constants.GetInstance().weaponMap[weaponId].weaponPrefab, leftHand);
+            //    weapon = Instantiate(Constants.GetInstance().weaponMap[weaponId], leftHand);
+            //}
+            //else
+            //{
+            weaponObject = Instantiate(Constants.GetInstance().weaponMap[weaponId].weaponPrefab, rightHand);
+            weapon = Instantiate(Constants.GetInstance().weaponMap[weaponId], rightHand);
+            //}
             
         }
     }

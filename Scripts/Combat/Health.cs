@@ -6,7 +6,7 @@ public class Health : MonoBehaviour
 {
     public int currentHealth;
     //public int healthModifier;
-    private int baseMaxHealth = 10;
+    public int baseMaxHealth = 10;
     public delegate void UpdateHealth();
     public UpdateHealth OnHealthUpdateCallback;
     public delegate void OnDeath();

@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e0bced39443ce246860cee672161036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 3
+  radius: 1
   outline: {fileID: 0}
   item: {fileID: 11400000, guid: a027fcf8114c38e428779e6b92e83ac3, type: 2}
 --- !u!114 &6343244909573757742

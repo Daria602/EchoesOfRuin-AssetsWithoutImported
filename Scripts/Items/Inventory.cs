@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, ILoadingData
 {
     public List<Item> items;
     public int[] itemIds;
@@ -60,5 +60,15 @@ public class Inventory : MonoBehaviour
         //{
         //    onItemChangedCallback.Invoke();
         //}
+    }
+
+    public void LoadGameData(CharacterData characterData)
+    {
+        //characterData.inventoryItems = this.items;
+    }
+
+    public void SaveGameData(ref CharacterData characterData)
+    {
+        //this.items = characterData.inventoryItems;
     }
 }

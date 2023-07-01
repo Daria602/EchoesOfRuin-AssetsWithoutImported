@@ -9,7 +9,7 @@ Well, lookie here.. another lost pup has found our camp. What do you say boys, s
 *[Ask about what this camp is]
     I didn't give you permission to speak yet. I'm going to teach you some manners.
     ** [Ready your weapon]
-    ~ choseToTrade = true
+    ~ choseToFight = true
     -> END
 * [You recognize this camp. Nothing good resides here. Attack!]
     ~ choseToFight = true

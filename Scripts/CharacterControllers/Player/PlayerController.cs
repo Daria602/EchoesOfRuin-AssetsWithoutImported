@@ -10,8 +10,8 @@ public class PlayerController : CharacterController, ILoadingData
     private int XP = 0;
     public int gold = 0;
     public int currentThreshold = 1000;
-    public Transform leftHand;
-    public Transform rightHand;
+    //public Transform leftHand;
+    //public Transform rightHand;
 
     private void Start()
     {
@@ -50,15 +50,20 @@ public class PlayerController : CharacterController, ILoadingData
             stats.availableAttributePoints += 3;
             stats.availableAbilityPoints += 3;
             CalculateNewThreshold();
-            UIManager.GetInstance().UpdateXPSlider(0, XPValue, currentThreshold);
+            UIManager.GetInstance().UpdateXPSlider(XP - getPreviousThreshold(), 0, currentThreshold);
             UIManager.GetInstance().ShowXPRecieved(XPValue, true);
         }
         else
         {
             UIManager.GetInstance().ShowXPRecieved(XPValue, false);
         }
-        UIManager.GetInstance().UpdateXPSlider(XPValue);
+        UIManager.GetInstance().UpdateXPSlider(XP - getPreviousThreshold());
         UIManager.GetInstance().UpdateXPText("Level " + stats.characterLevel.ToString());
+    }
+
+    private int getPreviousThreshold() 
+    {
+        return 500 * ((stats.characterLevel) * (stats.characterLevel)) - (500 * (stats.characterLevel));
     }
 
     void Update()
@@ -179,7 +184,12 @@ public class PlayerController : CharacterController, ILoadingData
     //    currentFocus = null;
     //}
 
+    public int GoldDropped()
+    {
+        int luck = stats.abilities.luck;
 
+        return 3 + luck * 2;
+    }
 
 
     public void LoadGameData(CharacterData characterData)

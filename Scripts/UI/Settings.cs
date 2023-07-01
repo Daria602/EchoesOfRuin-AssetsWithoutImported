@@ -23,7 +23,7 @@ public class Settings : MonoBehaviour
         List<string> runtimeResOptions = new List<string>();
         for (int i = 0; i < screenRes.Length; i++)
         {
-            string resOption = screenRes[i].width + "x" + screenRes[i].height;
+            string resOption = screenRes[i].width + "x" + screenRes[i].height + "@" + screenRes[i].refreshRate + "hz";
             runtimeResOptions.Add(resOption);
             if (screenRes[i].height == Screen.currentResolution.height &&
                 screenRes[i].width == Screen.currentResolution.width)

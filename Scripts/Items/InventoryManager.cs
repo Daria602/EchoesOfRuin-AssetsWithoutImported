@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour, ILoadingData
 {
     //Singleton pattern, shared by all instances of this class
     private static InventoryManager instance;
@@ -59,5 +59,13 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    
+    public void LoadGameData(CharacterData characterData)
+    {
+        items = characterData.inventoryItems;
+    }
+
+    public void SaveGameData(ref CharacterData characterData)
+    {
+        characterData.inventoryItems = items;
+    }
 }

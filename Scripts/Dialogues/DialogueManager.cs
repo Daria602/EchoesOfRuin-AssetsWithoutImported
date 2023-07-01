@@ -131,7 +131,7 @@ public class DialogueManager : MonoBehaviour
     public void ExitTrade()
     {
         currentNPC.GetComponent<NPCMovement>().IsAllowedToMove = true;
-        currentNPC.GetComponent<Animator>().SetBool("isRunning", true);
+        currentNPC.GetComponent<Animator>().SetBool("isWalking", true);
         player.GetComponent<PlayerMovement>().IsAllowedToMove = true;
         currentNPC = null;
     }

@@ -13,7 +13,7 @@ Hey there, stranger. Are you in search of adventure or perhaps some goods to buy
     -> END
 * [You're nothing but a washed-up has-been! Prepare to face my wrath!]
     {npcName} is visibly disturbed, steps back and looks at you confused.
-    ** ["You're confident you want this person gone" Attack him]
+    ** ["You're confident you want this person gone" Attack {npcName}]
     ~ choseToFight = true
     -> END
     ** [You calm down, take a deep breath and apologise]
@@ -21,7 +21,7 @@ Hey there, stranger. Are you in search of adventure or perhaps some goods to buy
     -> main
 * [Ask about {npcName}'s role in the village]
 Ah, my friend, that's a story worth telling. I used to be a renowned adventurer, traveling far and wide, facing formidable foes. But fate had its way with me. One day, a fearsome dragon named Sylvaria laid waste to my hometown. I fought valiantly, but alas, I lost everything. Now, I've found solace here, selling my wares and sharing my tales with those who lend an ear.
-    ** [Ask Liam why the villagers are so afraid of strangers]
+    ** [Ask {npcName} why the villagers are so afraid of strangers]
 A good question. And there is a good answer for that. The nearby forest has become a den for a group of troublesome bandits, causing distress to the villagers. I need someone brave enough to drive them out. Will you take up this quest?
         *** [Yes]
         I knew I could count on you. Bring justice to them and you shall be rewarded.

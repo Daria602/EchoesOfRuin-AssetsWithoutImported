@@ -10,7 +10,7 @@ Ah, greetings, weary traveler! Step closer and let me share with you the secrets
     ~ choseToTrade = true
     -> END
 * [Tell {npcName} that you're eager to embark on a new quest]
-Marvelous! A task of great import awaits. Within the nearby village, an ancient sage named Lena holds the key to hidden knowledge. Seek her counsel and return to me with her wisdom.
+Marvelous! A task of great import awaits. Within the nearby village, an ancient sage named Lena holds the key to hidden knowledge. Seek their counsel and return to me with her wisdom.
         ** [Will do, {npcName}]
         Splendid.
         ~ choseTheQuest = true

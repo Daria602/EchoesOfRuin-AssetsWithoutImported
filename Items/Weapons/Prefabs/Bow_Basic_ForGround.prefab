@@ -155,6 +155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e0bced39443ce246860cee672161036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 3
+  radius: 1
   outline: {fileID: 0}
   item: {fileID: 11400000, guid: 0c7b3620d3735864693b35a821aeba6b, type: 2}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CameraManager : MonoBehaviour
+public class CameraManager : MonoBehaviour, ILoadingData
 {
     // Singleton package
     private static CameraManager instance;
@@ -130,4 +130,15 @@ public class CameraManager : MonoBehaviour
         Zoom();
     }
 
+    public void LoadGameData(CharacterData characterData)
+    {
+        cameraRig.position = characterData.cameraPosition;
+        //cameraRig.rotation = characterData.cameraRotation;
+    }
+
+    public void SaveGameData(ref CharacterData characterData)
+    {
+        characterData.cameraPosition = cameraRig.position;
+        //characterData.cameraRotation = cameraRig.rotation;
+    }
 }

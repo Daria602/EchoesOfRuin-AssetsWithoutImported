@@ -11,8 +11,15 @@ public class ItemPickup : Interactable
     }
     void PickItemUp()
     {
-        //If the item was added to the list return true        
-        isItemPicked = InventoryManager.GetInstance().Add(item);
+        //If the item was added to the list return true
+        if (item.name != "Gold")
+            isItemPicked = InventoryManager.GetInstance().Add(item);
+        else 
+        {
+            PlayerController pc = FindObjectOfType<PlayerController>();
+            pc.gold += pc.GoldDropped();
+            isItemPicked = true;
+        }
 
         if (isItemPicked) {
 
