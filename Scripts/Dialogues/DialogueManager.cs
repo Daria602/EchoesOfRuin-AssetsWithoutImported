@@ -68,7 +68,7 @@ public class DialogueManager : MonoBehaviour
         // Stop the movement for both NPC and Player
         currentNPC = npc;
         currentNPC.GetComponent<NPCMovement>().IsAllowedToMove = false;
-        currentNPC.GetComponent<Animator>().SetBool("isRunning", false);
+        currentNPC.GetComponent<Animator>().SetBool("isWalking", false);
         player.GetComponent<PlayerMovement>().IsAllowedToMove = false;
         currentNPC.transform.LookAt((player.transform.position + currentNPC.transform.position) / 2);
         player.transform.LookAt((player.transform.position + currentNPC.transform.position) / 2);
@@ -147,6 +147,9 @@ public class DialogueManager : MonoBehaviour
         {
             //Debug.Log("Story cannot continue");
             ExitDialogueMode();
+            currentNPC.GetComponent<NPCMovement>().IsAllowedToMove = true;
+            //currentNPC.GetComponent<Animator>().SetBool("isWalking", true);
+            player.GetComponent<PlayerMovement>().IsAllowedToMove = true;
         }
     }
 

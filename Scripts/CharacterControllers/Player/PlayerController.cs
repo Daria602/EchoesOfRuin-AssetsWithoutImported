@@ -73,7 +73,7 @@ public class PlayerController : CharacterController, ILoadingData
                 Interactable interactable;
                 Vector3 point;
                 Constants.ClickType clickType = InputManager.GetInstance().GetClickType(out point, out interactable);
-                Debug.Log(point);
+                //Debug.Log(point);
                 MakeClickDecision(clickType, point, interactable);
                 
             }
@@ -121,6 +121,7 @@ public class PlayerController : CharacterController, ILoadingData
 
     public void StartFight()
     {
+        
         // To toggle combat
         // if player is not in combat, running, but the combat is triggered mid run,
         // reset the animation
@@ -128,7 +129,7 @@ public class PlayerController : CharacterController, ILoadingData
         {
             animator.SetBool("isRunning", false);
 
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 30f);
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f);
             List<int> participants = new List<int>();
             foreach (var hitCollider in hitColliders)
             {
@@ -139,6 +140,7 @@ public class PlayerController : CharacterController, ILoadingData
             }
             if (participants.Count > 0)
             {
+                
                 // Player's Id is 0
                 participants.Add(0);
                 InitiateCombat(participants);
@@ -149,7 +151,7 @@ public class PlayerController : CharacterController, ILoadingData
 
     private void InitiateCombat(List<int> participantsIds)
     {
-        
+        Debug.Log("Got to Initiate combat in PlayerControiller");
         CombatManager.GetInstance().StartCombat(participantsIds);
         
 
