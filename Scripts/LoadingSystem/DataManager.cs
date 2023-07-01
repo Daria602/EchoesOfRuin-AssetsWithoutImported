@@ -48,9 +48,17 @@ public class DataManager : MonoBehaviour
        
     }
 
+
+    public void CreateSaveIfNotPresent()
+    {
+        this.characterData = new CharacterData();
+        SaveState();
+    }
+
     public void CreateNewSave()
     {
         this.characterData = new CharacterData();
+        SaveState();
         SceneManager.LoadScene(1);
     }
 

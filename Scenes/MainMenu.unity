@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35bc1317dd1337e48aa1e9b7af14d90d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileNameForSave: 
+  fileNameForSave: testingSave.json
   continueOrLoadButton: {fileID: 4952559712196898129}
 --- !u!1 &914017595
 GameObject:
@@ -596,7 +596,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e623b337d7c0834caaffaf368e5af8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  qualityDropdown: {fileID: 0}
   resDropdown: {fileID: 95697401}
 --- !u!114 &4952559712196898129 stripped
 MonoBehaviour:
@@ -713,6 +712,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 532388581}
+    - target: {fileID: 1417822336445985065, guid: 87f3605fefb2b4e45b9c4f408f436e24, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Continue
+      objectReference: {fileID: 0}
     - target: {fileID: 1417822337358615024, guid: 87f3605fefb2b4e45b9c4f408f436e24, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
