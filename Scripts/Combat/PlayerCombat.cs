@@ -94,6 +94,11 @@ public class PlayerCombat : CombatController
                     }
 
                     state = PlayerAttackStates.Attacking;
+                    if (skills[actionIndex].hasVisuals)
+                    {
+                        skills[actionIndex].SetEffect(gameObject);
+                    }
+                    
                 }
                 else
                 {
@@ -114,10 +119,17 @@ public class PlayerCombat : CombatController
                     Debug.Log(skills[actionIndex].skillName);
                     GetComponent<Animator>().SetTrigger("CastBuff");
                     state = PlayerAttackStates.Attacking;
+                    if (skills[actionIndex].hasVisuals)
+                    {
+                        skills[actionIndex].SetEffect(gameObject);
+                    }
 
 
                 }
-                //CancelAttack();
+                else
+                {
+                    CancelAttack();
+                }
             }
             else
             {
@@ -260,6 +272,10 @@ public class PlayerCombat : CombatController
         enemyDied = DealDamageToEnemy();
         skills[actionIndex].cooldown = skills[actionIndex].maxCooldown;
         actionPointsLeft -= skills[actionIndex].cost;
+        if (skills[actionIndex].hasVisuals)
+        {
+            skills[actionIndex].RemoveEffect();
+        }
     }
 
     public void SetDoneBuff()
@@ -269,6 +285,10 @@ public class PlayerCombat : CombatController
         CombatManager.GetInstance().ApplyBuff(skills[actionIndex]);
         skills[actionIndex].cooldown = skills[actionIndex].maxCooldown;
         actionPointsLeft -= skills[actionIndex].cost;
+        if (skills[actionIndex].hasVisuals)
+        {
+            skills[actionIndex].RemoveEffect();
+        }
     }
 
     public bool DealDamageToEnemy()

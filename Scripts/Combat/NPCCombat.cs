@@ -109,13 +109,67 @@ public class NPCCombat : CombatController
         {
             GetComponent<Animator>().SetTrigger("CastBuff");
             actionPointsLeft -= selectedSkill.cost;
+            if (skills[actionIndex].hasVisuals)
+            {
+                skills[actionIndex].SetEffect(gameObject);
+            }
         }
         else
         {
-            GetComponent<Animator>().SetTrigger("CastMagicAoE");
+            if (selectedSkill.skillName == "Basic Attack")
+            {
+                SetBasicAttackAnimation();
+
+            }
+            else
+            {
+                if (selectedSkill.hasAnimTrigger)
+                {
+                    GetComponent<Animator>().SetTrigger(selectedSkill.castTrigger);
+                }
+                else
+                {
+                    GetComponent<Animator>().SetTrigger("CastMagicAoE");
+                }
+
+            }
+            //GetComponent<Animator>().SetTrigger("CastMagicAoE");
             actionPointsLeft -= selectedSkill.cost;
+            if (selectedSkill.hasVisuals)
+            {
+                selectedSkill.SetEffect(gameObject);
+            }
         }
         selectedSkill.cooldown = selectedSkill.maxCooldown;
+    }
+
+    private void SetBasicAttackAnimation()
+    {
+        if (hasWeapon)
+        {
+            Weapon currentWeapon = GetWeapon();
+            //Debug.Log("Weapon is null: " + currentWeapon == null);
+            if (currentWeapon != null)
+            {
+                switch (currentWeapon.weaponType)
+                {
+                    case Constants.WeaponTypes.Axe:
+                        GetComponent<Animator>().SetTrigger("BasicAxe");
+                        Debug.Log("Basic with Axe");
+                        break;
+                    case Constants.WeaponTypes.Bow:
+                        //transform.Rotate(0, 90, 0);
+                        GetComponent<Animator>().SetTrigger("BasicBow");
+                        Debug.Log("Basic with Bow");
+                        break;
+                    case Constants.WeaponTypes.Wand:
+                        GetComponent<Animator>().SetTrigger("BasicWand");
+                        Debug.Log("Basic with Wand");
+                        break;
+                }
+            }
+
+        }
     }
     private void MoveTowardsPlayer()
     {
@@ -201,6 +255,10 @@ public class NPCCombat : CombatController
     {
         // deal damage to the enemy
         state = NPCAttackState.Done;
+        if (selectedSkill.hasVisuals)
+        {
+            selectedSkill.RemoveEffect();
+        }
         playerDied = DealDamageToPlayer();
     }
     public void SetDoneBuff()
@@ -209,7 +267,11 @@ public class NPCCombat : CombatController
         playerDied = false;
         CombatManager.GetInstance().ApplyBuff(selectedSkill);
         state = NPCAttackState.Done;
-        
+        if (selectedSkill.hasVisuals)
+        {
+            selectedSkill.RemoveEffect();
+        }
+
         // skills[actionIndex].cooldown = skills[actionIndex].maxCooldown;
         // actionPointsLeft -= skills[actionIndex].cost;
     }
@@ -248,8 +310,8 @@ public class NPCCombat : CombatController
             }
             skillIndex++;
         }
-        Debug.Log("Actions taken: " + actionsTakenThisTurn + "; possibleSkills.Count: " + possibleSkills.Count 
-            + "; AP left: " + actionPointsLeft);
+        //Debug.Log("Actions taken: " + actionsTakenThisTurn + "; possibleSkills.Count: " + possibleSkills.Count 
+        //    + "; AP left: " + actionPointsLeft);
         // skills where found
         if (possibleSkills.Count > 0)
         {
