@@ -10,8 +10,22 @@ public class InventoryUI : MonoBehaviour
 
     SlotScript[] slots;
 
+    private static InventoryUI instance;
+    public static InventoryUI GetInstance() { return instance; }
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("Too many InventoryUI instances");
+        }
+        instance = this;
+    }
+
+
+
     void Start()
     {
+        UpdateUI();
         inventory = InventoryManager.GetInstance();
         inventory.onItemChangedCallback += UpdateUI;
 

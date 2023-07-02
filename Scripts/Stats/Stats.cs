@@ -306,6 +306,20 @@ public class Stats : MonoBehaviour
         return false;
     }
 
+    public bool SimplyIncreaseAttributeStat(int statType)
+    {
+        if (availableAttributePoints > 0)
+        {
+            if (attributes.PermModifyAttribute((Constants.Attributes)statType, true))
+            {
+                availableAttributePoints--;
+                return true;
+            }
+
+        }
+        return false;
+    }
+
     public bool DecreaseAttributeStat(int statType)
     {
         if (attributes.PermModifyAttribute((Constants.Attributes)statType, false))
@@ -317,6 +331,15 @@ public class Stats : MonoBehaviour
                 FindObjectOfType<PlayerHealth>().UpdateHealthUI();
             }
             
+            return true;
+        }
+        return false;
+    }
+    public bool SimplyDecreaseAttributeStat(int statType)
+    {
+        if (attributes.PermModifyAttribute((Constants.Attributes)statType, false))
+        {
+            availableAttributePoints++;
             return true;
         }
         return false;

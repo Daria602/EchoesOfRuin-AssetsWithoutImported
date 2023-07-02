@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour, ILoadingData
     }
 
     public List<Item> items = new List<Item>();
+    public List<int> itemIds = new List<int>();
     public int inventorySpace = 25;
     //Trigger this callback to inform UI of inventory changes
     public OnItemChanged onItemChangedCallback;
@@ -39,6 +40,7 @@ public class InventoryManager : MonoBehaviour, ILoadingData
                 return false;
             }
             items.Add(item);
+            AddToIds(item);
 
             if (onItemChangedCallback != null) 
             {
@@ -52,6 +54,8 @@ public class InventoryManager : MonoBehaviour, ILoadingData
     public void Remove(Item item)
     {
         items.Remove(item);
+        RemoveFromIds(item);
+        UIManager.GetInstance().RefreshEquipped();
 
         if (onItemChangedCallback != null)
         {
@@ -59,13 +63,31 @@ public class InventoryManager : MonoBehaviour, ILoadingData
         }
     }
 
+    private void RemoveFromIds(Item item)
+    {
+        itemIds.Remove(item.itemId);
+    }
+    private void AddToIds(Item item)
+    {
+        itemIds.Add(item.itemId);
+    }
+
     public void LoadGameData(CharacterData characterData)
     {
-        items = characterData.inventoryItems;
+        foreach (int itemID in characterData.inventoryItems)
+        {
+            Add(ItemSystem.GetInstance().itemMap[itemID]);
+            Debug.Log("Adding item to the inventory: " + ItemSystem.GetInstance().itemMap[itemID].name);
+            //if (onItemChangedCallback != null)
+            //{
+            //    onItemChangedCallback.Invoke();
+            //}
+        }
+        
     }
 
     public void SaveGameData(ref CharacterData characterData)
     {
-        characterData.inventoryItems = items;
+        characterData.inventoryItems = itemIds;
     }
 }

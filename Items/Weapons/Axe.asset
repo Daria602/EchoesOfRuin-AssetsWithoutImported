@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   name: Axe
+  itemId: 7
   itemIcon: {fileID: 21300000, guid: 068e1fdf499021846bfcd482e4f2b08d, type: 3}
   isDefaultItem: 0
   price: 10
@@ -22,3 +23,4 @@ MonoBehaviour:
   weaponPrefab: {fileID: 2999748106215116, guid: a9de5a98f016a334c9a1113e07b1a12f, type: 3}
   level: 1
   weaponType: 1
+  isEquipped: 0

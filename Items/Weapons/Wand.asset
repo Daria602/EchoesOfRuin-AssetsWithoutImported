@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Wand
   m_EditorClassIdentifier: 
   name: Wand
+  itemId: 9
   itemIcon: {fileID: 21300000, guid: ed0a32aeeb2bf0f40ad22e944d930018, type: 3}
   isDefaultItem: 0
   price: 10
@@ -22,3 +23,4 @@ MonoBehaviour:
   weaponPrefab: {fileID: 2757321990793488664, guid: 160de07b149a6834287022ac9e5947ca, type: 3}
   level: 1
   weaponType: 3
+  isEquipped: 0

@@ -28,6 +28,11 @@ public class SlotScript : MonoBehaviour
 
     }
 
+    public void SetEquipped(bool isEquipped)
+    {
+        equippedTag.SetActive(isEquipped);
+    }
+
     private void GetTooltipForItem()
     {
         Book book = item as Book;
@@ -116,14 +121,14 @@ public class SlotScript : MonoBehaviour
             {
                 Weapon weapon = item as Weapon;
                 weapon.isEquipped = !weapon.isEquipped;
-                if (weapon.isEquipped)
-                {
-                    equippedTag.SetActive(false);
-                }
-                else
-                {
-                    equippedTag.SetActive(false);
-                }
+                //if (weapon.isEquipped)
+                //{
+                //    equippedTag.SetActive(false);
+                //}
+                //else
+                //{
+                //    equippedTag.SetActive(false);
+                //}
                 
             }
         }

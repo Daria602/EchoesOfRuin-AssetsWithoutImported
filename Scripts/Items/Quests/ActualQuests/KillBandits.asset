@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: KillBandits
   m_EditorClassIdentifier: 
   XPGranted: 1000
-  isActive: 0
+  isActive: 1
   questType: 0
-  enemyIds: 08000000090000000a0000000b000000
+  enemyIds: 03000000
   positionToGetTo: {x: 0, y: 0, z: 0}
   idNPC: 0
-  questTitle: Kill bandits
-  questDescription: Find the Bandit area and release the village of its' terror
+  questTitle: Kill Joshua
+  questDescription: Joshua is a part of the bandits group and is terrorising the
+    village

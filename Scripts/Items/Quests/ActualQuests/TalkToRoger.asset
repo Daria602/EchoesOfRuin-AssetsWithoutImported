@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9233e61f27ea73146a8569835dbe25fd, type: 3}
   m_Name: TalkToRoger
   m_EditorClassIdentifier: 
-  XPGranted: 0
+  XPGranted: 500
   isActive: 0
   questType: 2
   enemyIds: 

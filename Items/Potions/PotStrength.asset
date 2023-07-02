@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PotStrength
   m_EditorClassIdentifier: 
   name: Potion of Strength  (+2)
+  itemId: 6
   itemIcon: {fileID: 21300000, guid: 74511d45027eb524eb7889ccb47d8709, type: 3}
   isDefaultItem: 0
   price: 10

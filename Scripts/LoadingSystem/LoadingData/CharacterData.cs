@@ -42,7 +42,7 @@ public class CharacterData
     public bool charactersTurn;
     public bool IsInCombat;
     public int characterLevel;
-    public List<Item> inventoryItems;
+    public List<int> inventoryItems;
 
     // Character health
 
@@ -70,6 +70,8 @@ public class CharacterData
     // Characters dead
     public List<int> charactersDead;
 
+    public int itemEquipped;
+
     // Creating initial values
     public CharacterData()
     {
@@ -86,7 +88,7 @@ public class CharacterData
         this.intelligence = 0;
         this.constitution = 0;
         this.wits = 0;
-        this.inventoryItems = new List<Item>();
+        this.inventoryItems = new List<int>() { 7, 9};
 
         // Abilities
         this.availableAbilityPoints = 5;
@@ -133,6 +135,8 @@ public class CharacterData
         this.itemsWerePickedUp = new List<int>();
         this.XP = 0;
         this.charactersDead = new List<int>();
+
+        this.itemEquipped = 7;
     }
 
 }

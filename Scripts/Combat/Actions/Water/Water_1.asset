@@ -19,8 +19,8 @@ MonoBehaviour:
     over water spells and increasing endurance.
   hasVisuals: 1
   visualEffectPrefab: {fileID: 9017484664307500583, guid: 1245b8d2997d5b34fb1637be70a7eb05, type: 3}
-  hasAnimTrigger: 0
-  castTrigger: 
+  hasAnimTrigger: 1
+  castTrigger: CastBuff
   cooldown: 0
   maxCooldown: 4
   baseDamageMin: 0
@@ -32,7 +32,5 @@ MonoBehaviour:
   affectedByAttribute: 2
   cost: 1
   buffsForTurns: 2
-  buffsAttributes: 1
   attributes: 0200000003000000
-  buffsAbilities: 0
   abilities: 

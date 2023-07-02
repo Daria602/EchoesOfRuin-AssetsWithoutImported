@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PotChaos
   m_EditorClassIdentifier: 
   name: Potion of Chaos (+2)
+  itemId: 1
   itemIcon: {fileID: 21300000, guid: cf39e699acd8e804697fb52ec5dbd82d, type: 3}
   isDefaultItem: 0
   price: 10

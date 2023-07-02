@@ -100,7 +100,7 @@ public class PlayerCharacter : MonoBehaviour, ILoadingData
         {
             isDarkSkin = femaleCharacter.GetComponent<CharacterCreation>().ToggleSkinColor();
         }
-        skinColor.text = isDarkSkin ? "Dark" : "Laght";
+        skinColor.text = isDarkSkin ? "Dark" : "Light";
         
     }
 
@@ -163,7 +163,7 @@ public class PlayerCharacter : MonoBehaviour, ILoadingData
     // Attributes
     public void IncreaseStat(int statType)
     {
-        if (GetComponent<Stats>().IncreaseAttributeStat(statType))
+        if (GetComponent<Stats>().SimplyIncreaseAttributeStat(statType))
         {
             UpdateAttributesUI(statType, true);
         }
@@ -185,7 +185,7 @@ public class PlayerCharacter : MonoBehaviour, ILoadingData
 
     public void DecreaseStat(int statType)
     {
-        if (GetComponent<Stats>().DecreaseAttributeStat(statType))
+        if (GetComponent<Stats>().SimplyDecreaseAttributeStat(statType))
         {
             UpdateAttributesUI(statType, false);
         }

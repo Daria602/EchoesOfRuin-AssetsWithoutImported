@@ -171,6 +171,9 @@ public class CombatManager : MonoBehaviour
                     if (characterInitiativeList[turnIndex].characterId == Constants.PLAYER_ID)
                     {
                         PlayerTurn();
+                        CombatUI.GetInstance().UpdateForImpossibleSkills(player.GetComponent<CombatController>().skills, player.GetComponent<CombatController>().actionPointsLeft);
+
+
                     }
                     else
                     {
@@ -295,17 +298,17 @@ public class CombatManager : MonoBehaviour
 
     private void PlayerTurn()
     {
-        //Debug.Log("Player is doing the turn");
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            // currentCharacter.GetComponent<CombatController>().endedTurn = true;
-            List<Skill> debugSkills = currentCharacter.GetComponent<CombatController>().skills;
-            foreach (Skill skill in debugSkills)
-            {
-                Debug.Log(skill.cooldown);
-            }
+        ////Debug.Log("Player is doing the turn");
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    // currentCharacter.GetComponent<CombatController>().endedTurn = true;
+        //    List<Skill> debugSkills = currentCharacter.GetComponent<CombatController>().skills;
+        //    foreach (Skill skill in debugSkills)
+        //    {
+        //        Debug.Log(skill.cooldown);
+        //    }
 
-        }
+        //}
 
         int actionPointsLeft = currentCharacter.GetComponent<CombatController>().actionPointsLeft;
         CombatUI.GetInstance().UpdateActionPointsUI(actionPointsLeft);
@@ -505,6 +508,30 @@ public class CombatManager : MonoBehaviour
         player.GetComponent<PlayerHealth>().UpdateHealthUI();
         SkillPanelController.GetInstance().UpdateSkillbar();
     }
+    public void ApplyBuffToAnother(int charId, Skill skill)
+    {
+        GameObject characterToBuff = Constants.GetInstance().characters[charId];
+        foreach (var attribute in skill.attributes)
+        {
+            characterToBuff.GetComponent<Stats>().attributes.TempModifyAttribute(attribute, true);
+        }
+        foreach (var ability in skill.abilities)
+        {
+            characterToBuff.GetComponent<Stats>().abilities.TempModifyAbility(ability, true);
+        }
+
+        //int characterId = currentCharacter.GetComponent<CharacterController>().characterId;
+        int turnsCountdown = skill.buffsForTurns;
+        Constants.Attributes[] attributes = skill.attributes;
+        Constants.Abilities[] abilities = skill.abilities;
+        CharacterBuff cb = new CharacterBuff(charId, turnsCountdown, attributes, abilities);
+        characterBuffs.Add(cb);
+        StatsUI.GetInstance().SetAbilityValues();
+        player.GetComponent<PlayerHealth>().UpdateHealthUI();
+        SkillPanelController.GetInstance().UpdateSkillbar();
+    }
+
+    
 
     public void ApplyPotion(Potion potion)
     {

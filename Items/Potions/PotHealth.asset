@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PotHealth
   m_EditorClassIdentifier: 
   name: Healing Potion (+20% of max health)
+  itemId: 3
   itemIcon: {fileID: 21300000, guid: e52ea25af699fd445b7046374f81a5b9, type: 3}
   isDefaultItem: 0
   price: 10

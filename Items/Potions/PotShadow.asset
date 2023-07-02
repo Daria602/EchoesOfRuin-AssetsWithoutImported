@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PotShadow
   m_EditorClassIdentifier: 
   name: Potion of Shadow (+2)
+  itemId: 5
   itemIcon: {fileID: 21300000, guid: 89753419da7774d40a12b45625ecfd6c, type: 3}
   isDefaultItem: 0
   price: 10

@@ -19,8 +19,8 @@ MonoBehaviour:
     and increased critical strike chance.
   hasVisuals: 0
   visualEffectPrefab: {fileID: 0}
-  hasAnimTrigger: 0
-  castTrigger: 
+  hasAnimTrigger: 1
+  castTrigger: CastBuff
   cooldown: 0
   maxCooldown: 4
   baseDamageMin: 0
@@ -32,7 +32,5 @@ MonoBehaviour:
   affectedByAttribute: 0
   cost: 1
   buffsForTurns: 2
-  buffsAttributes: 1
   attributes: 00000000
-  buffsAbilities: 1
   abilities: 00000000

@@ -130,11 +130,43 @@ public class Skill : ScriptableObject
         }
         
         int[] minMaxDamage = GetDamageCalculated();
-        string affectedBy = affectedByAttribute.ToString();
+        string affectedBy = "";
+        if (skillName == "Basic Attack")
+        {
+            //description = "Attack with your ";
+            Weapon weapon = FindObjectOfType<PlayerCombat>().GetWeapon();
+            if (weapon == null)
+            {
+                affectedBy += "nothing";
+            }
+            else
+            {
+                switch (weapon.weaponType)
+                {
+                    case Constants.WeaponTypes.Axe:
+                        affectedBy += "Strength";
+                        break;
+                    case Constants.WeaponTypes.Bow:
+                        affectedBy += "Agility";
+                        break;
+                    case Constants.WeaponTypes.Wand:
+                        affectedBy += "Intelligence";
+                        break;
+                }
+            }
+        }
+        else
+        {
+            affectedBy = affectedByAttribute.ToString();
+        }
+
+
+
+        
         string range = maxDistance.ToString();
         tooltipString =
             "~" + name + " $" + skillCost + "AP\n" +
-            "$Damage: " + minMaxDamage[0] + " - " + minMaxDamage[1] + "`\n" +
+            (spellType != Constants.SpellType.Buff ? "$Damage: " + minMaxDamage[0] + " - " + minMaxDamage[1] + "`\n" : "") +
             "*Range: " + range + "u`\n" +
            ( name != "Move" ? "@This skill is affected by " + affectedBy + ".`\n" : "") +
             description;

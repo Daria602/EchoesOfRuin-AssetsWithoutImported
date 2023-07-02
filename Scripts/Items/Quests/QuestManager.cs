@@ -27,6 +27,8 @@ public class QuestManager : MonoBehaviour, ILoadingData
         instance = this;
         journalPanel.SetActive(false);
     }
+    
+
 
     private void Update()
     {
@@ -160,11 +162,12 @@ public class QuestManager : MonoBehaviour, ILoadingData
 
     public void LoadGameData(CharacterData characterData)
     {
-        this.questIds = characterData.questIds;
-        foreach (int questId in this.questIds)
+        //this.questIds = characterData.questIds;
+        foreach (int questId in characterData.questIds)
         {
             AddQuest(questId);
         }
+        UpdateJournal();
     }
 
     public void SaveGameData(ref CharacterData characterData)

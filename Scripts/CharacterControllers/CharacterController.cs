@@ -44,7 +44,7 @@ public class CharacterController : MonoBehaviour
         {
             //GameObject go = Instantiate(itemDrop);
             //go.GetComponent<VisualItem>
-            itemDrop.transform.position = transform.position;
+            itemDrop.transform.position = transform.position + Vector3.up;
             //go.transform.position = transform.position;
             itemDrop.SetActive(true);
             itemDrop.GetComponent<VisualItem>().isDroppedBySomebody = false;

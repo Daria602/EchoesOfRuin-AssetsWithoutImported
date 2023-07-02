@@ -48,15 +48,15 @@ public class SkillPanelController : MonoBehaviour
 
     private void Update()
     {
-        if (afterStart)
-        {
+        //if (afterStart)
+        //{
             
             skills = pc.skills;
             //Debug.Log("Skill panel thing " + skills.Count);
             AssignSkillsToButtons();
             AssignTooltips();
-            afterStart = false;
-        }
+           // afterStart = false;
+        //}
         
         if (isInCombat)
         {

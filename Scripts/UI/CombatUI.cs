@@ -129,6 +129,19 @@ public class CombatUI : MonoBehaviour
         for (int i = 0; i < skills.Count; i++)
         {
             SkillPanelController.GetInstance().UpdateCooldown(i, skills[i].cooldown);
+            
+        }
+    }
+
+    public void UpdateForImpossibleSkills(List<Skill> skills, int actionPointsLeft)
+    {
+        for (int i = 0; i < skills.Count; i++)
+        {
+            if (skills[i].cost > actionPointsLeft)
+            {
+                SkillPanelController.GetInstance().slots[i].interactable = false;
+            }
+            //SkillPanelController.GetInstance().UpdateCooldown(i, skills[i].cooldown);
         }
     }
 

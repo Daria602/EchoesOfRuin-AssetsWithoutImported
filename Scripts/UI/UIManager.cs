@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour, ILoadingData
 {
     [Header("Escape menu")]
     public GameObject escapeMenu;
@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI xpText;
     public TextMeshProUGUI xpPopUp;
 
+    public int itemEquipped;
+
 
     private static UIManager instance;
     public static UIManager GetInstance() { return instance; }
@@ -34,8 +36,11 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
+        
         InventoryManager.GetInstance().onItemChangedCallback += UpdateInventoryUI;
         slots = slotsParent.GetComponentsInChildren<SlotScript>();
+        UpdateInventoryUI();
+        UpdateEquipped(this.itemEquipped);
     }
 
     private void Update()
@@ -105,6 +110,38 @@ public class UIManager : MonoBehaviour
         Debug.Log("Updating UI");
     }
 
+    public void UpdateEquipped(int itemId)
+    {
+        Debug.Log("Got to update equipped with new id of: " + itemId);
+        this.itemEquipped = itemId;
+        for (int i = 0; i < InventoryManager.GetInstance().items.Count; i++)
+        {
+            Debug.Log("Id is in inventory: " + (itemId == InventoryManager.GetInstance().items[i].itemId).ToString());
+            //if (i % 2 == 0)
+            //{
+            //    slots[i].SetEquipped(true);
+            //}
+            //else
+            //{
+            //    slots[i].SetEquipped(false);
+            //}
+            if (itemId == InventoryManager.GetInstance().items[i].itemId)
+            {
+                slots[i].SetEquipped(true);
+            }
+            else
+            {
+                slots[i].SetEquipped(false);
+            }
+        }
+    }
+
+    public void RefreshEquipped()
+    {
+        UpdateEquipped(this.itemEquipped);
+    }
+
+
     public void UpdateXPSlider(int actualValue, int minValue = -1, int maxValue = -1)
     {
         if (minValue != -1 && maxValue != -1)
@@ -153,4 +190,13 @@ public class UIManager : MonoBehaviour
         xpPopUp.gameObject.SetActive(false);
     }
 
+    public void LoadGameData(CharacterData characterData)
+    {
+        this.itemEquipped = characterData.itemEquipped;
+    }
+
+    public void SaveGameData(ref CharacterData characterData)
+    {
+        characterData.itemEquipped = this.itemEquipped;
+    }
 }

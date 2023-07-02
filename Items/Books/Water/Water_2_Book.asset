@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Water_2_Book
   m_EditorClassIdentifier: 
   name: Book
+  itemId: 20
   itemIcon: {fileID: 21300000, guid: ae496f5dad56ea645b72d374a0376368, type: 3}
   isDefaultItem: 0
   price: 10

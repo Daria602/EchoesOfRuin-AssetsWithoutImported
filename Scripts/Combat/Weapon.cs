@@ -17,19 +17,21 @@ public class Weapon : Item
 
     public override void Use()
     {
-        base.Use();
+        //base.Use();
         //Debug.Log("Using weapon: " + name +
         //    "; Equipped is " + equipped);
         //if (equipped)
         //{
         //    equipped = false;
         //    FindObjectOfType<PlayerCombat>().PlayerUnequipsWeapon();
-            
+
         //}
         //else
         //{
-            //equipped = true;
+        //equipped = true;
+        Debug.Log("Used " + weaponType);
         FindObjectOfType<PlayerCombat>().PlayerEquipsWeapon(weaponId);
+        UIManager.GetInstance().UpdateEquipped(itemId);
         SkillPanelController.GetInstance().UpdateSkillbar();
             
         //}
