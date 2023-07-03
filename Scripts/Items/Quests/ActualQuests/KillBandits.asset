@@ -18,6 +18,6 @@ MonoBehaviour:
   enemyIds: 03000000
   positionToGetTo: {x: 0, y: 0, z: 0}
   idNPC: 0
-  questTitle: Kill Joshua
-  questDescription: Joshua is a part of the bandits group and is terrorising the
+  questTitle: Kill Sebastian
+  questDescription: Sebastian is a part of the bandits group and is terrorising the
     village

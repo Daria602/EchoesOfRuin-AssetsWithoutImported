@@ -60,6 +60,7 @@ public class CharacterData
 
     // Quests
     public List<int> questIds;
+    public List<int> questsDone;
 
     // Items that were picked up
     public List<int> itemsWerePickedUp;
@@ -131,6 +132,7 @@ public class CharacterData
 
         // Quests
         this.questIds = new List<int> { 0 };
+        this.questsDone = new List<int>();
 
         this.itemsWerePickedUp = new List<int>();
         this.XP = 0;

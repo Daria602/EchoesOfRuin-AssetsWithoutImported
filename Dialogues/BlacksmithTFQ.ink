@@ -22,7 +22,7 @@ Greetings, traveler! What brings you to our humble village?
 * [Ask about {npcName}'s role in the village]
 I am the village blacksmith. I forge weapons and armor for our brave warriors. If you're in need of any equipment, I can offer you my services.
     ** [Ask {npcName} if there are any tasks that need your help]
-Ah, I have a task that requires a skilled adventurer like yourself. A pack of wolves has been attacking our livestock. If you can eliminate the threat, you'll be rewarded handsomely.
+Ah, I have a task that requires a skilled adventurer like yourself. Some bandits led by Sebastian have been attacking our village. If you can eliminate the threat, you'll be rewarded handsomely.
         *** [I can do it]
         I was hoping you'd say that. Be careful.
         ~ choseTheQuest = true

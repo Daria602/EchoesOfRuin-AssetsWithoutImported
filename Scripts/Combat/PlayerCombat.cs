@@ -281,14 +281,14 @@ public class PlayerCombat : CombatController
     public void SetDoneBuff()
     {
         state = PlayerAttackStates.Done;
-        if (interactable != null)
-        {
-            CombatManager.GetInstance().ApplyBuffToAnother(interactable.gameObject.GetComponent<CharacterController>().characterId, skills[actionIndex]);
-        }
-        else
-        {
+        //if (interactable != null)
+        //{
+        //    CombatManager.GetInstance().ApplyBuffToAnother(interactable.gameObject.GetComponent<CharacterController>().characterId, skills[actionIndex]);
+        //}
+        //else
+        //{
             CombatManager.GetInstance().ApplyBuff(skills[actionIndex]);
-        }
+        //}
         enemyDied = false;
         
         skills[actionIndex].cooldown = skills[actionIndex].maxCooldown;
@@ -306,7 +306,7 @@ public class PlayerCombat : CombatController
         if (interactable.gameObject.GetComponent<NPCHealth>().GetDamaged(damageAfflicted))
         {
             // return true for death of an enemy
-            interactable = null;
+            //interactable = null;
             return true;
         }
         else
@@ -400,6 +400,7 @@ public class PlayerCombat : CombatController
         characterData.IsInCombat = this.IsInCombat;
         characterData.characterId = this.characterId;
         characterData.skillsIds = this.skillsIds;
+        Debug.Log(skillsIds.Count.ToString());
         characterData.hasWeapon = this.hasWeapon;
         characterData.weaponId = this.weaponId;
         characterData.isPerformingAction = this.isPerformingAction;

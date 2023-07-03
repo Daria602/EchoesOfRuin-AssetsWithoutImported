@@ -47,7 +47,7 @@ public class QuestManager : MonoBehaviour, ILoadingData
 
     public bool AddQuest(int questId)
     {
-        if (questIds.Contains(questId))
+        if (questIds.Contains(questId) || Constants.GetInstance().questsDone.Contains(questId))
         {
             return false;
         }
@@ -92,12 +92,13 @@ public class QuestManager : MonoBehaviour, ILoadingData
                     isCompleted = CheckIfTalked(quest);
                     break;
                 case Constants.QuestType.Explore:
-                    CheckIfExplored();
+                    isCompleted = CheckIfExplored(quest);
                     break;
             }
             if (isCompleted)
             {
                 questsSetToRemove.Add(currentQuestId);
+                Constants.GetInstance().questsDone.Add(currentQuestId);
                 //Debug.Log("CompletedQuest");
             }
         }
@@ -127,6 +128,11 @@ public class QuestManager : MonoBehaviour, ILoadingData
             questsSetToRemove.Clear();
             UpdateJournal();
         }
+    }
+
+    public bool CheckIfExplored(Quest quest)
+    {
+        return Vector3.Distance(player.transform.position, quest.positionToGetTo) <= 10;
     }
 
     public bool CheckIfKilled(Quest quest)

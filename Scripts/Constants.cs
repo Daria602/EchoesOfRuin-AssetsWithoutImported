@@ -37,6 +37,8 @@ public class Constants : MonoBehaviour, ILoadingData
     public Dictionary<int, Quest> questMap = new Dictionary<int, Quest>();
     public GameObject goldPrefab;
 
+    
+    public List<int> questsDone;
     //public string[] combatTextVariants =
     //{
 
@@ -207,12 +209,15 @@ public class Constants : MonoBehaviour, ILoadingData
             itemsStillPresent = characterData.itemsStillPresent;
         }
         this.charactersDead = characterData.charactersDead;
+        this.questsDone = characterData.questsDone;
+
     }
 
     public void SaveGameData(ref CharacterData characterData)
     {
         characterData.itemsStillPresent = itemsStillPresent;
         characterData.charactersDead = this.charactersDead;
+        characterData.questsDone = this.questsDone;
         Debug.Log(characterData.itemsStillPresent.Length);
     }
 

@@ -37,7 +37,15 @@ public class NPCController : CharacterController
 
     private void Start()
     {
-        npcSaysInstance = Instantiate(talkToNpcPrefab, transform);
-        npcSaysInstance.SetActive(false);
+        if (Constants.GetInstance().charactersDead.Contains(characterId))
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            npcSaysInstance = Instantiate(talkToNpcPrefab, transform);
+            npcSaysInstance.SetActive(false);
+        }
+        
     }
 }
